@@ -58,7 +58,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 							<artifactId>maven-javadoc-plugin</artifactId>
 							<configuration>
 								<links>
-									<link>http://commons.apache.org/proper/commons-validator/javadocs/api-1.5.1/</link>
+									<link>https://commons.apache.org/proper/commons-validator/javadocs/api-1.5.1/</link>
 									<link>https://www.aoindustries.com/docs/aocode-public/</link>
 								</links>
 							</configuration>
