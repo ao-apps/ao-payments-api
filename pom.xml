@@ -59,7 +59,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 							<configuration>
 								<links>
 									<link>https://commons.apache.org/proper/commons-validator/javadocs/api-1.5.1/</link>
-									<link>https://www.aoindustries.com/docs/aocode-public/</link>
+									<link>https://www.aoindustries.com/aocode-public/apidocs/</link>
 								</links>
 							</configuration>
 						</plugin>
