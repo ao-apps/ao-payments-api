@@ -4,7 +4,7 @@ Credit card processing API supporting multiple payment gateways.
 ## Project Links
 * [Project Home](https://www.aoindustries.com/ao-credit-cards/api/)
 * [API Docs](https://www.aoindustries.com/ao-credit-cards/api/apidocs/)
-* [Maven Central Repository](http://search.maven.org/#search|gav|1|g:%22com.aoindustries%22%20AND%20a:%22ao-credit-cards-api%22)
+* [Maven Central Repository](https://search.maven.org/#search|gav|1|g:%22com.aoindustries%22%20AND%20a:%22ao-credit-cards-api%22)
 * [GitHub](https://github.com/aoindustries/ao-credit-cards-api)
 
 ## Contact Us
