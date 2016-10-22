@@ -53,12 +53,10 @@ public final class ApplicationResources extends EditableResourceBundle {
 
 	static File[] getSourceDirectories(String filename) {
 		return new File[] {
-			// AO development system
-			// new File(System.getProperty("user.home")+"/common/aodev/cvswork/ao-credit-cards/src/main/java/com/aoindustries/creditcards", filename),
-			// AO production build
-			new File(System.getProperty("user.home")+"/common/aoprod/cvswork/ao-credit-cards/src/main/java/com/aoindustries/creditcards", filename),
+			// AO build
+			new File(System.getProperty("user.home")+"/maven2/ao/ao-credit-cards/ao-credit-cards-api/src/main/java/com/aoindustries/creditcards", filename),
 			// Windows development system
-			// new File("C:/ao/cvswork/ao-credit-cards/src/com/aoindustries/creditcards", filename)
+			// new File("C:/maven2/ao/ao-credit-cards/ao-credit-cards/src/main/java/com/aoindustries/creditcards", filename)
 		};
 	}
 
