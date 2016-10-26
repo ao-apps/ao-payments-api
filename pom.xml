@@ -41,7 +41,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 	</properties>
 
 	<name>AO Credit Cards API</name>
-	<url>${project.parent.url}api/</url>
+	<url>https://www.aoindustries.com${bookPath}/</url><!-- Can't inherit due to multi-module -->
 	<description>Credit card processing API supporting multiple payment gateways.</description>
 	<inceptionYear>2007</inceptionYear>
 
