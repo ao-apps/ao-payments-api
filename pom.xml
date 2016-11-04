@@ -41,7 +41,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 	</properties>
 
 	<name>AO Credit Cards API</name>
-	<url>https://www.aoindustries.com${bookPath}/</url><!-- Can't inherit due to multi-module -->
+	<url>https://aoindustries.com${bookPath}/</url><!-- Can't inherit due to multi-module -->
 	<description>Credit card processing API supporting multiple payment gateways.</description>
 	<inceptionYear>2007</inceptionYear>
 
@@ -65,7 +65,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 							<configuration>
 								<links>
 									<link>https://commons.apache.org/proper/commons-validator/javadocs/api-1.5.1/</link>
-									<link>https://www.aoindustries.com/aocode-public/apidocs/</link>
+									<link>https://aoindustries.com/aocode-public/apidocs/</link>
 								</links>
 							</configuration>
 						</plugin>
