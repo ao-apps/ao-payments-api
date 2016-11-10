@@ -36,12 +36,11 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 	<packaging>jar</packaging>
 
 	<properties>
-		<bookPath>/${project.parent.artifactId}/api</bookPath>
 		<shortTitle>API</shortTitle>
 	</properties>
 
 	<name>AO Credit Cards API</name>
-	<url>https://aoindustries.com${bookPath}/</url><!-- Can't inherit due to multi-module -->
+	<url>https://aoindustries.com/${project.parent.artifactId}/api/</url>
 	<description>Credit card processing API supporting multiple payment gateways.</description>
 	<inceptionYear>2007</inceptionYear>
 
