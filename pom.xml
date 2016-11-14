@@ -26,8 +26,9 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 
 	<parent>
 		<groupId>com.aoindustries</groupId>
-		<artifactId>ao-credit-cards</artifactId>
-		<version>1.0.2-SNAPSHOT</version>
+		<artifactId>ao-oss-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
 	<groupId>com.aoindustries</groupId>
@@ -36,11 +37,13 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 	<packaging>jar</packaging>
 
 	<properties>
+		<javadoc.breadcrumbs><![CDATA[<a target="_top" href="https://aoindustries.com/ao-credit-cards/">AO Credit Cards</a>
+/ <a target="_top" href="${project.url}">${shortTitle}</a>]]></javadoc.breadcrumbs>
 		<shortTitle>API</shortTitle>
 	</properties>
 
 	<name>AO Credit Cards API</name>
-	<url>https://aoindustries.com/${project.parent.artifactId}/api/</url>
+	<url>https://aoindustries.com/ao-credit-cards/api/</url>
 	<description>Credit card processing API supporting multiple payment gateways.</description>
 	<inceptionYear>2007</inceptionYear>
 
