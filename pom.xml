@@ -82,7 +82,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
-			<version>1.5.1</version>
+			<version>1.6</version>
 		</dependency>
 		<dependency>
 			<groupId>com.aoindustries</groupId>
