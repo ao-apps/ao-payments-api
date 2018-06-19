@@ -1,4 +1,4 @@
-# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://aoindustries.com/) [AO Credit Cards](https://aoindustries.com/ao-credit-cards/) / [API](https://aoindustries.com/ao-credit-cards/api/)
+# [<img src="ao-logo.png" alt="AO Logo" width="35" height="40">](https://github.com/aoindustries) [AO Credit Cards](https://github.com/aoindustries/ao-credit-cards) / [API](https://github.com/aoindustries/ao-credit-cards-api)
 <p>
 	<a href="https://aoindustries.com/life-cycle#project-current-stable">
 		<img src="https://aoindustries.com/ao-badges/project-current-stable.svg" alt="project: current stable" />
