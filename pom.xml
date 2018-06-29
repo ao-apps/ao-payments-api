@@ -55,21 +55,19 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		<profile>
 			<id>release</id>
 			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId>
-							<configuration>
-								<links>
-									<link>${javac.link.javaApi}</link>
-									<link>https://commons.apache.org/proper/commons-validator/javadocs/api-1.5.1/</link>
-									<link>https://aoindustries.com/ao-lang/apidocs/</link>
-									<link>https://aoindustries.com/aocode-public/apidocs/</link>
-								</links>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId>
+						<configuration>
+							<links>
+								<link>${javac.link.javaApi}</link>
+								<link>https://commons.apache.org/proper/commons-validator/javadocs/api-1.5.1</link>
+								<link>https://aoindustries.com/ao-lang/apidocs</link>
+								<link>https://aoindustries.com/aocode-public/apidocs</link>
+							</links>
+						</configuration>
+					</plugin>
+				</plugins>
 			</build>
 		</profile>
 	</profiles>
