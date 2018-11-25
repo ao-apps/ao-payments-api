@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2018  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -33,6 +33,7 @@ import static com.aoindustries.creditcards.ApplicationResourcesAccessor.accessor
  */
 public class AuthorizationResult extends TransactionResult implements Cloneable {
 
+	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.ApprovalResult-type.sql
 	public enum ApprovalResult {
 		APPROVED,
 		DECLINED,
@@ -47,6 +48,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
+	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.DeclineReason-type.sql
 	public enum DeclineReason {
 		NO_SPECIFIC,
 		EXPIRED_CARD,
@@ -81,6 +83,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
+	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.ReviewReason-type.sql
 	public enum ReviewReason {
 		RISK_MANAGEMENT,
 		ACCEPTED_MERCHANT_REVIEW,
@@ -95,6 +98,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
+	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.CvvResult-type.sql
 	public enum CvvResult {
 		MATCH,
 		NO_MATCH,
@@ -112,6 +116,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
+	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.AvsResult-type.sql
 	public enum AvsResult {
 		ADDRESS_NOT_PROVIDED,
 		ADDRESS_Y_ZIP_9,
