@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,11 +22,11 @@
  */
 package com.aoindustries.creditcards;
 
-import com.aoindustries.lang.ObjectUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Creates instances of <code>MerchantServicesProvider</code>s based on the provided
@@ -82,15 +82,15 @@ public class MerchantServicesProviderFactory {
 			return
 				providerId.equals(other.providerId)
 				&& className.equals(other.className)
-				&& ObjectUtils.equals(param1, other.param1)
-				&& ObjectUtils.equals(param2, other.param2)
-				&& ObjectUtils.equals(param3, other.param3)
-				&& ObjectUtils.equals(param4, other.param4)
+				&& Objects.equals(param1, other.param1)
+				&& Objects.equals(param2, other.param2)
+				&& Objects.equals(param3, other.param3)
+				&& Objects.equals(param4, other.param4)
 			;
 		}
 	}
 
-	final private static Map<ProviderKey,MerchantServicesProvider> providers = new HashMap<ProviderKey,MerchantServicesProvider>();
+	final private static Map<ProviderKey,MerchantServicesProvider> providers = new HashMap<>();
 
 	/**
 	 * Gets the provider for the given parameters.<br>
@@ -127,13 +127,7 @@ public class MerchantServicesProviderFactory {
 				try {
 					Constructor<? extends MerchantServicesProvider> constructor = clazz.getConstructor(String.class, String.class, String.class, String.class, String.class);
 					provider = constructor.newInstance(providerId, param1, param2, param3, param4);
-				} catch(NoSuchMethodException err) {
-					// Fall through to next param set
-				} catch(IllegalAccessException err) {
-					// Fall through to next param set
-				} catch(InstantiationException err) {
-					// Fall through to next param set
-				} catch(InvocationTargetException err) {
+				} catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException err) {
 					// Fall through to next param set
 				}
 
@@ -142,13 +136,7 @@ public class MerchantServicesProviderFactory {
 					try {
 						Constructor<? extends MerchantServicesProvider> constructor = clazz.getConstructor(String.class, String.class, String.class, String.class);
 						provider = constructor.newInstance(providerId, param1, param2, param3);
-					} catch(NoSuchMethodException err) {
-						// Fall through to next param set
-					} catch(IllegalAccessException err) {
-						// Fall through to next param set
-					} catch(InstantiationException err) {
-						// Fall through to next param set
-					} catch(InvocationTargetException err) {
+					} catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException err) {
 						// Fall through to next param set
 					}
 				}
@@ -158,13 +146,7 @@ public class MerchantServicesProviderFactory {
 					try {
 						Constructor<? extends MerchantServicesProvider> constructor = clazz.getConstructor(String.class, String.class, String.class);
 						provider = constructor.newInstance(providerId, param1, param2);
-					} catch(NoSuchMethodException err) {
-						// Fall through to next param set
-					} catch(IllegalAccessException err) {
-						// Fall through to next param set
-					} catch(InstantiationException err) {
-						// Fall through to next param set
-					} catch(InvocationTargetException err) {
+					} catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException err) {
 						// Fall through to next param set
 					}
 				}
@@ -174,13 +156,7 @@ public class MerchantServicesProviderFactory {
 					try {
 						Constructor<? extends MerchantServicesProvider> constructor = clazz.getConstructor(String.class, String.class);
 						provider = constructor.newInstance(providerId, param1);
-					} catch(NoSuchMethodException err) {
-						// Fall through to next param set
-					} catch(IllegalAccessException err) {
-						// Fall through to next param set
-					} catch(InstantiationException err) {
-						// Fall through to next param set
-					} catch(InvocationTargetException err) {
+					} catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException err) {
 						// Fall through to next param set
 					}
 				}

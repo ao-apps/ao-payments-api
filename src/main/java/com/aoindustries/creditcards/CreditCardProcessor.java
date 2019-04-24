@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -24,7 +24,6 @@ package com.aoindustries.creditcards;
 
 import static com.aoindustries.creditcards.ApplicationResourcesAccessor.accessor;
 import com.aoindustries.lang.LocalizedIllegalArgumentException;
-import com.aoindustries.lang.NotImplementedException;
 import com.aoindustries.sql.LocalizedSQLException;
 import java.io.IOException;
 import java.security.Principal;
@@ -227,8 +226,9 @@ public class CreditCardProcessor {
 	 *
 	 * @see  #authorize
 	 */
+	@SuppressWarnings("deprecation")
 	public CaptureResult capture(AuthorizationResult authorizationResult) {
-		throw new NotImplementedException();
+		throw new com.aoindustries.lang.NotImplementedException();
 		// return provider.capture(authorizationResult);
 	}
 
@@ -277,8 +277,9 @@ public class CreditCardProcessor {
 	/**
 	 * Requests a credit.
 	 */
+	@SuppressWarnings("deprecation")
 	public CreditResult credit(TransactionRequest transactionRequest, CreditCard creditCard) {
-		throw new NotImplementedException();
+		throw new com.aoindustries.lang.NotImplementedException();
 		// return provider.credit(transactionRequest, creditCard);
 	}
 
