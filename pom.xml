@@ -74,6 +74,10 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 
 	<dependencies>
 		<dependency>
+			<groupId>junit</groupId><artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>commons-validator</groupId><artifactId>commons-validator</artifactId><version>1.6</version>
 		</dependency>
 		<dependency>

@@ -38,27 +38,58 @@ import org.apache.commons.validator.GenericValidator;
  */
 public class CreditCard implements Cloneable {
 
+	private static final int MASK_START_DIGITS = 6;
+
+	private static final int MASK_END_DIGITS = 4;
+
+	private static final char MASK_CHARACTER = 'X';
+
 	/**
-	 * Only shows the first four and last four digits of a card number.
-	 * If the number is <code>null</code>, returns an empty string.
+	 * Only keeps the first {@link #MASK_START_DIGITS} and last {@link #MASK_END_DIGITS} digits of a card number after trimming.
+	 * Other digits are replaced with {@link #MASK_CHARACTER}.
+	 * All non-digit characters are left intact.
+	 * If the number is {@code null}, returns an empty string.
 	 */
 	public static String maskCreditCardNumber(String cardNumber) {
-		if(cardNumber==null) return "";
-		cardNumber=cardNumber.trim();
-		int len=cardNumber.length();
-		if(len==0) return "";
-		StringBuilder SB=new StringBuilder(len);
-		for(int c=0;c<len;c++) {
-			char ch=cardNumber.charAt(c);
-			if(
-				ch<'0'
-				|| ch>'9'
-				|| c<4
-				|| c>=(len-4)
-			) SB.append(cardNumber.charAt(c));
-			else SB.append('X');
+		if(cardNumber == null) return "";
+		cardNumber = cardNumber.trim();
+		int len = cardNumber.length();
+		if(len == 0) return "";
+		char[] chars = cardNumber.toCharArray();
+		// Find the start digits
+		int startDigitCount = 0;
+		int startDigitPos;
+		for(startDigitPos = 0; startDigitPos < len; startDigitPos++) {
+			char ch = chars[startDigitPos];
+			if(ch >= '0' && ch <= '9') {
+				startDigitCount++;
+				if(startDigitCount >= MASK_START_DIGITS) {
+					break;
+				}
+			}
 		}
-		return SB.toString();
+		// Find the end digits
+		int endDigitCount = 0;
+		int endDigitPos;
+		for(endDigitPos = len - 1; endDigitPos > startDigitPos; endDigitPos--) {
+			char ch = chars[endDigitPos];
+			if(ch >= '0' && ch <= '9') {
+				endDigitCount++;
+				if(endDigitCount >= MASK_END_DIGITS) {
+					break;
+				}
+			}
+		}
+		// Replace all between start and end
+		boolean replaced = false;
+		for(int i = startDigitPos + 1; i < endDigitPos; i++) {
+			char ch = chars[i];
+			if(ch >= '0' && ch <= '9') {
+				chars[i] = MASK_CHARACTER;
+				replaced = true;
+			}
+		}
+		return replaced ? new String(chars) : cardNumber;
 	}
 
 	/**
