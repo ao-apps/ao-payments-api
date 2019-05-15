@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2018  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2018, 2019  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -52,6 +52,7 @@ abstract public class TransactionResult {
 		HASH_CHECK_FAILED,
 		// IO_ERROR
 		// GATEWAY_ERROR
+		RATE_LIMIT,
 		INVALID_TRANSACTION_TYPE,
 		VOICE_AUTHORIZATION_REQUIRED,
 		INSUFFICIENT_PERMISSIONS,
