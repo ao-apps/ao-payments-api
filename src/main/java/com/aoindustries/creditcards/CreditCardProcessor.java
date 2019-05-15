@@ -69,8 +69,8 @@ public class CreditCardProcessor {
 	 * @param  principal  <code>null</code> is acceptable
 	 * @param  group      <code>null</code> is acceptable
 	 *
-	 * @see  #authorize
-	 * @see  #capture
+	 * @see  #authorize(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
+	 * @see  #capture(com.aoindustries.creditcards.AuthorizationResult)
 	 */
 	public Transaction sale(Principal principal, Group group, TransactionRequest transactionRequest, CreditCard creditCard) throws SQLException {
 		// Insert into persistence layer
@@ -152,8 +152,8 @@ public class CreditCardProcessor {
 	 * @param  principal  <code>null</code> is acceptable
 	 * @param  group      <code>null</code> is acceptable
 	 * 
-	 * @see  #capture
-	 * @see  #voidTransaction
+	 * @see  #capture(com.aoindustries.creditcards.AuthorizationResult)
+	 * @see  #voidTransaction(java.security.Principal, com.aoindustries.creditcards.Transaction)
 	 */
 	public Transaction authorize(Principal principal, Group group, TransactionRequest transactionRequest, CreditCard creditCard) throws SQLException {
 		// Insert into persistence layer
@@ -224,12 +224,42 @@ public class CreditCardProcessor {
 	/**
 	 * Captures the funds from a previous call to <code>authorize</code>.
 	 *
-	 * @see  #authorize
+	 * @param  principal  <code>null</code> is acceptable
+	 * 
+	 * @see  #authorize(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
 	 */
-	@SuppressWarnings("deprecation")
-	public CaptureResult capture(AuthorizationResult authorizationResult) {
-		throw new com.aoindustries.lang.NotImplementedException();
-		// return provider.capture(authorizationResult);
+	public CaptureResult capture(Principal principal, Transaction transaction) throws SQLException {
+		CaptureResult captureResult = provider.capture(transaction.getAuthorizationResult());
+		long completedTimeMillis = System.currentTimeMillis();
+		transaction.setCaptureTime(completedTimeMillis);
+		transaction.setCapturePrincipalName(principal==null ? null : principal.getName());
+		transaction.setCaptureResult(captureResult);
+		Transaction.Status status;
+		switch(captureResult.getCommunicationResult()) {
+			case LOCAL_ERROR:
+				status = Transaction.Status.LOCAL_ERROR;
+				break;
+			case IO_ERROR:
+				status = Transaction.Status.IO_ERROR;
+				break;
+			case GATEWAY_ERROR:
+				status = Transaction.Status.GATEWAY_ERROR;
+				break;
+			case SUCCESS:
+				status = Transaction.Status.CAPTURED;
+				break;
+			default:
+				throw new LocalizedSQLException(accessor, "CreditCardProcessor.capture.unexpectedCommunicationResult", captureResult.getCommunicationResult());
+		}
+		transaction.setStatus(status);
+
+		// Update persistence layer
+		persistenceMechanism.saleCompleted(
+			principal,
+			transaction
+		);
+
+		return captureResult;
 	}
 
 	/**

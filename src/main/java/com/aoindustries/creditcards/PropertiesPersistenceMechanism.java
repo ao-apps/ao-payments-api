@@ -118,11 +118,11 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 							props.getProperty("creditCards."+counter+".groupName"),
 							props.getProperty("creditCards."+counter+".providerId"),
 							props.getProperty("creditCards."+counter+".providerUniqueId"),
-							null,
+							null, // cardNumber
 							props.getProperty("creditCards."+counter+".maskedCardNumber"),
-							(byte)-1,
-							(short)-1,
-							null,
+							(byte)-1, // expirationMonth
+							(short)-1, // expirationYear
+							null, // cardCode
 							props.getProperty("creditCards."+counter+".firstName"),
 							props.getProperty("creditCards."+counter+".lastName"),
 							props.getProperty("creditCards."+counter+".companyName"),
@@ -213,16 +213,16 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 								props.getProperty("transactions."+counter+".transactionRequest.description")
 							),
 							new CreditCard(
-								null,
+								null, // persistenceUniqueId
 								props.getProperty("transactions."+counter+".creditCard.principalName"),
 								props.getProperty("transactions."+counter+".creditCard.groupName"),
 								props.getProperty("transactions."+counter+".providerId"),
 								props.getProperty("transactions."+counter+".creditCard.providerUniqueId"),
-								null,
+								null, // cardNumber
 								props.getProperty("transactions."+counter+".creditCard.maskedCardNumber"),
-								(byte)-1,
-								(short)-1,
-								null,
+								(byte)-1, // expirationMonth
+								(short)-1, // expirationYear
+								null, // cardCode
 								props.getProperty("transactions."+counter+".creditCard.firstName"),
 								props.getProperty("transactions."+counter+".creditCard.lastName"),
 								props.getProperty("transactions."+counter+".creditCard.companyName"),
