@@ -68,13 +68,21 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	public static PropertiesPersistenceMechanism getInstance(String propertiesFilePath) {
 		synchronized(ppms) {
 			PropertiesPersistenceMechanism ppm = ppms.get(propertiesFilePath);
-			if(ppm==null) {
+			if(ppm == null) {
 				ppm = new PropertiesPersistenceMechanism(propertiesFilePath);
 				ppms.put(propertiesFilePath, ppm);
 			}
 			return ppm;
 		}
 	}
+
+	private static final String CC_PRE = "creditCards.";
+	private static final String TRANS_PRE = "transactions.";
+	private static final String TRANS_REQ_SUF = ".transactionRequest";
+	private static final String CC_SUF = ".creditCard";
+	private static final String AUTH_RES_SUF = ".authorizationResult";
+	private static final String CAP_RES_SUF = ".captureResult";
+	private static final String VOID_RES_SUF = ".voidResult";
 
 	/**
 	 * The properties file path is obtained at creation time just in case the configuration mapping
@@ -101,186 +109,191 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		this.propertiesFilePath = propertiesFilePath;
 	}
 
+	private static String getProperty(Properties props, String prefix, long counter, String suffix) {
+		return props.getProperty(prefix + counter + suffix);
+	}
+
+	private static Currency getPropertyCurrency(Properties props, String prefix, long counter, String suffix) {
+		String currencyCode = getProperty(props, prefix, counter, suffix);
+		return currencyCode == null ? null : Currency.getInstance(currencyCode);
+	}
+
+	private static BigDecimal getPropertyBigDecimal(Properties props, String prefix, long counter, String suffix) {
+		String value = getProperty(props, prefix, counter, suffix);
+		return value == null ? null : new BigDecimal(value);
+	}
+
+	private static <T extends Enum<T>> T getPropertyEnum(Properties props, String prefix, long counter, String suffix, Class<T> enumType) {
+		String value = getProperty(props, prefix, counter, suffix);
+		return value == null ? null : Enum.valueOf(enumType, value);
+	}
+
+	private static Long getPropertyLong(Properties props, String prefix, long counter, String suffix) {
+		String value = getProperty(props, prefix, counter, suffix);
+		return value == null ? null : Long.valueOf(value);
+	}
+
+	private static Boolean getPropertyBoolean(Properties props, String prefix, long counter, String suffix) {
+		String value = getProperty(props, prefix, counter, suffix);
+		return value == null ? null : Boolean.valueOf(value);
+	}
+
+	private static Integer getPropertyInteger(Properties props, String prefix, long counter, String suffix) {
+		String value = getProperty(props, prefix, counter, suffix);
+		return value == null ? null : Integer.valueOf(value);
+	}
+
+	private static long coalesce(Long value, long defaultValue) {
+		return value != null ? value : defaultValue;
+	}
+
 	private synchronized void loadIfNeeded() throws SQLException {
-		if(internalCreditCards==null || internalTransactions==null) {
+		if(internalCreditCards == null || internalTransactions == null) {
 			try {
 				File file = new File(propertiesFilePath);
 				if(file.exists()) {
 					List<CreditCard> newCreditCards = new ArrayList<>();
 					List<Transaction> newTransactions = new ArrayList<>();
 					Properties props = PropertiesUtils.loadFromFile(file);
-					for(long counter=1; counter<Long.MAX_VALUE; counter++) {
-						String persistenceUniqueId = props.getProperty("creditCards."+counter+".persistenceUniqueId");
-						if(persistenceUniqueId==null) break;
+					for(long counter = 1; counter < Long.MAX_VALUE; counter++) {
+						String persistenceUniqueId = getProperty(props, CC_PRE, counter, ".persistenceUniqueId");
+						if(persistenceUniqueId == null) break;
 						CreditCard newCreditCard = new CreditCard(
 							persistenceUniqueId,
-							props.getProperty("creditCards."+counter+".principalName"),
-							props.getProperty("creditCards."+counter+".groupName"),
-							props.getProperty("creditCards."+counter+".providerId"),
-							props.getProperty("creditCards."+counter+".providerUniqueId"),
+							getProperty(props, CC_PRE, counter, ".principalName"),
+							getProperty(props, CC_PRE, counter, ".groupName"),
+							getProperty(props, CC_PRE, counter, ".providerId"),
+							getProperty(props, CC_PRE, counter, ".providerUniqueId"),
 							null, // cardNumber
-							props.getProperty("creditCards."+counter+".maskedCardNumber"),
-							(byte)-1, // expirationMonth
-							(short)-1, // expirationYear
+							// TODO: 2.0: Store separate type and masked card numbers
+							getProperty(props, CC_PRE, counter, ".maskedCardNumber"),
+							(byte)-1, // expirationMonth // TODO: 2.0: Make nullable Byte
+							(short)-1, // expirationYear // TODO: 2.0: Make nullable Short
 							null, // cardCode
-							props.getProperty("creditCards."+counter+".firstName"),
-							props.getProperty("creditCards."+counter+".lastName"),
-							props.getProperty("creditCards."+counter+".companyName"),
-							props.getProperty("creditCards."+counter+".email"),
-							props.getProperty("creditCards."+counter+".phone"),
-							props.getProperty("creditCards."+counter+".fax"),
-							props.getProperty("creditCards."+counter+".customerId"),
-							props.getProperty("creditCards."+counter+".customerTaxId"),
-							props.getProperty("creditCards."+counter+".streetAddress1"),
-							props.getProperty("creditCards."+counter+".streetAddress2"),
-							props.getProperty("creditCards."+counter+".city"),
-							props.getProperty("creditCards."+counter+".state"),
-							props.getProperty("creditCards."+counter+".postalCode"),
-							props.getProperty("creditCards."+counter+".countryCode"),
-							props.getProperty("creditCards."+counter+".comments")
+							getProperty(props, CC_PRE, counter, ".firstName"),
+							getProperty(props, CC_PRE, counter, ".lastName"),
+							getProperty(props, CC_PRE, counter, ".companyName"),
+							getProperty(props, CC_PRE, counter, ".email"),
+							getProperty(props, CC_PRE, counter, ".phone"),
+							getProperty(props, CC_PRE, counter, ".fax"),
+							getProperty(props, CC_PRE, counter, ".customerId"),
+							getProperty(props, CC_PRE, counter, ".customerTaxId"),
+							getProperty(props, CC_PRE, counter, ".streetAddress1"),
+							getProperty(props, CC_PRE, counter, ".streetAddress2"),
+							getProperty(props, CC_PRE, counter, ".city"),
+							getProperty(props, CC_PRE, counter, ".state"),
+							getProperty(props, CC_PRE, counter, ".postalCode"),
+							getProperty(props, CC_PRE, counter, ".countryCode"),
+							getProperty(props, CC_PRE, counter, ".comments")
 						);
 						newCreditCards.add(newCreditCard);
 					}
-					for(long counter=1; counter<Long.MAX_VALUE; counter++) {
-						String persistenceUniqueId = props.getProperty("transactions."+counter+".persistenceUniqueId");
-						if(persistenceUniqueId==null) break;
-						String currencyCode = props.getProperty("transactions."+counter+".transactionRequest.currencyCode");
-						Currency currency = currencyCode==null ? null : Currency.getInstance(currencyCode);
-						String amountString = props.getProperty("transactions."+counter+".transactionRequest.amount");
-						BigDecimal amount = amountString==null ? null : new BigDecimal(amountString);
-						String taxAmountString = props.getProperty("transactions."+counter+".transactionRequest.taxAmount");
-						BigDecimal taxAmount = taxAmountString==null ? null : new BigDecimal(taxAmountString);
-						String shippingAmountString = props.getProperty("transactions."+counter+".transactionRequest.shippingAmount");
-						BigDecimal shippingAmount = shippingAmountString==null ? null : new BigDecimal(shippingAmountString);
-						String dutyAmountString = props.getProperty("transactions."+counter+".transactionRequest.dutyAmount");
-						BigDecimal dutyAmount = dutyAmountString==null ? null : new BigDecimal(dutyAmountString);
-						String authorizationCommunicationResultString = props.getProperty("transactions."+counter+".authorizationResult.communicationResult");
-						TransactionResult.CommunicationResult authorizationCommunicationResult = authorizationCommunicationResultString==null ? null : TransactionResult.CommunicationResult.valueOf(authorizationCommunicationResultString);
-						String authorizationErrorCodeString = props.getProperty("transactions."+counter+".authorizationResult.errorCode");
-						TransactionResult.ErrorCode authorizationErrorCode = authorizationErrorCodeString==null ? null : TransactionResult.ErrorCode.valueOf(authorizationErrorCodeString);
-						String approvalResultString = props.getProperty("transactions."+counter+".authorizationResult.approvalResult");
-						AuthorizationResult.ApprovalResult approvalResult = approvalResultString==null ? null : AuthorizationResult.ApprovalResult.valueOf(approvalResultString);
-						String declineReasonString = props.getProperty("transactions."+counter+".authorizationResult.declineReason");
-						AuthorizationResult.DeclineReason declineReason = declineReasonString==null ? null : AuthorizationResult.DeclineReason.valueOf(declineReasonString);
-						String reviewReasonString = props.getProperty("transactions."+counter+".authorizationResult.reviewReason");
-						AuthorizationResult.ReviewReason reviewReason = reviewReasonString==null ? null : AuthorizationResult.ReviewReason.valueOf(reviewReasonString);
-						String cvvResultString = props.getProperty("transactions."+counter+".authorizationResult.cvvResult");
-						AuthorizationResult.CvvResult cvvResult = cvvResultString==null ? null : AuthorizationResult.CvvResult.valueOf(cvvResultString);
-						String avsResultString = props.getProperty("transactions."+counter+".authorizationResult.avsResult");
-						AuthorizationResult.AvsResult avsResult = avsResultString==null ? null : AuthorizationResult.AvsResult.valueOf(avsResultString);
-						String captureTimeString = props.getProperty("transactions."+counter+".captureTime");
-						long captureTime = captureTimeString==null ? (long)-1 : Long.parseLong(captureTimeString);
-						String captureCommunicationResultString = props.getProperty("transactions."+counter+".captureResult.communicationResult");
-						TransactionResult.CommunicationResult captureCommunicationResult = captureCommunicationResultString==null ? null : TransactionResult.CommunicationResult.valueOf(captureCommunicationResultString);
-						String captureErrorCodeString = props.getProperty("transactions."+counter+".captureResult.errorCode");
-						TransactionResult.ErrorCode captureErrorCode = captureErrorCodeString==null ? null : TransactionResult.ErrorCode.valueOf(captureErrorCodeString);
-						String voidTimeString = props.getProperty("transactions."+counter+".voidTime");
-						long voidTime = voidTimeString==null ? (long)-1 : Long.parseLong(voidTimeString);
-						String voidCommunicationResultString = props.getProperty("transactions."+counter+".voidResult.communicationResult");
-						TransactionResult.CommunicationResult voidCommunicationResult = voidCommunicationResultString==null ? null : TransactionResult.CommunicationResult.valueOf(voidCommunicationResultString);
-						String voidErrorCodeString = props.getProperty("transactions."+counter+".voidResult.errorCode");
-						TransactionResult.ErrorCode voidErrorCode = voidErrorCodeString==null ? null : TransactionResult.ErrorCode.valueOf(voidErrorCodeString);
-						String statusString = props.getProperty("transactions."+counter+".status");
-						Transaction.Status status = statusString==null ? null : Transaction.Status.valueOf(statusString);
+					for(long counter = 1; counter < Long.MAX_VALUE; counter++) {
+						String persistenceUniqueId = getProperty(props, TRANS_PRE, counter, ".persistenceUniqueId");
+						if(persistenceUniqueId == null) break;
 						Transaction newTransaction = new Transaction(
-							props.getProperty("transactions."+counter+".providerId"),
+							getProperty(props, TRANS_PRE, counter, ".providerId"),
 							persistenceUniqueId,
-							props.getProperty("transactions."+counter+".groupName"),
+							getProperty(props, TRANS_PRE, counter, ".groupName"),
 							new TransactionRequest(
-								"true".equals(props.getProperty("transactions."+counter+".transactionRequest.testMode")),
-								props.getProperty("transactions."+counter+".transactionRequest.customerIp"),
-								Integer.parseInt(props.getProperty("transactions."+counter+".transactionRequest.duplicateWindow")),
-								props.getProperty("transactions."+counter+".transactionRequest.orderNumber"),
-								currency,
-								amount,
-								taxAmount,
-								"true".equals(props.getProperty("transactions."+counter+".transactionRequest.taxExempt")),
-								shippingAmount,
-								dutyAmount,
-								props.getProperty("transactions."+counter+".transactionRequest.shippingFirstName"),
-								props.getProperty("transactions."+counter+".transactionRequest.shippingLastName"),
-								props.getProperty("transactions."+counter+".transactionRequest.shippingCompanyName"),
-								props.getProperty("transactions."+counter+".transactionRequest.shippingStreetAddress1"),
-								props.getProperty("transactions."+counter+".transactionRequest.shippingStreetAddress2"),
-								props.getProperty("transactions."+counter+".transactionRequest.shippingCity"),
-								props.getProperty("transactions."+counter+".transactionRequest.shippingState"),
-								props.getProperty("transactions."+counter+".transactionRequest.shippingPostalCode"),
-								props.getProperty("transactions."+counter+".transactionRequest.shippingCountryCode"),
-								"true".equals(props.getProperty("transactions."+counter+".transactionRequest.emailCustomer")),
-								props.getProperty("transactions."+counter+".transactionRequest.merchantEmail"),
-								props.getProperty("transactions."+counter+".transactionRequest.invoiceNumber"),
-								props.getProperty("transactions."+counter+".transactionRequest.purchaseOrderNumber"),
-								props.getProperty("transactions."+counter+".transactionRequest.description")
+								getPropertyBoolean   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".testMode"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".customerIp"),
+								getPropertyInteger   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".duplicateWindow"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".orderNumber"),
+								getPropertyCurrency  (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".currencyCode"),
+								getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".amount"),
+								getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxAmount"),
+								getPropertyBoolean   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxExempt"),
+								getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingAmount"),
+								getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".dutyAmount"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingFirstName"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingLastName"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCompanyName"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress1"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress2"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCity"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingState"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingPostalCode"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCountryCode"),
+								getPropertyBoolean   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".emailCustomer"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".merchantEmail"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".invoiceNumber"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".purchaseOrderNumber"),
+								getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".description")
 							),
 							new CreditCard(
 								null, // persistenceUniqueId
-								props.getProperty("transactions."+counter+".creditCard.principalName"),
-								props.getProperty("transactions."+counter+".creditCard.groupName"),
-								props.getProperty("transactions."+counter+".providerId"),
-								props.getProperty("transactions."+counter+".creditCard.providerUniqueId"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".principalName"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".groupName"),
+								getProperty(props, TRANS_PRE, counter, ".providerId"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".providerUniqueId"),
 								null, // cardNumber
-								props.getProperty("transactions."+counter+".creditCard.maskedCardNumber"),
-								(byte)-1, // expirationMonth
-								(short)-1, // expirationYear
+								// TODO: 2.0: Store separate type and masked card numbers
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".maskedCardNumber"),
+								(byte)-1, // expirationMonth // TODO: 2.0: Make nullable Byte
+								(short)-1, // expirationYear // TODO: 2.0: Make nullable Short
 								null, // cardCode
-								props.getProperty("transactions."+counter+".creditCard.firstName"),
-								props.getProperty("transactions."+counter+".creditCard.lastName"),
-								props.getProperty("transactions."+counter+".creditCard.companyName"),
-								props.getProperty("transactions."+counter+".creditCard.email"),
-								props.getProperty("transactions."+counter+".creditCard.phone"),
-								props.getProperty("transactions."+counter+".creditCard.fax"),
-								props.getProperty("transactions."+counter+".creditCard.customerId"),
-								props.getProperty("transactions."+counter+".creditCard.customerTaxId"),
-								props.getProperty("transactions."+counter+".creditCard.streetAddress1"),
-								props.getProperty("transactions."+counter+".creditCard.streetAddress2"),
-								props.getProperty("transactions."+counter+".creditCard.city"),
-								props.getProperty("transactions."+counter+".creditCard.state"),
-								props.getProperty("transactions."+counter+".creditCard.postalCode"),
-								props.getProperty("transactions."+counter+".creditCard.countryCode"),
-								props.getProperty("transactions."+counter+".creditCard.comments")
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".firstName"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".lastName"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".companyName"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".email"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".phone"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".fax"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".customerId"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".customerTaxId"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".streetAddress1"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".streetAddress2"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".city"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".state"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".postalCode"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".countryCode"),
+								getProperty(props, TRANS_PRE, counter, CC_SUF + ".comments")
 							),
-							Long.parseLong(props.getProperty("transactions."+counter+".authorizationTime")),
-							props.getProperty("transactions."+counter+".authorizationPrincipalName"),
+							Long.parseLong(getProperty(props, TRANS_PRE, counter, ".authorizationTime")),
+							getProperty(props, TRANS_PRE, counter, ".authorizationPrincipalName"),
 							new AuthorizationResult(
-								props.getProperty("transactions."+counter+".providerId"),
-								authorizationCommunicationResult,
-								props.getProperty("transactions."+counter+".authorizationResult.providerErrorCode"),
-								authorizationErrorCode,
-								props.getProperty("transactions."+counter+".authorizationResult.providerErrorMessage"),
-								props.getProperty("transactions."+counter+".authorizationResult.providerUniqueId"),
-								props.getProperty("transactions."+counter+".authorizationResult.providerApprovalResult"),
-								approvalResult,
-								props.getProperty("transactions."+counter+".authorizationResult.providerDeclineReason"),
-								declineReason,
-								props.getProperty("transactions."+counter+".authorizationResult.providerReviewReason"),
-								reviewReason,
-								props.getProperty("transactions."+counter+".authorizationResult.providerCvvResult"),
-								cvvResult,
-								props.getProperty("transactions."+counter+".authorizationResult.providerAvsResult"),
-								avsResult,
-								props.getProperty("transactions."+counter+".authorizationResult.approvalCode")
+								getProperty    (props, TRANS_PRE, counter, ".providerId"),
+								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorCode"),
+								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage"),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId"),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementMaskedCardNumber"),
+								// TODO: 2.0: Store separate type and masked card numbers
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementMaskedCardNumber"),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult"),
+								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", AuthorizationResult.ApprovalResult.class),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason"),
+								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".declineReason", AuthorizationResult.DeclineReason.class),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReviewReason"),
+								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".reviewReason", AuthorizationResult.ReviewReason.class),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerCvvResult"),
+								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".cvvResult", AuthorizationResult.CvvResult.class),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerAvsResult"),
+								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".avsResult", AuthorizationResult.AvsResult.class),
+								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalCode")
 							),
-							captureTime,
-							props.getProperty("transactions."+counter+".capturePrincipalName"),
+							coalesce(getPropertyLong(props, TRANS_PRE, counter, ".captureTime"), -1), // TODO: 2.0: Make nullable Long
+							getProperty(props, TRANS_PRE, counter, ".capturePrincipalName"),
 							new CaptureResult(
-								props.getProperty("transactions."+counter+".providerId"),
-								captureCommunicationResult,
-								props.getProperty("transactions."+counter+".captureResult.providerErrorCode"),
-								captureErrorCode,
-								props.getProperty("transactions."+counter+".captureResult.providerErrorMessage"),
-								props.getProperty("transactions."+counter+".captureResult.providerUniqueId")
+								getProperty    (props, TRANS_PRE, counter, ".providerId"),
+								getPropertyEnum(props, TRANS_PRE, counter, CAP_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
+								getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorCode"),
+								getPropertyEnum(props, TRANS_PRE, counter, CAP_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
+								getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorMessage"),
+								getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerUniqueId")
 							),
-							voidTime,
-							props.getProperty("transactions."+counter+".voidPrincipalName"),
+							coalesce(getPropertyLong(props, TRANS_PRE, counter, ".voidTime"), -1), // TODO: 2.0: Make nullable Long
+							getProperty(props, TRANS_PRE, counter, ".voidPrincipalName"),
 							new VoidResult(
-								props.getProperty("transactions."+counter+".providerId"),
-								voidCommunicationResult,
-								props.getProperty("transactions."+counter+".voidResult.providerErrorCode"),
-								voidErrorCode,
-								props.getProperty("transactions."+counter+".voidResult.providerErrorMessage"),
-								props.getProperty("transactions."+counter+".voidResult.providerUniqueId")
+								getProperty    (props, TRANS_PRE, counter, ".providerId"),
+								getPropertyEnum(props, TRANS_PRE, counter, VOID_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
+								getProperty    (props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorCode"),
+								getPropertyEnum(props, TRANS_PRE, counter, VOID_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
+								getProperty    (props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorMessage"),
+								getProperty    (props, TRANS_PRE, counter, VOID_RES_SUF + ".providerUniqueId")
 							),
-							status
+							getPropertyEnum(props, TRANS_PRE, counter, ".status", Transaction.Status.class)
 						);
 						newTransactions.add(newTransaction);
 					}
@@ -296,6 +309,42 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		}
 	}
 
+	private static void setProperty(Properties props, String prefix, long counter, String suffix, String value) {
+		if(value != null) {
+			props.setProperty(prefix + counter + suffix, value);
+		}
+	}
+
+	private static void setProperty(Properties props, String prefix, long counter, String suffix, Currency value) {
+		if(value != null) {
+			props.setProperty(prefix + counter + suffix, value.getCurrencyCode());
+		}
+	}
+
+	private static void setProperty(Properties props, String prefix, long counter, String suffix, BigDecimal value) {
+		if(value != null) {
+			props.setProperty(prefix + counter + suffix, value.toString());
+		}
+	}
+
+	private static void setProperty(Properties props, String prefix, long counter, String suffix, Boolean value) {
+		if(value != null) {
+			props.setProperty(prefix + counter + suffix, value.toString());
+		}
+	}
+
+	private static void setProperty(Properties props, String prefix, long counter, String suffix, Enum<?> value) {
+		if(value != null) {
+			props.setProperty(prefix + counter + suffix, value.name());
+		}
+	}
+
+	private static void setProperty(Properties props, String prefix, long counter, String suffix, Long value) {
+		if(value != null) {
+			props.setProperty(prefix + counter + suffix, value.toString());
+		}
+	}
+
 	private synchronized void save() throws SQLException {
 		try {
 			File newFile = new File(propertiesFilePath+".new");
@@ -303,134 +352,140 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 			File backupFile = new File(propertiesFilePath+".backup");
 			Properties props = new Properties();
 			// Add the credit cards
-			long counter=1;
+			long counter = 1;
 			for(CreditCard internalCreditCard : internalCreditCards) {
-				props.setProperty("creditCards."+counter+".persistenceUniqueId", internalCreditCard.getPersistenceUniqueId());
-				if(internalCreditCard.getPrincipalName()!=null) props.setProperty("creditCards."+counter+".principalName", internalCreditCard.getPrincipalName());
-				if(internalCreditCard.getGroupName()!=null) props.setProperty("creditCards."+counter+".groupName", internalCreditCard.getGroupName());
-				if(internalCreditCard.getProviderId()!=null) props.setProperty("creditCards."+counter+".providerId", internalCreditCard.getProviderId());
-				if(internalCreditCard.getProviderUniqueId()!=null) props.setProperty("creditCards."+counter+".providerUniqueId", internalCreditCard.getProviderUniqueId());
-				if(internalCreditCard.getMaskedCardNumber()!=null) props.setProperty("creditCards."+counter+".maskedCardNumber", internalCreditCard.getMaskedCardNumber());
-				if(internalCreditCard.getFirstName()!=null) props.setProperty("creditCards."+counter+".firstName", internalCreditCard.getFirstName());
-				if(internalCreditCard.getLastName()!=null) props.setProperty("creditCards."+counter+".lastName", internalCreditCard.getLastName());
-				if(internalCreditCard.getCompanyName()!=null) props.setProperty("creditCards."+counter+".companyName", internalCreditCard.getCompanyName());
-				if(internalCreditCard.getEmail()!=null) props.setProperty("creditCards."+counter+".email", internalCreditCard.getEmail());
-				if(internalCreditCard.getPhone()!=null) props.setProperty("creditCards."+counter+".phone", internalCreditCard.getPhone());
-				if(internalCreditCard.getFax()!=null) props.setProperty("creditCards."+counter+".fax", internalCreditCard.getFax());
-				if(internalCreditCard.getCustomerId()!=null) props.setProperty("creditCards."+counter+".customerId", internalCreditCard.getCustomerId());
-				if(internalCreditCard.getCustomerTaxId()!=null) props.setProperty("creditCards."+counter+".customerTaxId", internalCreditCard.getCustomerTaxId());
-				if(internalCreditCard.getStreetAddress1()!=null) props.setProperty("creditCards."+counter+".streetAddress1", internalCreditCard.getStreetAddress1());
-				if(internalCreditCard.getStreetAddress2()!=null) props.setProperty("creditCards."+counter+".streetAddress2", internalCreditCard.getStreetAddress2());
-				if(internalCreditCard.getCity()!=null) props.setProperty("creditCards."+counter+".city", internalCreditCard.getCity());
-				if(internalCreditCard.getState()!=null) props.setProperty("creditCards."+counter+".state", internalCreditCard.getState());
-				if(internalCreditCard.getPostalCode()!=null) props.setProperty("creditCards."+counter+".postalCode", internalCreditCard.getPostalCode());
-				if(internalCreditCard.getCountryCode()!=null) props.setProperty("creditCards."+counter+".countryCode", internalCreditCard.getCountryCode());
-				if(internalCreditCard.getComments()!=null) props.setProperty("creditCards."+counter+".comments", internalCreditCard.getComments());
+				setProperty(props, CC_PRE, counter, ".persistenceUniqueId", internalCreditCard.getPersistenceUniqueId());
+				setProperty(props, CC_PRE, counter, ".principalName", internalCreditCard.getPrincipalName());
+				setProperty(props, CC_PRE, counter, ".groupName", internalCreditCard.getGroupName());
+				setProperty(props, CC_PRE, counter, ".providerId", internalCreditCard.getProviderId());
+				setProperty(props, CC_PRE, counter, ".providerUniqueId", internalCreditCard.getProviderUniqueId());
+				// TODO: 2.0: Store separate type and masked card numbers
+				setProperty(props, CC_PRE, counter, ".maskedCardNumber", internalCreditCard.getMaskedCardNumber());
+				setProperty(props, CC_PRE, counter, ".firstName", internalCreditCard.getFirstName());
+				setProperty(props, CC_PRE, counter, ".lastName", internalCreditCard.getLastName());
+				setProperty(props, CC_PRE, counter, ".companyName", internalCreditCard.getCompanyName());
+				setProperty(props, CC_PRE, counter, ".email", internalCreditCard.getEmail());
+				setProperty(props, CC_PRE, counter, ".phone", internalCreditCard.getPhone());
+				setProperty(props, CC_PRE, counter, ".fax", internalCreditCard.getFax());
+				setProperty(props, CC_PRE, counter, ".customerId", internalCreditCard.getCustomerId());
+				setProperty(props, CC_PRE, counter, ".customerTaxId", internalCreditCard.getCustomerTaxId());
+				setProperty(props, CC_PRE, counter, ".streetAddress1", internalCreditCard.getStreetAddress1());
+				setProperty(props, CC_PRE, counter, ".streetAddress2", internalCreditCard.getStreetAddress2());
+				setProperty(props, CC_PRE, counter, ".city", internalCreditCard.getCity());
+				setProperty(props, CC_PRE, counter, ".state", internalCreditCard.getState());
+				setProperty(props, CC_PRE, counter, ".postalCode", internalCreditCard.getPostalCode());
+				setProperty(props, CC_PRE, counter, ".countryCode", internalCreditCard.getCountryCode());
+				setProperty(props, CC_PRE, counter, ".comments", internalCreditCard.getComments());
 				counter++;
 			}
 			// Add the transactions
-			counter=1;
+			counter = 1;
 			for(Transaction internalTransaction : internalTransactions) {
-				props.setProperty("transactions."+counter+".providerId", internalTransaction.getProviderId());
-				props.setProperty("transactions."+counter+".persistenceUniqueId", internalTransaction.getPersistenceUniqueId());
-				if(internalTransaction.getGroupName()!=null) props.setProperty("transactions."+counter+".groupName", internalTransaction.getGroupName());
+				setProperty(props, TRANS_PRE, counter, ".providerId", internalTransaction.getProviderId());
+				setProperty(props, TRANS_PRE, counter, ".persistenceUniqueId", internalTransaction.getPersistenceUniqueId());
+				setProperty(props, TRANS_PRE, counter, ".groupName", internalTransaction.getGroupName());
 				TransactionRequest transactionRequest = internalTransaction.getTransactionRequest();
-				if(transactionRequest!=null) {
-					props.setProperty("transactions."+counter+".transactionRequest.testMode", transactionRequest.getTestMode() ? "true" : "false");
-					if(transactionRequest.getCustomerIp()!=null) props.setProperty("transactions."+counter+".transactionRequest.customerIp", transactionRequest.getCustomerIp());
-					props.setProperty("transactions."+counter+".transactionRequest.duplicateWindow", Integer.toString(transactionRequest.getDuplicateWindow()));
-					if(transactionRequest.getOrderNumber()!=null) props.setProperty("transactions."+counter+".transactionRequest.orderNumber", transactionRequest.getOrderNumber());
-					if(transactionRequest.getCurrency()!=null) props.setProperty("transactions."+counter+".transactionRequest.currencyCode", transactionRequest.getCurrency().getCurrencyCode());
-					if(transactionRequest.getAmount()!=null) props.setProperty("transactions."+counter+".transactionRequest.amount", transactionRequest.getAmount().toString());
-					if(transactionRequest.getTaxAmount()!=null) props.setProperty("transactions."+counter+".transactionRequest.taxAmount", transactionRequest.getTaxAmount().toString());
-					props.setProperty("transactions."+counter+".transactionRequest.taxExempt", transactionRequest.getTaxExempt() ? "true" : "false");
-					if(transactionRequest.getShippingAmount()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingAmount", transactionRequest.getShippingAmount().toString());
-					if(transactionRequest.getDutyAmount()!=null) props.setProperty("transactions."+counter+".transactionRequest.dutyAmount", transactionRequest.getDutyAmount().toString());
-					if(transactionRequest.getShippingFirstName()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingFirstName", transactionRequest.getShippingFirstName());
-					if(transactionRequest.getShippingLastName()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingLastName", transactionRequest.getShippingLastName());
-					if(transactionRequest.getShippingCompanyName()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingCompanyName", transactionRequest.getShippingCompanyName());
-					if(transactionRequest.getShippingStreetAddress1()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingStreetAddress1", transactionRequest.getShippingStreetAddress1());
-					if(transactionRequest.getShippingStreetAddress2()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingStreetAddress2", transactionRequest.getShippingStreetAddress2());
-					if(transactionRequest.getShippingCity()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingCity", transactionRequest.getShippingCity());
-					if(transactionRequest.getShippingState()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingState", transactionRequest.getShippingState());
-					if(transactionRequest.getShippingPostalCode()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingPostalCode", transactionRequest.getShippingPostalCode());
-					if(transactionRequest.getShippingCountryCode()!=null) props.setProperty("transactions."+counter+".transactionRequest.shippingCountryCode", transactionRequest.getShippingCountryCode());
-					props.setProperty("transactions."+counter+".transactionRequest.emailCustomer", transactionRequest.getEmailCustomer() ? "true" : "false");
-					if(transactionRequest.getMerchantEmail()!=null) props.setProperty("transactions."+counter+".transactionRequest.merchantEmail", transactionRequest.getMerchantEmail());
-					if(transactionRequest.getInvoiceNumber()!=null) props.setProperty("transactions."+counter+".transactionRequest.invoiceNumber", transactionRequest.getInvoiceNumber());
-					if(transactionRequest.getPurchaseOrderNumber()!=null) props.setProperty("transactions."+counter+".transactionRequest.purchaseOrderNumber", transactionRequest.getPurchaseOrderNumber());
-					if(transactionRequest.getDescription()!=null) props.setProperty("transactions."+counter+".transactionRequest.description", transactionRequest.getDescription());
+				if(transactionRequest != null) {
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".testMode", transactionRequest.getTestMode());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".customerIp", transactionRequest.getCustomerIp());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".duplicateWindow", Integer.toString(transactionRequest.getDuplicateWindow()));
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".orderNumber", transactionRequest.getOrderNumber());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".currencyCode", transactionRequest.getCurrency());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".amount", transactionRequest.getAmount());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxAmount", transactionRequest.getTaxAmount());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxExempt", transactionRequest.getTaxExempt());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingAmount", transactionRequest.getShippingAmount());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".dutyAmount", transactionRequest.getDutyAmount());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingFirstName", transactionRequest.getShippingFirstName());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingLastName", transactionRequest.getShippingLastName());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCompanyName", transactionRequest.getShippingCompanyName());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress1", transactionRequest.getShippingStreetAddress1());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress2", transactionRequest.getShippingStreetAddress2());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCity", transactionRequest.getShippingCity());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingState", transactionRequest.getShippingState());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingPostalCode", transactionRequest.getShippingPostalCode());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCountryCode", transactionRequest.getShippingCountryCode());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".emailCustomer", transactionRequest.getEmailCustomer());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".merchantEmail", transactionRequest.getMerchantEmail());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".invoiceNumber", transactionRequest.getInvoiceNumber());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".purchaseOrderNumber", transactionRequest.getPurchaseOrderNumber());
+					setProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".description", transactionRequest.getDescription());
 				}
 				CreditCard creditCard = internalTransaction.getCreditCard();
-				if(creditCard!=null) {
-					if(creditCard.getPrincipalName()!=null) props.setProperty("transactions."+counter+".creditCard.principalName", creditCard.getPrincipalName());
-					if(creditCard.getGroupName()!=null) props.setProperty("transactions."+counter+".creditCard.groupName", creditCard.getGroupName());
-					if(creditCard.getProviderUniqueId()!=null) props.setProperty("transactions."+counter+".creditCard.providerUniqueId", creditCard.getProviderUniqueId());
-					if(creditCard.getMaskedCardNumber()!=null) props.setProperty("transactions."+counter+".creditCard.maskedCardNumber", creditCard.getMaskedCardNumber());
-					if(creditCard.getFirstName()!=null) props.setProperty("transactions."+counter+".creditCard.firstName", creditCard.getFirstName());
-					if(creditCard.getLastName()!=null) props.setProperty("transactions."+counter+".creditCard.lastName", creditCard.getLastName());
-					if(creditCard.getCompanyName()!=null) props.setProperty("transactions."+counter+".creditCard.companyName", creditCard.getCompanyName());
-					if(creditCard.getEmail()!=null) props.setProperty("transactions."+counter+".creditCard.email", creditCard.getEmail());
-					if(creditCard.getPhone()!=null) props.setProperty("transactions."+counter+".creditCard.phone", creditCard.getPhone());
-					if(creditCard.getFax()!=null) props.setProperty("transactions."+counter+".creditCard.fax", creditCard.getFax());
-					if(creditCard.getCustomerId()!=null) props.setProperty("transactions."+counter+".creditCard.customerId", creditCard.getCustomerId());
-					if(creditCard.getCustomerTaxId()!=null) props.setProperty("transactions."+counter+".creditCard.customerTaxId", creditCard.getCustomerTaxId());
-					if(creditCard.getStreetAddress1()!=null) props.setProperty("transactions."+counter+".creditCard.streetAddress1", creditCard.getStreetAddress1());
-					if(creditCard.getStreetAddress2()!=null) props.setProperty("transactions."+counter+".creditCard.streetAddress2", creditCard.getStreetAddress2());
-					if(creditCard.getCity()!=null) props.setProperty("transactions."+counter+".creditCard.city", creditCard.getCity());
-					if(creditCard.getState()!=null) props.setProperty("transactions."+counter+".creditCard.state", creditCard.getState());
-					if(creditCard.getPostalCode()!=null) props.setProperty("transactions."+counter+".creditCard.postalCode", creditCard.getPostalCode());
-					if(creditCard.getCountryCode()!=null) props.setProperty("transactions."+counter+".creditCard.countryCode", creditCard.getCountryCode());
-					if(creditCard.getComments()!=null) props.setProperty("transactions."+counter+".creditCard.comments", creditCard.getComments());
+				if(creditCard != null) {
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".principalName", creditCard.getPrincipalName());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".groupName", creditCard.getGroupName());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".providerUniqueId", creditCard.getProviderUniqueId());
+					// TODO: 2.0: Store separate type and masked card numbers
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".maskedCardNumber", creditCard.getMaskedCardNumber());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".firstName", creditCard.getFirstName());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".lastName", creditCard.getLastName());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".companyName", creditCard.getCompanyName());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".email", creditCard.getEmail());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".phone", creditCard.getPhone());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".fax", creditCard.getFax());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".customerId", creditCard.getCustomerId());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".customerTaxId", creditCard.getCustomerTaxId());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".streetAddress1", creditCard.getStreetAddress1());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".streetAddress2", creditCard.getStreetAddress2());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".city", creditCard.getCity());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".state", creditCard.getState());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".postalCode", creditCard.getPostalCode());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".countryCode", creditCard.getCountryCode());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".comments", creditCard.getComments());
 				}
-				props.setProperty("transactions."+counter+".authorizationTime", Long.toString(internalTransaction.getAuthorizationTime()));
-				if(internalTransaction.getAuthorizationPrincipalName()!=null) props.setProperty("transactions."+counter+".authorizationPrincipalName", internalTransaction.getAuthorizationPrincipalName());
+				setProperty(props, TRANS_PRE, counter, ".authorizationTime", Long.toString(internalTransaction.getAuthorizationTime()));
+				setProperty(props, TRANS_PRE, counter, ".authorizationPrincipalName", internalTransaction.getAuthorizationPrincipalName());
 				AuthorizationResult authorizationResult = internalTransaction.getAuthorizationResult();
-				if(authorizationResult!=null) {
-					if(authorizationResult.getCommunicationResult()!=null) props.setProperty("transactions."+counter+".authorizationResult.communicationResult", authorizationResult.getCommunicationResult().name());
-					if(authorizationResult.getProviderErrorCode()!=null) props.setProperty("transactions."+counter+".authorizationResult.providerErrorCode", authorizationResult.getProviderErrorCode());
-					if(authorizationResult.getErrorCode()!=null) props.setProperty("transactions."+counter+".authorizationResult.errorCode", authorizationResult.getErrorCode().name());
-					if(authorizationResult.getProviderErrorMessage()!=null) props.setProperty("transactions."+counter+".authorizationResult.providerErrorMessage", authorizationResult.getProviderErrorMessage());
-					if(authorizationResult.getProviderUniqueId()!=null) props.setProperty("transactions."+counter+".authorizationResult.providerUniqueId", authorizationResult.getProviderUniqueId());
-					if(authorizationResult.getProviderApprovalResult()!=null) props.setProperty("transactions."+counter+".authorizationResult.providerApprovalResult", authorizationResult.getProviderApprovalResult());
-					if(authorizationResult.getApprovalResult()!=null) props.setProperty("transactions."+counter+".authorizationResult.approvalResult", authorizationResult.getApprovalResult().name());
-					if(authorizationResult.getProviderDeclineReason()!=null) props.setProperty("transactions."+counter+".authorizationResult.providerDeclineReason", authorizationResult.getProviderDeclineReason());
-					if(authorizationResult.getDeclineReason()!=null) props.setProperty("transactions."+counter+".authorizationResult.declineReason", authorizationResult.getDeclineReason().name());
-					if(authorizationResult.getProviderReviewReason()!=null) props.setProperty("transactions."+counter+".authorizationResult.providerReviewReason", authorizationResult.getProviderReviewReason());
-					if(authorizationResult.getReviewReason()!=null) props.setProperty("transactions."+counter+".authorizationResult.reviewReason", authorizationResult.getReviewReason().name());
-					if(authorizationResult.getProviderCvvResult()!=null) props.setProperty("transactions."+counter+".authorizationResult.providerCvvResult", authorizationResult.getProviderCvvResult());
-					if(authorizationResult.getCvvResult()!=null) props.setProperty("transactions."+counter+".authorizationResult.cvvResult", authorizationResult.getCvvResult().name());
-					if(authorizationResult.getProviderAvsResult()!=null) props.setProperty("transactions."+counter+".authorizationResult.providerAvsResult", authorizationResult.getProviderAvsResult());
-					if(authorizationResult.getAvsResult()!=null) props.setProperty("transactions."+counter+".authorizationResult.avsResult", authorizationResult.getAvsResult().name());
-					if(authorizationResult.getApprovalCode()!=null) props.setProperty("transactions."+counter+".authorizationResult.approvalCode", authorizationResult.getApprovalCode());
+				if(authorizationResult != null) {
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".communicationResult", authorizationResult.getCommunicationResult());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorCode", authorizationResult.getProviderErrorCode());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".errorCode", authorizationResult.getErrorCode());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage", authorizationResult.getProviderErrorMessage());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId", authorizationResult.getProviderUniqueId());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementMaskedCardNumber", authorizationResult.getProviderReplacementMaskedCardNumber());
+					// TODO: 2.0: Store separate type and masked card numbers
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementMaskedCardNumber", authorizationResult.getReplacementMaskedCardNumber());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult", authorizationResult.getProviderApprovalResult());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", authorizationResult.getApprovalResult());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason", authorizationResult.getProviderDeclineReason());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".declineReason", authorizationResult.getDeclineReason());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReviewReason", authorizationResult.getProviderReviewReason());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".reviewReason", authorizationResult.getReviewReason());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerCvvResult", authorizationResult.getProviderCvvResult());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".cvvResult", authorizationResult.getCvvResult());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerAvsResult", authorizationResult.getProviderAvsResult());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".avsResult", authorizationResult.getAvsResult());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalCode", authorizationResult.getApprovalCode());
 				}
-				props.setProperty("transactions."+counter+".captureTime", Long.toString(internalTransaction.getCaptureTime()));
-				if(internalTransaction.getCapturePrincipalName()!=null) props.setProperty("transactions."+counter+".capturePrincipalName", internalTransaction.getCapturePrincipalName());
+				setProperty(props, TRANS_PRE, counter, ".captureTime", internalTransaction.getCaptureTime());
+				setProperty(props, TRANS_PRE, counter, ".capturePrincipalName", internalTransaction.getCapturePrincipalName());
 				CaptureResult captureResult = internalTransaction.getCaptureResult();
-				if(captureResult!=null) {
-					if(captureResult.getCommunicationResult()!=null) props.setProperty("transactions."+counter+".captureResult.communicationResult", captureResult.getCommunicationResult().name());
-					if(captureResult.getProviderErrorCode()!=null) props.setProperty("transactions."+counter+".captureResult.providerErrorCode", captureResult.getProviderErrorCode());
-					if(captureResult.getErrorCode()!=null) props.setProperty("transactions."+counter+".captureResult.errorCode", captureResult.getErrorCode().name());
-					if(captureResult.getProviderErrorMessage()!=null) props.setProperty("transactions."+counter+".captureResult.providerErrorMessage", captureResult.getProviderErrorMessage());
-					if(captureResult.getProviderUniqueId()!=null) props.setProperty("transactions."+counter+".captureResult.providerUniqueId", captureResult.getProviderUniqueId());
+				if(captureResult != null) {
+					setProperty(props, TRANS_PRE, counter, CAP_RES_SUF + ".communicationResult", captureResult.getCommunicationResult());
+					setProperty(props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorCode", captureResult.getProviderErrorCode());
+					setProperty(props, TRANS_PRE, counter, CAP_RES_SUF + ".errorCode", captureResult.getErrorCode());
+					setProperty(props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorMessage", captureResult.getProviderErrorMessage());
+					setProperty(props, TRANS_PRE, counter, CAP_RES_SUF + ".providerUniqueId", captureResult.getProviderUniqueId());
 				}
-				props.setProperty("transactions."+counter+".voidTime", Long.toString(internalTransaction.getVoidTime()));
-				if(internalTransaction.getVoidPrincipalName()!=null) props.setProperty("transactions."+counter+".voidPrincipalName", internalTransaction.getVoidPrincipalName());
+				setProperty(props, TRANS_PRE, counter, ".voidTime", internalTransaction.getVoidTime());
+				setProperty(props, TRANS_PRE, counter, ".voidPrincipalName", internalTransaction.getVoidPrincipalName());
 				VoidResult voidResult = internalTransaction.getVoidResult();
-				if(voidResult!=null) {
-					if(voidResult.getCommunicationResult()!=null) props.setProperty("transactions."+counter+".voidResult.communicationResult", voidResult.getCommunicationResult().name());
-					if(voidResult.getProviderErrorCode()!=null) props.setProperty("transactions."+counter+".voidResult.providerErrorCode", voidResult.getProviderErrorCode());
-					if(voidResult.getErrorCode()!=null) props.setProperty("transactions."+counter+".voidResult.errorCode", voidResult.getErrorCode().name());
-					if(voidResult.getProviderErrorMessage()!=null) props.setProperty("transactions."+counter+".voidResult.providerErrorMessage", voidResult.getProviderErrorMessage());
-					if(voidResult.getProviderUniqueId()!=null) props.setProperty("transactions."+counter+".voidResult.providerUniqueId", voidResult.getProviderUniqueId());
+				if(voidResult != null) {
+					setProperty(props, TRANS_PRE, counter, VOID_RES_SUF + ".communicationResult", voidResult.getCommunicationResult());
+					setProperty(props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorCode", voidResult.getProviderErrorCode());
+					setProperty(props, TRANS_PRE, counter, VOID_RES_SUF + ".errorCode", voidResult.getErrorCode());
+					setProperty(props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorMessage", voidResult.getProviderErrorMessage());
+					setProperty(props, TRANS_PRE, counter, VOID_RES_SUF + ".providerUniqueId", voidResult.getProviderUniqueId());
 				}
-				if(internalTransaction.getStatus()!=null) props.setProperty("transactions."+counter+".status", internalTransaction.getStatus().name());
+				setProperty(props, TRANS_PRE, counter, ".status", internalTransaction.getStatus());
 				counter++;
 			}
 			// Store the a new file
 			if(newFile.exists()) FileUtils.delete(newFile);
 			try (OutputStream out = new BufferedOutputStream(new FileOutputStream(newFile))) {
-				props.store(out, "Generated by "+PropertiesPersistenceMechanism.class.getName());
+				// TODO: Add a version number from a Maven.properties
+				props.store(out, "Generated by " + PropertiesPersistenceMechanism.class.getName());
 			}
 			// Move the file into place
 			if(backupFile.exists()) FileUtils.delete(backupFile);
@@ -454,7 +509,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 				logger.log(Level.WARNING, null, err);
 			}
 		}
-		String uniqueId = Long.toString(highest+1);
+		String uniqueId = Long.toString(highest + 1);
 		CreditCard internalCreditCard = creditCard.clone();
 		internalCreditCard.setPersistenceUniqueId(uniqueId);
 		internalCreditCards.add(internalCreditCard);
@@ -470,7 +525,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		loadIfNeeded();
 		// Find the card with matching persistence id
 		CreditCard internalCreditCard = getCreditCard(creditCard.getPersistenceUniqueId());
-		if(internalCreditCard==null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
+		if(internalCreditCard == null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
+		internalCreditCard.setMaskedCardNumber(creditCard.getMaskedCardNumber());
 		internalCreditCard.setFirstName(creditCard.getFirstName());
 		internalCreditCard.setLastName(creditCard.getLastName());
 		internalCreditCard.setCompanyName(creditCard.getCompanyName());
@@ -497,13 +553,14 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		Principal principal,
 		CreditCard creditCard,
 		String cardNumber,
-		byte expirationMonth,
-		short expirationYear
+		byte expirationMonth, // TODO: 2.0: Make nullable Byte
+		short expirationYear // TODO: 2.0: Make nullable Short
 	) throws SQLException {
 		loadIfNeeded();
 		// Find the card with matching persistence id
 		CreditCard internalCreditCard = getCreditCard(creditCard.getPersistenceUniqueId());
-		if(internalCreditCard==null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
+		if(internalCreditCard == null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
+		// TODO: 2.0: Store separate type and masked card numbers
 		internalCreditCard.setMaskedCardNumber(CreditCard.maskCreditCardNumber(cardNumber));
 		save();
 	}
@@ -515,8 +572,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	public void updateExpiration(
 		Principal principal,
 		CreditCard creditCard,
-		byte expirationMonth,
-		short expirationYear
+		byte expirationMonth, // TODO: 2.0: Make nullable Byte
+		short expirationYear // TODO: 2.0: Make nullable Short
 	) throws SQLException {
 	}
 
@@ -530,7 +587,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 
 	@Override
 	synchronized public void deleteCreditCard(Principal principal, CreditCard creditCard) throws SQLException {
-		if(creditCard.getPersistenceUniqueId()!=null) {
+		if(creditCard.getPersistenceUniqueId() != null) {
 			loadIfNeeded();
 			boolean modified=false;
 			Iterator<CreditCard> I = internalCreditCards.iterator();
@@ -558,7 +615,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 				logger.log(Level.WARNING, null, err);
 			}
 		}
-		String uniqueId = Long.toString(highest+1);
+		String uniqueId = Long.toString(highest + 1);
 		Transaction internalTransaction = transaction.clone();
 		internalTransaction.setPersistenceUniqueId(uniqueId);
 		internalTransactions.add(internalTransaction);

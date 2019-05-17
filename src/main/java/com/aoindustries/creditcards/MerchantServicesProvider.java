@@ -118,7 +118,7 @@ public interface MerchantServicesProvider {
 		CreditCard creditCard,
 		byte expirationMonth,
 		short expirationYear
-		// TODO: cardCode (optionally) here, too
+		// TODO: 2.0: cardCode (optionally) here, too
 	) throws IOException;
 
 	/**

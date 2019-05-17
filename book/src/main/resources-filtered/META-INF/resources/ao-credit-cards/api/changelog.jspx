@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-0500"
-		dateModified="2019-05-15T17:26:42-0500"
+		dateModified="2019-05-16T17:19:42-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-credit-cards-api:pom.version}" />
@@ -63,6 +63,13 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 						<ao:a href="https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_.28IIN.29">Issuer identification number (IIN)</ao:a>.
 					</li>
 					<li>Please note: the next release of this project will be renamed to <code>ao-payment-api</code>.</li>
+					<li>
+						Authorization results now include an optional replacement masked card number.
+						This facilitates the handling of card details that are updated by a provider.
+						When updated, the new masked card number is persisted.
+						The persisted value is then used to correctly represent the stored card to the user.
+					</li>
+					<!-- TODO: 2.0: Persist expirationMonth and expirationYear locally, too.  Allow them to be updated along with replacementCardNumber -->
 					<!--
 						TODO: Version 2.0: Have a constructor given a mapping of String->String (or Properties) as configuration,
 						      or use a builder pattern with JavaBeans pattern setters.

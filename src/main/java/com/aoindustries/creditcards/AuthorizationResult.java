@@ -142,6 +142,10 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
+	private final String providerReplacementMaskedCardNumber;
+	// TODO: 2.0: Store separate type and masked card numbers
+	private final String replacementMaskedCardNumber;
+	// TODO: 2.0: replacementExpirationMonth and replacementExpirationYear
 	private final String providerApprovalResult;
 	private final ApprovalResult approvalResult;
 	private final String providerDeclineReason;
@@ -161,6 +165,10 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		ErrorCode errorCode,
 		String providerErrorMessage,
 		String providerUniqueId,
+		String providerReplacementMaskedCardNumber,
+		// TODO: 2.0: Store separate type and masked card numbers
+		String replacementMaskedCardNumber,
+		// TODO: 2.0: replacementExpirationMonth and replacementExpirationYear
 		String providerApprovalResult,
 		ApprovalResult approvalResult,
 		String providerDeclineReason,
@@ -181,6 +189,10 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 			providerErrorMessage,
 			providerUniqueId
 		);
+		this.providerReplacementMaskedCardNumber = providerReplacementMaskedCardNumber;
+		// TODO: 2.0: Store separate type and masked card numbers
+		this.replacementMaskedCardNumber = replacementMaskedCardNumber;
+		// TODO: 2.0: replacementExpirationMonth and replacementExpirationYear
 		this.providerApprovalResult = providerApprovalResult;
 		this.approvalResult = approvalResult;
 		this.providerDeclineReason = providerDeclineReason;
@@ -194,6 +206,52 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		this.approvalCode = approvalCode;
 	}
 
+	/**
+	 * @deprecated  Please use {@link #AuthorizationResult(java.lang.String, com.aoindustries.creditcards.TransactionResult.CommunicationResult, java.lang.String, com.aoindustries.creditcards.TransactionResult.ErrorCode, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ApprovalResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.DeclineReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ReviewReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.CvvResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.AvsResult, java.lang.String)}
+	 */
+	@Deprecated
+	public AuthorizationResult(
+		String providerId,
+		CommunicationResult communicationResult,
+		String providerErrorCode,
+		ErrorCode errorCode,
+		String providerErrorMessage,
+		String providerUniqueId,
+		String providerApprovalResult,
+		ApprovalResult approvalResult,
+		String providerDeclineReason,
+		DeclineReason declineReason,
+		String providerReviewReason,
+		ReviewReason reviewReason,
+		String providerCvvResult,
+		CvvResult cvvResult,
+		String providerAvsResult,
+		AvsResult avsResult,
+		String approvalCode
+	) {
+		this(
+			providerId,
+			communicationResult,
+			providerErrorCode,
+			errorCode,
+			providerErrorMessage,
+			providerUniqueId,
+			null, // providerReplacementMaskedCardNumber
+			null, // replacementMaskedCardNumber
+			providerApprovalResult,
+			approvalResult,
+			providerDeclineReason,
+			declineReason,
+			providerReviewReason,
+			reviewReason,
+			providerCvvResult,
+			cvvResult,
+			providerAvsResult,
+			avsResult,
+			approvalCode
+		);
+	}
+
 	@Override
 	public AuthorizationResult clone() {
 		try {
@@ -202,6 +260,30 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 			throw new RuntimeException(err);
 		}
 	}
+
+	/**
+	 * Gets the provider-specific replacement card number used for this authorization.
+	 *
+	 * @see  #getReplacementMaskedCardNumber()
+	 */
+	public String getProviderReplacementMaskedCardNumber() {
+		return providerReplacementMaskedCardNumber;
+	}
+
+	// TODO: 2.0: Store separate type and masked card numbers
+
+	/**
+	 * Gets the masked card number used for this authorization.
+	 * This may be updated by the provider when new card information is available.
+	 * This updated number may be then stored back into any local persistence.
+	 *
+	 * @return  the new masked card number of {@code null} when unchanged or auto-replacements not supported
+	 */
+	public String getReplacementMaskedCardNumber() {
+		return replacementMaskedCardNumber;
+	}
+
+	// TODO: 2.0: replacementExpirationMonth and replacementExpirationYear
 
 	/**
 	 * Gets the provider-specific approval response.

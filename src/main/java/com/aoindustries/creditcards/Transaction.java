@@ -59,10 +59,10 @@ public class Transaction {
 	private long authorizationTime;
 	private String authorizationPrincipalName;
 	private AuthorizationResult authorizationResult;
-	private long captureTime;
+	private long captureTime; // TODO: 2.0: Make nullable Long
 	private String capturePrincipalName;
 	private CaptureResult captureResult;
-	private long voidTime;
+	private long voidTime; // TODO: 2.0: Make nullable Long
 	private String voidPrincipalName;
 	private VoidResult voidResult;
 	private Status status;
@@ -85,10 +85,10 @@ public class Transaction {
 		long authorizationTime,
 		String authorizationPrincipalName,
 		AuthorizationResult authorizationResult,
-		long captureTime,
+		long captureTime, // TODO: 2.0: Make nullable Long
 		String capturePrincipalName,
 		CaptureResult captureResult,
-		long voidTime,
+		long voidTime, // TODO: 2.0: Make nullable Long
 		String voidPrincipalName,
 		VoidResult voidResult,
 		Status status
@@ -116,17 +116,17 @@ public class Transaction {
 			providerId,
 			persistenceUniqueId,
 			groupName,
-			transactionRequest==null ? null : transactionRequest.clone(),
-			creditCard==null ? null : creditCard.clone(),
+			transactionRequest == null ? null : transactionRequest.clone(),
+			creditCard == null ? null : creditCard.clone(),
 			authorizationTime,
 			authorizationPrincipalName,
-			authorizationResult==null ? null : authorizationResult.clone(),
+			authorizationResult == null ? null : authorizationResult.clone(),
 			captureTime,
 			capturePrincipalName,
-			captureResult==null ? null : captureResult.clone(),
+			captureResult == null ? null : captureResult.clone(),
 			voidTime,
 			voidPrincipalName,
-			voidResult==null ? null : voidResult.clone(),
+			voidResult == null ? null : voidResult.clone(),
 			status
 		);
 	}
@@ -195,10 +195,12 @@ public class Transaction {
 		this.authorizationResult = authorizationResult;
 	}
 
+	// TODO: 2.0: Make nullable Long
 	public long getCaptureTime() {
 		return captureTime;
 	}
 
+	// TODO: 2.0: Make nullable Long
 	public void setCaptureTime(long captureTime) {
 		this.captureTime = captureTime;
 	}
@@ -219,10 +221,12 @@ public class Transaction {
 		this.captureResult = captureResult;
 	}
 
+	// TODO: 2.0: Make nullable Long
 	public long getVoidTime() {
 		return voidTime;
 	}
 
+	// TODO: 2.0: Make nullable Long
 	public void setVoidTime(long voidTime) {
 		this.voidTime = voidTime;
 	}

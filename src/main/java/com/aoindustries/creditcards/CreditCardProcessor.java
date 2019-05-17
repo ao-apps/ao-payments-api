@@ -68,6 +68,10 @@ public class CreditCardProcessor {
 	 *
 	 * @param  principal  <code>null</code> is acceptable
 	 * @param  group      <code>null</code> is acceptable
+	 * @param  transactionRequest  The transaction details for this sale
+	 * @param  creditCard  The credit card to charge for this sale.
+	 *                     The masked card number might be updated during the sale, and if updated
+	 *                     the changes will have already been persisted.
 	 *
 	 * @see  #authorize(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
 	 * @see  #capture(com.aoindustries.creditcards.AuthorizationResult)
@@ -78,14 +82,14 @@ public class CreditCardProcessor {
 		Transaction transaction = new Transaction(
 			provider.getProviderId(),
 			null, // persistenceUniqueId
-			group==null ? null : group.getName(),
+			group == null ? null : group.getName(),
 			transactionRequest,
 			creditCard,
 			currentTimeMillis,
-			principal==null ? null : principal.getName(),
+			principal == null ? null : principal.getName(),
 			null, // authorizationResult
 			currentTimeMillis,
-			principal==null ? null : principal.getName(),
+			principal == null ? null : principal.getName(),
 			null, // captureResult
 			(long)-1, // voidTime
 			null, // voidPrincipalName
@@ -98,12 +102,13 @@ public class CreditCardProcessor {
 		// Perform sale
 		SaleResult saleResult = provider.sale(transactionRequest, creditCard);
 		long completedTimeMillis = System.currentTimeMillis();
-		transaction.setAuthorizationResult(saleResult.getAuthorizationResult());
+		AuthorizationResult authorizationResult = saleResult.getAuthorizationResult();
+		transaction.setAuthorizationResult(authorizationResult);
 		transaction.setCaptureTime(completedTimeMillis);
-		transaction.setCapturePrincipalName(principal==null ? null : principal.getName());
+		transaction.setCapturePrincipalName(principal == null ? null : principal.getName());
 		transaction.setCaptureResult(saleResult.getCaptureResult());
 		Transaction.Status status;
-		switch(saleResult.getAuthorizationResult().getCommunicationResult()) {
+		switch(authorizationResult.getCommunicationResult()) {
 			case LOCAL_ERROR:
 				status = Transaction.Status.LOCAL_ERROR;
 				break;
@@ -114,7 +119,7 @@ public class CreditCardProcessor {
 				status = Transaction.Status.GATEWAY_ERROR;
 				break;
 			case SUCCESS:
-				switch(saleResult.getAuthorizationResult().getApprovalResult()) {
+				switch(authorizationResult.getApprovalResult()) {
 					case APPROVED:
 						status = Transaction.Status.CAPTURED;
 						break;
@@ -125,15 +130,20 @@ public class CreditCardProcessor {
 						status = Transaction.Status.HOLD;
 						break;
 					default:
-						throw new LocalizedSQLException(accessor, "CreditCardProcessor.sale.unexpectedApprovalResult", saleResult.getAuthorizationResult().getApprovalResult());
+						throw new LocalizedSQLException(accessor, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
 				}
 				break;
 			default:
-				throw new LocalizedSQLException(accessor, "CreditCardProcessor.sale.unexpectedCommunicationResult", saleResult.getAuthorizationResult().getCommunicationResult());
+				throw new LocalizedSQLException(accessor, "CreditCardProcessor.sale.unexpectedCommunicationResult", authorizationResult.getCommunicationResult());
 		}
 		transaction.setStatus(status);
 
 		// Update persistence layer
+		String replacementMaskedCardNumber = authorizationResult.getReplacementMaskedCardNumber();
+		if(replacementMaskedCardNumber != null && creditCard.getPersistenceUniqueId() != null) {
+			creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
+			persistenceMechanism.updateCreditCard(principal, creditCard);
+		}
 		persistenceMechanism.saleCompleted(
 			principal,
 			transaction
@@ -151,6 +161,10 @@ public class CreditCardProcessor {
 	 *
 	 * @param  principal  <code>null</code> is acceptable
 	 * @param  group      <code>null</code> is acceptable
+	 * @param  transactionRequest  The transaction details for this sale
+	 * @param  creditCard  The credit card to charge for this sale.
+	 *                     The masked card number might be updated during the sale, and if updated
+	 *                     the changes will have already been persisted.
 	 * 
 	 * @see  #capture(com.aoindustries.creditcards.AuthorizationResult)
 	 * @see  #voidTransaction(java.security.Principal, com.aoindustries.creditcards.Transaction)
@@ -161,11 +175,11 @@ public class CreditCardProcessor {
 		Transaction transaction = new Transaction(
 			provider.getProviderId(),
 			null, // persistenceUniqueId
-			group==null ? null : group.getName(),
+			group == null ? null : group.getName(),
 			transactionRequest,
 			creditCard,
 			currentTimeMillis,
-			principal==null ? null : principal.getName(),
+			principal == null ? null : principal.getName(),
 			null, // authorizationResult
 			(long)-1, // captureTime
 			null, // capturePrincipalName
@@ -213,6 +227,11 @@ public class CreditCardProcessor {
 		transaction.setStatus(status);
 
 		// Update persistence layer
+		String replacementMaskedCardNumber = authorizationResult.getReplacementMaskedCardNumber();
+		if(replacementMaskedCardNumber != null && creditCard.getPersistenceUniqueId() != null) {
+			creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
+			persistenceMechanism.updateCreditCard(principal, creditCard);
+		}
 		persistenceMechanism.authorizeCompleted(
 			principal,
 			transaction
@@ -232,7 +251,7 @@ public class CreditCardProcessor {
 		CaptureResult captureResult = provider.capture(transaction.getAuthorizationResult());
 		long completedTimeMillis = System.currentTimeMillis();
 		transaction.setCaptureTime(completedTimeMillis);
-		transaction.setCapturePrincipalName(principal==null ? null : principal.getName());
+		transaction.setCapturePrincipalName(principal == null ? null : principal.getName());
 		transaction.setCaptureResult(captureResult);
 		Transaction.Status status;
 		switch(captureResult.getCommunicationResult()) {
@@ -285,9 +304,9 @@ public class CreditCardProcessor {
 		) {
 			// Void on the merchant
 			if(
-				transaction.getAuthorizationResult()!=null
-				&& transaction.getAuthorizationResult().getProviderUniqueId()!=null
-				&& transaction.getAuthorizationResult().getProviderUniqueId().length()>0
+				transaction.getAuthorizationResult() != null
+				&& transaction.getAuthorizationResult().getProviderUniqueId() != null
+				&& transaction.getAuthorizationResult().getProviderUniqueId().length() > 0
 			) {
 				VoidResult voidResult = provider.voidTransaction(transaction);
 				// Update the status
@@ -300,7 +319,7 @@ public class CreditCardProcessor {
 				throw new LocalizedIllegalArgumentException(accessor, "CreditCardProcessor.voidTransaction.providerUniqueId.required");
 			}
 		} else {
-			throw new LocalizedIllegalArgumentException(accessor, "CreditCardProcessor.voidTransaction.invalidStatus", status==null ? null : status.toString());
+			throw new LocalizedIllegalArgumentException(accessor, "CreditCardProcessor.voidTransaction.invalidStatus", status == null ? null : status.toString());
 		}
 	}
 
@@ -358,7 +377,7 @@ public class CreditCardProcessor {
 		Principal principal,
 		CreditCard creditCard
 	) throws IOException, SQLException {
-		if(creditCard.getProviderUniqueId()!=null) {
+		if(creditCard.getProviderUniqueId() != null) {
 			// Update in persistence (this also enforces security)
 			persistenceMechanism.updateCreditCard(principal, creditCard);
 			// Update in secure storage
@@ -375,13 +394,15 @@ public class CreditCardProcessor {
 	 */
 	public void updateCreditCardNumberAndExpiration(Principal principal, CreditCard creditCard, String cardNumber, byte expirationMonth, short expirationYear, String cardCode) throws IOException, SQLException {
 		cardNumber = CreditCard.numbersOnly(cardNumber);
-		if(creditCard.getProviderUniqueId()!=null) {
+		if(creditCard.getProviderUniqueId() != null) {
 			// Update in persistence (this also enforces security)
+			// TODO: 2.0: Store separate type and masked card numbers
 			String maskedCardNumber = CreditCard.maskCreditCardNumber(cardNumber);
 			persistenceMechanism.updateCardNumber(principal, creditCard, cardNumber, expirationMonth, expirationYear);
 			// Update in secure storage
 			provider.updateCreditCardNumberAndExpiration(creditCard, cardNumber, expirationMonth, expirationYear, cardCode);
 			// Update the masked number
+			// TODO: 2.0: Store separate type and masked card numbers
 			creditCard.setMaskedCardNumber(maskedCardNumber);
 		} else {
 			// Update directly
@@ -399,7 +420,7 @@ public class CreditCardProcessor {
 	 * @throws  IOException   when unable to contact the bank
 	 */
 	public void updateCreditCardExpiration(Principal principal, CreditCard creditCard, byte expirationMonth, short expirationYear) throws IOException, SQLException  {
-		if(creditCard.getProviderUniqueId()!=null) {
+		if(creditCard.getProviderUniqueId() != null) {
 			// Update in persistence (this also enforces security)
 			persistenceMechanism.updateExpiration(principal, creditCard, expirationMonth, expirationYear);
 			// Update in secure storage
@@ -419,12 +440,12 @@ public class CreditCardProcessor {
 	 */
 	public void deleteCreditCard(Principal principal, CreditCard creditCard) throws IOException, SQLException {
 		// Delete from persistence (this also implements security)
-		if(creditCard.getPersistenceUniqueId()!=null) {
+		if(creditCard.getPersistenceUniqueId() != null) {
 			persistenceMechanism.deleteCreditCard(principal, creditCard);
 			creditCard.setPersistenceUniqueId(null);
 		}
 		// Delete from provider database
-		if(creditCard.getProviderUniqueId()!=null) {
+		if(creditCard.getProviderUniqueId() != null) {
 			provider.deleteCreditCard(creditCard);
 			creditCard.setProviderUniqueId(null);
 		}

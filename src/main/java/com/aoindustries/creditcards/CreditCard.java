@@ -38,11 +38,34 @@ import org.apache.commons.validator.GenericValidator;
  */
 public class CreditCard implements Cloneable {
 
-	private static final int MASK_START_DIGITS = 6;
+	/**
+	 * The maximum number of starting digits kept when masked.
+	 */
+	public static final int MASK_START_DIGITS = 6;
 
-	private static final int MASK_END_DIGITS = 4;
+	/**
+	 * The maximum number of ending digits kept when masked.
+	 */
+	public static final int MASK_END_DIGITS = 4;
 
-	private static final char MASK_CHARACTER = 'X';
+	/**
+	 * The character used representing a masked digit.
+	 */
+	// TODO: 2.0: Change to '*', document, adapt data as loaded, display as Unicode bullet in web interface
+	public static final char MASK_CHARACTER = 'X';
+
+	/**
+	 * The character used for an unknown digits.  Unknown digits would not be masked if available, but are simply not available.
+	 * This is used when converting from card type + last4 back to a masked card number.
+	 * In a future version of the API, when both card type and last4 are stored, this mechanism will be unnecessary.
+	 */
+	public static final char UNKNOWN_DIGIT = '?';
+
+	/**
+	 * When the number of digits is unknown, such as generating a possible masked card number from type + last4, this can be used
+	 * as a filler between beginning and end of the card number.
+	 */
+	public static final char UNKNOWN_MIDDLE = '…';
 
 	/**
 	 * Only keeps the first {@link #MASK_START_DIGITS} and last {@link #MASK_END_DIGITS} digits of a card number after trimming.
@@ -113,6 +136,7 @@ public class CreditCard implements Cloneable {
 	 * @throws  IllegalArgumentException  if invalid date
 	 */
 	public static String getExpirationDateMMYY(byte month, short year) {
+		// TODO: 2.0: Change range, allow Nullable?
 		if(month==-1) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.setExpirationMonth.expirationMonth.invalid");
 		if(year==-1) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.setExpirationYear.expirationYear.invalid");
 		StringBuilder SB = new StringBuilder(4);
@@ -145,9 +169,10 @@ public class CreditCard implements Cloneable {
 	private String providerId;
 	private String providerUniqueId;
 	private String cardNumber;
+	// TODO: 2.0: Store separate type and masked card numbers
 	private String maskedCardNumber;
-	private byte expirationMonth = -1;
-	private short expirationYear = -1;
+	private byte expirationMonth = -1; // TODO: 2.0: Make nullable Byte
+	private short expirationYear = -1; // TODO: 2.0: Make nullable Short
 	private String cardCode;
 	private String firstName;
 	private String lastName;
@@ -183,9 +208,10 @@ public class CreditCard implements Cloneable {
 		String providerId,
 		String providerUniqueId,
 		String cardNumber,
+		// TODO: 2.0: Store separate type and masked card numbers
 		String maskedCardNumber,
-		byte expirationMonth,
-		short expirationYear,
+		byte expirationMonth, // TODO: 2.0: Make nullable Byte
+		short expirationYear, // TODO: 2.0: Make nullable Short
 		String cardCode,
 		String firstName,
 		String lastName,
@@ -209,6 +235,7 @@ public class CreditCard implements Cloneable {
 		setProviderId(providerId);
 		setProviderUniqueId(providerUniqueId);
 		setCardNumber(cardNumber);
+		// TODO: 2.0: Store separate type and masked card numbers
 		if(cardNumber==null) setMaskedCardNumber(maskedCardNumber);
 		setExpirationMonth(expirationMonth);
 		setExpirationYear(expirationYear);
@@ -331,11 +358,14 @@ public class CreditCard implements Cloneable {
 			) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.setCardNumber.cardNumber.invalid");
 			String trimmed = cardNumber.trim();
 			this.cardNumber = trimmed;
+			// TODO: 2.0: Store separate type and masked card numbers
 			this.maskedCardNumber = maskCreditCardNumber(trimmed);
 		} else {
 			this.cardNumber = null;
 		}
 	}
+
+	// TODO: 2.0: Store separate type and masked card numbers
 
 	/**
 	 * Gets the masked card number.  This contains the first two and last four digits of the card number.
@@ -357,6 +387,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * Gets the expiration month, where 1 is January and 12 is December.
 	 */
+	// TODO: 2.0: Make nullable Byte
 	public byte getExpirationMonth() {
 		return expirationMonth;
 	}
@@ -366,6 +397,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @throws  IllegalArgumentException  if out of range.
 	 */
+	// TODO: 2.0: Make nullable Byte
 	public void setExpirationMonth(byte expirationMonth) {
 		if(expirationMonth!=-1 && (expirationMonth<1 || expirationMonth>12)) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.setExpirationMonth.expirationMonth.invalid");
 		this.expirationMonth = expirationMonth;
@@ -374,6 +406,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * Gets the expiration year, such as <code>2007</code>.
 	 */
+	// TODO: 2.0: Make nullable Short
 	public short getExpirationYear() {
 		return expirationYear;
 	}
@@ -385,6 +418,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @throws  IllegalArgumentException  if the resolved year is < 1977 or > (current year + 12)
 	 */
+	// TODO: 2.0: Make nullable Short
 	public void setExpirationYear(short expirationYear) {
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		if(expirationYear>=0 && expirationYear<=99) {
@@ -399,6 +433,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @throws  IllegalArgumentException  if invalid date
 	 */
+	// TODO: 2.0: Return null when no expiration?
 	public String getExpirationDateMMYY() {
 		return getExpirationDateMMYY(getExpirationMonth(), getExpirationYear());
 	}
