@@ -31,7 +31,7 @@ import static com.aoindustries.creditcards.ApplicationResourcesAccessor.accessor
  */
 abstract public class TransactionResult {
 
-	// Matches aoserv-master-db/aoindustries/payment/TransactionResult.CommunicationResult-type.sql
+	// Matches src/main/sql/com/aoindustries/creditcards/TransactionResult.CommunicationResult-type.sql
 	public enum CommunicationResult {
 		LOCAL_ERROR,
 		IO_ERROR,
@@ -44,7 +44,7 @@ abstract public class TransactionResult {
 		}
 	}
 
-	// Matches aoserv-master-db/aoindustries/payment/TransactionResult.ErrorCode-type.sql
+	// Matches src/main/sql/com/aoindustries/creditcards/TransactionResult.ErrorCode-type.sql
 	public enum ErrorCode {
 		// ALL
 		UNKNOWN,

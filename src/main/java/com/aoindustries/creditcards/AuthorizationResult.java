@@ -33,7 +33,7 @@ import static com.aoindustries.creditcards.ApplicationResourcesAccessor.accessor
  */
 public class AuthorizationResult extends TransactionResult implements Cloneable {
 
-	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.ApprovalResult-type.sql
+	// Matches src/main/sql/com/aoindustries/creditcards/AuthorizationResult.ApprovalResult-type.sql
 	public enum ApprovalResult {
 		APPROVED,
 		DECLINED,
@@ -48,7 +48,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
-	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.DeclineReason-type.sql
+	// Matches src/main/sql/com/aoindustries/creditcards/AuthorizationResult.DeclineReason-type.sql
 	public enum DeclineReason {
 		NO_SPECIFIC,
 		EXPIRED_CARD,
@@ -83,7 +83,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
-	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.ReviewReason-type.sql
+	// Matches src/main/sql/com/aoindustries/creditcards/AuthorizationResult.ReviewReason-type.sql
 	public enum ReviewReason {
 		RISK_MANAGEMENT,
 		ACCEPTED_MERCHANT_REVIEW,
@@ -98,7 +98,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
-	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.CvvResult-type.sql
+	// Matches src/main/sql/com/aoindustries/creditcards/AuthorizationResult.CvvResult-type.sql
 	public enum CvvResult {
 		MATCH,
 		NO_MATCH,
@@ -116,7 +116,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
-	// Matches aoserv-master-db/aoindustries/payment/AuthorizationResult.AvsResult-type.sql
+	// Matches src/main/sql/com/aoindustries/creditcards/AuthorizationResult.AvsResult-type.sql
 	public enum AvsResult {
 		ADDRESS_NOT_PROVIDED,
 		ADDRESS_Y_ZIP_9,

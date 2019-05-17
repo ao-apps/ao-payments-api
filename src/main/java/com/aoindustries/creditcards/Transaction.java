@@ -31,7 +31,7 @@ import static com.aoindustries.creditcards.ApplicationResourcesAccessor.accessor
  */
 public class Transaction {
 
-	// Matches aoserv-master-db/aoindustries/payment/Transaction.Status-type.sql
+	// Matches src/main/sql/com/aoindustries/creditcards/Transaction.Status-type.sql
 	public enum Status {
 		PROCESSING,
 		LOCAL_ERROR,
