@@ -117,17 +117,48 @@ public class CreditCard implements Cloneable {
 
 	/**
 	 * Gets the numbers out of a String.
+	 *
+	 * @param  value  the value to extract numbers from
+	 * @param  allowUnknownDigit  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
 	 */
-	public static String numbersOnly(String S) {
-		if(S==null) return null;
-		int len = S.length();
-		if(len==0) return S;
+	public static String numbersOnly(String value, boolean allowUnknownDigit) {
+		if(value == null) return null;
+		int len = value.length();
+		if(len == 0) return value;
 		StringBuilder SB = new StringBuilder(len);
-		for(int c=0;c<len;c++) {
-			char ch = S.charAt(c);
-			if(ch>='0' && ch<='9') SB.append(ch);
+		for(int c = 0; c < len; c++) {
+			char ch = value.charAt(c);
+			if(
+				ch >= '0' && ch <= '9'
+				|| (allowUnknownDigit && ch == UNKNOWN_DIGIT)
+			) SB.append(ch);
 		}
-		return SB.length() == len ? S : SB.toString();
+		return SB.length() == len ? value : SB.toString();
+	}
+
+	/**
+	 * Gets the numbers out of a String, not including
+	 * any {@link #UNKNOWN_DIGIT}.
+	 */
+	public static String numbersOnly(String value) {
+		return numbersOnly(value, false);
+	}
+
+	public static String getCardDisplay(String cardNumber) {
+		if(cardNumber == null) return null;
+		cardNumber = cardNumber.trim();
+		if(cardNumber.isEmpty()) return "";
+		String digits = numbersOnly(cardNumber, true);
+		StringBuilder result = new StringBuilder(9);
+		result.append("•••• ");
+		int digLen = digits.length();
+		if(digLen < MASK_END_DIGITS) {
+			for(int i = digLen; i < MASK_END_DIGITS; i++) result.append(UNKNOWN_DIGIT);
+			result.append(digits);
+		} else {
+			result.append(digits.substring(digLen - MASK_END_DIGITS));
+		}
+		return result.toString();
 	}
 
 	/**
@@ -351,15 +382,13 @@ public class CreditCard implements Cloneable {
 	public void setCardNumber(String cardNumber) {
 		if(cardNumber!=null && cardNumber.length()>0) {
 			cardNumber = numbersOnly(cardNumber);
-			String numbersOnly = numbersOnly(cardNumber);
 			if(
 				//!"4222222222222222".equals(cardNumber)
-				!GenericValidator.isCreditCard(numbersOnly)
+				!GenericValidator.isCreditCard(cardNumber)
 			) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.setCardNumber.cardNumber.invalid");
-			String trimmed = cardNumber.trim();
-			this.cardNumber = trimmed;
+			this.cardNumber = cardNumber;
 			// TODO: 2.0: Store separate type and masked card numbers
-			this.maskedCardNumber = maskCreditCardNumber(trimmed);
+			this.maskedCardNumber = maskCreditCardNumber(cardNumber);
 		} else {
 			this.cardNumber = null;
 		}
@@ -592,16 +621,22 @@ public class CreditCard implements Cloneable {
 	}
 
 	/**
-	 * Trims and sets the merchant-specific unique customer ID, removes any spaces and hyphens.
+	 * Trims and sets the customer SSN or Tax ID, removes any spaces and hyphens.
 	 *
 	 * @throws  IllegalArgumentException  if not a nine digit number after trimming.
 	 */
 	public void setCustomerTaxId(String customerTaxId) {
-		if(customerTaxId==null || customerTaxId.length()==0) {
+		if(customerTaxId == null) {
 			this.customerTaxId = null;
 		} else {
-			customerTaxId = numbersOnly(customerTaxId.trim());
-			this.customerTaxId = customerTaxId;
+			customerTaxId = customerTaxId.trim();
+			if(customerTaxId.isEmpty()) {
+				this.customerTaxId = null;
+			} else {
+				customerTaxId = numbersOnly(customerTaxId);
+				if(customerTaxId.length() != 9) throw new IllegalArgumentException("Invalid customerTaxId, customerTaxId.length() != 9: " + customerTaxId);
+				this.customerTaxId = customerTaxId;
+			}
 		}
 	}
 

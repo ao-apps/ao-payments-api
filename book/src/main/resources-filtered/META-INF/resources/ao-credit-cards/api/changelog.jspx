@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-0500"
-		dateModified="2019-05-17T16:53:58-0500"
+		dateModified="2019-05-19T17:41:08-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-credit-cards-api:pom.version}" />
@@ -68,6 +68,14 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 						This facilitates the handling of card details that are updated by a provider.
 						When updated, the new masked card number is persisted.
 						The persisted value is then used to correctly represent the stored card to the user.
+					</li>
+					<li>
+						New function <ao:a href="apidocs/com/aoindustries/creditcards/CreditCard.html#getCardDisplay-java.lang.String-">CreditCard.getCardDisplay(String)</ao:a>
+						to format masked card numbers for display.
+					</li>
+					<li>
+						Fixed <ao:a href="apidocs/com/aoindustries/creditcards/CreditCard.html#setCustomerTaxId-java.lang.String-">CreditCard.setCustomerTaxId(String)</ao:a>
+						to validate argument as documented.
 					</li>
 					<li>Added SQL implementation in alternate "sql" classifier.</li>
 					<!-- TODO: 2.0: Persist expirationMonth and expirationYear locally, too.  Allow them to be updated along with replacementCardNumber -->
