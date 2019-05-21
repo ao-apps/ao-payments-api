@@ -93,7 +93,7 @@ public class CreditCard implements Cloneable {
 	 *   indicates +20 years for <a href="https://www.amazon.com/">Amazon</a></li>
 	 * </ol>
 	 */
-	public static final short EXPIRATION_YEARS_FUTURE = 12;
+	public static final short EXPIRATION_YEARS_FUTURE = 20;
 
 	/**
 	 * The prefix used for {@link #getCardNumberDisplay(java.lang.String)
