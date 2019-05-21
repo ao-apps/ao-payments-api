@@ -86,9 +86,13 @@ public class CreditCard implements Cloneable {
 	public static final short MIN_EXPIRATION_YEAR = 1977;
 
 	/**
-	 * The maximum number of years in the future expected for an expiration year.
+	 * The maximum number of years in the future expected for an expiration year, inclusive.
+	 * <ol>
+	 * <li><a href="https://dashboard.stripe.com/">Stripe Dashboard</a> allows +19 years</li>
+	 * <li><a href="https://stackoverflow.com/questions/2500588/maximum-year-in-expiry-date-of-credit-card">Stack Overflow - Maximum Year in Expiry Date of Credit Card</a>
+	 *   indicates +20 years for <a href="https://www.amazon.com/">Amazon</a></li>
+	 * </ol>
 	 */
-	// TODO: Stripe goes up to the year 2038 in their dashboard currently, which is +19 years
 	public static final short EXPIRATION_YEARS_FUTURE = 12;
 
 	/**
