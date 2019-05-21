@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-0500"
-		dateModified="2019-05-19T22:58:30-0500"
+		dateModified="2019-05-20T13:22:27-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-credit-cards-api:pom.version}" />
@@ -55,10 +55,11 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 			>
 				<ul>
 					<li>Minimum Java version changed from 1.6 to 1.7.</li>
-					<li>New error code: <code>RATE_LIMIT</code><!-- TODO: apidocs link -->.</li>
+					<li>New error code: <ao:a href="apidocs/com/aoindustries/creditcards/TransactionResult.ErrorCode.html#RATE_LIMIT">TransactionResult.ErrorCode.RATE_LIMIT</ao:a>.</li>
 					<li>Finished delayed capture persistence implementation.</li>
 					<li>
-						Masked card numbers now keep the first six digits instead of only four.
+						Masked card numbers now keep up to the first six digits instead of only four.
+						The number of first digits kept may be lower, depending on card type.
 						This allows for more complete card type determination per
 						<ao:a href="https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_.28IIN.29">Issuer identification number (IIN)</ao:a>.
 					</li>
@@ -69,16 +70,24 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 						The persisted value is then used to correctly represent the stored card to the user.
 					</li>
 					<li>
-						New function <ao:a href="apidocs/com/aoindustries/creditcards/CreditCard.html#getCardDisplay-java.lang.String-">CreditCard.getCardDisplay(String)</ao:a>
+						New function <ao:a href="apidocs/com/aoindustries/creditcards/CreditCard.html#getCardNumberDisplay-java.lang.String-">CreditCard.getCardNumberDisplay(String)</ao:a>
 						to format masked card numbers for display.
 					</li>
 					<li>
 						Fixed <ao:a href="apidocs/com/aoindustries/creditcards/CreditCard.html#setCustomerTaxId-java.lang.String-">CreditCard.setCustomerTaxId(String)</ao:a>
 						to validate argument as documented.
 					</li>
+					<li>
+						Card <code>expirationMonth</code> and <code>expirationYear</code> are now persisted and remain available for display.
+						Previously, the expiration dates were only sent off to the payment processor.
+						Payment processors may also provide replacement expiration date in the same fashion as the replacement masked card number.
+					</li>
+					<li>
+						New function <ao:a href="apidocs/com/aoindustries/creditcards/CreditCard.html#getExpirationDisplay-byte-short-">CreditCard.getExpirationDisplay(byte,short)</ao:a>
+						to format expiration dates for display.
+					</li>
 					<li>Added SQL implementation in alternate "sql" classifier.</li>
 					<li>Please note: the next major release of this project will be renamed to <code>ao-payment-api</code>.</li>
-					<!-- TODO: 2.0: Persist expirationMonth and expirationYear locally, too.  Allow them to be updated along with replacementCardNumber -->
 					<!--
 						TODO: Version 2.0: Have a constructor given a mapping of String->String (or Properties) as configuration,
 						      or use a builder pattern with JavaBeans pattern setters.

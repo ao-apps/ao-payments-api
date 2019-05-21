@@ -139,10 +139,24 @@ public class CreditCardProcessor {
 		transaction.setStatus(status);
 
 		// Update persistence layer
-		String replacementMaskedCardNumber = authorizationResult.getReplacementMaskedCardNumber();
-		if(replacementMaskedCardNumber != null && creditCard.getPersistenceUniqueId() != null) {
-			creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
-			persistenceMechanism.updateCreditCard(principal, creditCard);
+		if(creditCard.getPersistenceUniqueId() != null) {
+			String replacementMaskedCardNumber = authorizationResult.getReplacementMaskedCardNumber();
+			if(replacementMaskedCardNumber != null) {
+				creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
+				persistenceMechanism.updateCreditCard(principal, creditCard);
+			}
+			Byte replacementExpirationMonth = authorizationResult.getReplacementExpirationMonth();
+			Short replacementExpirationYear = authorizationResult.getReplacementExpirationYear();
+			if(replacementExpirationMonth != null && replacementExpirationYear != null) {
+				creditCard.setExpirationMonth(replacementExpirationMonth);
+				creditCard.setExpirationYear(replacementExpirationYear);
+				persistenceMechanism.updateExpiration(
+					principal,
+					creditCard,
+					replacementExpirationMonth,
+					replacementExpirationYear
+				);
+			}
 		}
 		persistenceMechanism.saleCompleted(
 			principal,
@@ -227,10 +241,26 @@ public class CreditCardProcessor {
 		transaction.setStatus(status);
 
 		// Update persistence layer
-		String replacementMaskedCardNumber = authorizationResult.getReplacementMaskedCardNumber();
-		if(replacementMaskedCardNumber != null && creditCard.getPersistenceUniqueId() != null) {
-			creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
-			persistenceMechanism.updateCreditCard(principal, creditCard);
+		if(creditCard.getPersistenceUniqueId() != null) {
+			boolean updated = false;
+			String replacementMaskedCardNumber = authorizationResult.getReplacementMaskedCardNumber();
+			if(replacementMaskedCardNumber != null) {
+				creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
+				updated = true;
+			}
+			Byte replacementExpirationMonth = authorizationResult.getReplacementExpirationMonth();
+			if(replacementExpirationMonth != null) {
+				creditCard.setExpirationMonth(replacementExpirationMonth);
+				updated = true;
+			}
+			Short replacementExpirationYear = authorizationResult.getReplacementExpirationYear();
+			if(replacementExpirationYear != null) {
+				creditCard.setExpirationYear(replacementExpirationYear);
+				updated = true;
+			}
+			if(updated) {
+				persistenceMechanism.updateCreditCard(principal, creditCard);
+			}
 		}
 		persistenceMechanism.authorizeCompleted(
 			principal,
@@ -387,12 +417,21 @@ public class CreditCardProcessor {
 
 	/**
 	 * Updates the credit card number, expiration, and (optionally) card code.  If card stored to secure storage, updates that storage.
-	 * Otherwise updates <code>creditCard</code> directly.  In either event, the masked card number is updated.
+	 * Also updates <code>creditCard</code> directly.
 	 *
 	 * @throws  IOException   when unable to contact the bank
 	 * @throws  SQLException  when unable to store in the persistence layer
 	 */
-	public void updateCreditCardNumberAndExpiration(Principal principal, CreditCard creditCard, String cardNumber, byte expirationMonth, short expirationYear, String cardCode) throws IOException, SQLException {
+	public void updateCreditCardNumberAndExpiration(
+		Principal principal,
+		CreditCard creditCard,
+		String cardNumber,
+		byte expirationMonth,
+		short expirationYear,
+		String cardCode
+	) throws IOException, SQLException {
+		CreditCard.validateExpirationMonth(expirationMonth, false);
+		CreditCard.validateExpirationYear(expirationYear, false);
 		cardNumber = CreditCard.numbersOnly(cardNumber);
 		if(creditCard.getProviderUniqueId() != null) {
 			// Update in persistence (this also enforces security)
@@ -404,32 +443,39 @@ public class CreditCardProcessor {
 			// Update the masked number
 			// TODO: 2.0: Store separate type and masked card numbers
 			creditCard.setMaskedCardNumber(maskedCardNumber);
+			// cardCode not set here on stored card
 		} else {
 			// Update directly
 			creditCard.setCardNumber(cardNumber); // This also sets the masked value
-			creditCard.setExpirationMonth(expirationMonth);
-			creditCard.setExpirationYear(expirationYear);
 			if(cardCode != null) creditCard.setCardCode(cardCode);
 		}
+		creditCard.setExpirationMonth(expirationMonth);
+		creditCard.setExpirationYear(expirationYear);
 	}
 
 	/**
 	 * Updates the credit card expiration.  If card stored to secure storage, updates that storage.
-	 * Otherwise updates <code>creditCard</code> directly.
+	 * Also updates <code>creditCard</code> directly.
 	 *
 	 * @throws  IOException   when unable to contact the bank
 	 */
-	public void updateCreditCardExpiration(Principal principal, CreditCard creditCard, byte expirationMonth, short expirationYear) throws IOException, SQLException  {
+	public void updateCreditCardExpiration(
+		Principal principal,
+		CreditCard creditCard,
+		byte expirationMonth,
+		short expirationYear
+	) throws IOException, SQLException  {
+		CreditCard.validateExpirationMonth(expirationMonth, false);
+		CreditCard.validateExpirationYear(expirationYear, false);
 		if(creditCard.getProviderUniqueId() != null) {
 			// Update in persistence (this also enforces security)
 			persistenceMechanism.updateExpiration(principal, creditCard, expirationMonth, expirationYear);
 			// Update in secure storage
 			provider.updateCreditCardExpiration(creditCard, expirationMonth, expirationYear);
-		} else {
-			// Update directly
-			creditCard.setExpirationMonth(expirationMonth);
-			creditCard.setExpirationYear(expirationYear);
 		}
+		// Update directly
+		creditCard.setExpirationMonth(expirationMonth);
+		creditCard.setExpirationYear(expirationYear);
 	}
 
 	/**

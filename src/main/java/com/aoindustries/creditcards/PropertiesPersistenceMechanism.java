@@ -143,6 +143,16 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		return value == null ? null : Integer.valueOf(value);
 	}
 
+	private static Byte getPropertyByte(Properties props, String prefix, long counter, String suffix) {
+		String value = getProperty(props, prefix, counter, suffix);
+		return value == null ? null : Byte.valueOf(value);
+	}
+
+	private static Short getPropertyShort(Properties props, String prefix, long counter, String suffix) {
+		String value = getProperty(props, prefix, counter, suffix);
+		return value == null ? null : Short.valueOf(value);
+	}
+
 	private static long coalesce(Long value, long defaultValue) {
 		return value != null ? value : defaultValue;
 	}
@@ -158,6 +168,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 					for(long counter = 1; counter < Long.MAX_VALUE; counter++) {
 						String persistenceUniqueId = getProperty(props, CC_PRE, counter, ".persistenceUniqueId");
 						if(persistenceUniqueId == null) break;
+						Byte expirationMonth = getPropertyByte(props, CC_PRE, counter, ".expirationMonth");
+						Short expirationYear = getPropertyShort(props, CC_PRE, counter, ".expirationYear");
 						CreditCard newCreditCard = new CreditCard(
 							persistenceUniqueId,
 							getProperty(props, CC_PRE, counter, ".principalName"),
@@ -167,8 +179,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 							null, // cardNumber
 							// TODO: 2.0: Store separate type and masked card numbers
 							getProperty(props, CC_PRE, counter, ".maskedCardNumber"),
-							(byte)-1, // expirationMonth // TODO: 2.0: Make nullable Byte
-							(short)-1, // expirationYear // TODO: 2.0: Make nullable Short
+							expirationMonth == null ? CreditCard.UNKNOWN_EXPRIATION_MONTH : expirationMonth, // TODO: 2.0: Make nullable Byte
+							expirationYear == null ? CreditCard.UNKNOWN_EXPRIATION_YEAR : expirationYear, // TODO: 2.0: Make nullable Short
 							null, // cardCode
 							getProperty(props, CC_PRE, counter, ".firstName"),
 							getProperty(props, CC_PRE, counter, ".lastName"),
@@ -191,6 +203,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 					for(long counter = 1; counter < Long.MAX_VALUE; counter++) {
 						String persistenceUniqueId = getProperty(props, TRANS_PRE, counter, ".persistenceUniqueId");
 						if(persistenceUniqueId == null) break;
+						Byte expirationMonth = getPropertyByte(props, TRANS_PRE, counter, CC_SUF + ".expirationMonth");
+						Short expirationYear = getPropertyShort(props, TRANS_PRE, counter, CC_SUF + ".expirationYear");
 						Transaction newTransaction = new Transaction(
 							getProperty(props, TRANS_PRE, counter, ".providerId"),
 							persistenceUniqueId,
@@ -230,8 +244,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 								null, // cardNumber
 								// TODO: 2.0: Store separate type and masked card numbers
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".maskedCardNumber"),
-								(byte)-1, // expirationMonth // TODO: 2.0: Make nullable Byte
-								(short)-1, // expirationYear // TODO: 2.0: Make nullable Short
+								expirationMonth == null ? CreditCard.UNKNOWN_EXPRIATION_MONTH : expirationMonth, // TODO: 2.0: Make nullable Byte
+								expirationYear == null ? CreditCard.UNKNOWN_EXPRIATION_YEAR : expirationYear, // TODO: 2.0: Make nullable Short
 								null, // cardCode
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".firstName"),
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".lastName"),
@@ -252,26 +266,29 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 							Long.parseLong(getProperty(props, TRANS_PRE, counter, ".authorizationTime")),
 							getProperty(props, TRANS_PRE, counter, ".authorizationPrincipalName"),
 							new AuthorizationResult(
-								getProperty    (props, TRANS_PRE, counter, ".providerId"),
-								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorCode"),
-								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage"),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId"),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementMaskedCardNumber"),
+								getProperty     (props, TRANS_PRE, counter, ".providerId"),
+								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorCode"),
+								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage"),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId"),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementMaskedCardNumber"),
 								// TODO: 2.0: Store separate type and masked card numbers
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementMaskedCardNumber"),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult"),
-								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", AuthorizationResult.ApprovalResult.class),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason"),
-								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".declineReason", AuthorizationResult.DeclineReason.class),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReviewReason"),
-								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".reviewReason", AuthorizationResult.ReviewReason.class),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerCvvResult"),
-								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".cvvResult", AuthorizationResult.CvvResult.class),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerAvsResult"),
-								getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".avsResult", AuthorizationResult.AvsResult.class),
-								getProperty    (props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalCode")
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementMaskedCardNumber"),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementExpiration"),
+								getPropertyByte (props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementExpirationMonth"),
+								getPropertyShort(props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementExpirationYear"),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult"),
+								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", AuthorizationResult.ApprovalResult.class),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason"),
+								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".declineReason", AuthorizationResult.DeclineReason.class),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReviewReason"),
+								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".reviewReason", AuthorizationResult.ReviewReason.class),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerCvvResult"),
+								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".cvvResult", AuthorizationResult.CvvResult.class),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerAvsResult"),
+								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".avsResult", AuthorizationResult.AvsResult.class),
+								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalCode")
 							),
 							coalesce(getPropertyLong(props, TRANS_PRE, counter, ".captureTime"), -1), // TODO: 2.0: Make nullable Long
 							getProperty(props, TRANS_PRE, counter, ".capturePrincipalName"),
@@ -345,6 +362,18 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		}
 	}
 
+	private static void setProperty(Properties props, String prefix, long counter, String suffix, Byte value) {
+		if(value != null) {
+			props.setProperty(prefix + counter + suffix, value.toString());
+		}
+	}
+
+	private static void setProperty(Properties props, String prefix, long counter, String suffix, Short value) {
+		if(value != null) {
+			props.setProperty(prefix + counter + suffix, value.toString());
+		}
+	}
+
 	private synchronized void save() throws SQLException {
 		try {
 			File newFile = new File(propertiesFilePath+".new");
@@ -354,6 +383,10 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 			// Add the credit cards
 			long counter = 1;
 			for(CreditCard internalCreditCard : internalCreditCards) {
+				Byte expirationMonth = internalCreditCard.getExpirationMonth(); // TODO: 2.0: Make nullable Byte
+				if(expirationMonth == CreditCard.UNKNOWN_EXPRIATION_MONTH) expirationMonth = null;
+				Short expirationYear = internalCreditCard.getExpirationYear(); // TODO: 2.0: Make nullable Short
+				if(expirationYear == CreditCard.UNKNOWN_EXPRIATION_YEAR) expirationYear = null;
 				setProperty(props, CC_PRE, counter, ".persistenceUniqueId", internalCreditCard.getPersistenceUniqueId());
 				setProperty(props, CC_PRE, counter, ".principalName", internalCreditCard.getPrincipalName());
 				setProperty(props, CC_PRE, counter, ".groupName", internalCreditCard.getGroupName());
@@ -361,6 +394,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 				setProperty(props, CC_PRE, counter, ".providerUniqueId", internalCreditCard.getProviderUniqueId());
 				// TODO: 2.0: Store separate type and masked card numbers
 				setProperty(props, CC_PRE, counter, ".maskedCardNumber", internalCreditCard.getMaskedCardNumber());
+				setProperty(props, CC_PRE, counter, ".expirationMonth", expirationMonth);
+				setProperty(props, CC_PRE, counter, ".expirationYear", expirationYear);
 				setProperty(props, CC_PRE, counter, ".firstName", internalCreditCard.getFirstName());
 				setProperty(props, CC_PRE, counter, ".lastName", internalCreditCard.getLastName());
 				setProperty(props, CC_PRE, counter, ".companyName", internalCreditCard.getCompanyName());
@@ -413,11 +448,17 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 				}
 				CreditCard creditCard = internalTransaction.getCreditCard();
 				if(creditCard != null) {
+					Byte expirationMonth = creditCard.getExpirationMonth(); // TODO: 2.0: Make nullable Byte
+					if(expirationMonth == CreditCard.UNKNOWN_EXPRIATION_MONTH) expirationMonth = null;
+					Short expirationYear = creditCard.getExpirationYear(); // TODO: 2.0: Make nullable Short
+					if(expirationYear == CreditCard.UNKNOWN_EXPRIATION_YEAR) expirationYear = null;
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".principalName", creditCard.getPrincipalName());
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".groupName", creditCard.getGroupName());
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".providerUniqueId", creditCard.getProviderUniqueId());
 					// TODO: 2.0: Store separate type and masked card numbers
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".maskedCardNumber", creditCard.getMaskedCardNumber());
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".expirationMonth", expirationMonth);
+					setProperty(props, TRANS_PRE, counter, CC_SUF + ".expirationYear", expirationYear);
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".firstName", creditCard.getFirstName());
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".lastName", creditCard.getLastName());
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".companyName", creditCard.getCompanyName());
@@ -446,6 +487,9 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementMaskedCardNumber", authorizationResult.getProviderReplacementMaskedCardNumber());
 					// TODO: 2.0: Store separate type and masked card numbers
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementMaskedCardNumber", authorizationResult.getReplacementMaskedCardNumber());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementExpiration", authorizationResult.getProviderReplacementExpiration());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementExpirationMonth", authorizationResult.getReplacementExpirationMonth());
+					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementExpirationYear", authorizationResult.getReplacementExpirationYear());
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult", authorizationResult.getProviderApprovalResult());
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", authorizationResult.getApprovalResult());
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason", authorizationResult.getProviderDeclineReason());
@@ -527,6 +571,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		CreditCard internalCreditCard = getCreditCard(creditCard.getPersistenceUniqueId());
 		if(internalCreditCard == null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
 		internalCreditCard.setMaskedCardNumber(creditCard.getMaskedCardNumber());
+		internalCreditCard.setExpirationMonth(creditCard.getExpirationMonth());
+		internalCreditCard.setExpirationYear(creditCard.getExpirationYear());
 		internalCreditCard.setFirstName(creditCard.getFirstName());
 		internalCreditCard.setLastName(creditCard.getLastName());
 		internalCreditCard.setCompanyName(creditCard.getCompanyName());
@@ -546,15 +592,15 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	}
 
 	/**
-	 * Card numbers and expiration dates are not persisted to the properties files - encrypted local storage not supported.
+	 * Card numbers are not persisted to the properties files - encrypted local storage not supported.
 	 */
 	@Override
 	synchronized public void updateCardNumber(
 		Principal principal,
 		CreditCard creditCard,
 		String cardNumber,
-		byte expirationMonth, // TODO: 2.0: Make nullable Byte
-		short expirationYear // TODO: 2.0: Make nullable Short
+		byte expirationMonth,
+		short expirationYear
 	) throws SQLException {
 		loadIfNeeded();
 		// Find the card with matching persistence id
@@ -562,19 +608,29 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		if(internalCreditCard == null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
 		// TODO: 2.0: Store separate type and masked card numbers
 		internalCreditCard.setMaskedCardNumber(CreditCard.maskCreditCardNumber(cardNumber));
+		internalCreditCard.setExpirationMonth(expirationMonth);
+		internalCreditCard.setExpirationYear(expirationYear);
 		save();
 	}
 
 	/**
-	 * Expiration dates are not persisted to the properties files - encrypted local storage not supported.
+	 * Encrypted local storage not supported.
 	 */
 	@Override
 	public void updateExpiration(
 		Principal principal,
 		CreditCard creditCard,
-		byte expirationMonth, // TODO: 2.0: Make nullable Byte
-		short expirationYear // TODO: 2.0: Make nullable Short
+		byte expirationMonth,
+		short expirationYear
 	) throws SQLException {
+		loadIfNeeded();
+		// Find the card with matching persistence id
+		CreditCard internalCreditCard = getCreditCard(creditCard.getPersistenceUniqueId());
+		if(internalCreditCard == null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
+		// TODO: 2.0: Store separate type and masked card numbers
+		internalCreditCard.setExpirationMonth(expirationMonth);
+		internalCreditCard.setExpirationYear(expirationYear);
+		save();
 	}
 
 	synchronized private CreditCard getCreditCard(String persistenceUniqueId) throws SQLException {

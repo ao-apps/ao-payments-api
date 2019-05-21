@@ -22,6 +22,9 @@
  */
 package com.aoindustries.creditcards;
 
+import com.aoindustries.lang.LocalizedIllegalArgumentException;
+import com.aoindustries.math.SafeMath;
+import java.util.Calendar;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -83,6 +86,128 @@ public class CreditCardTest {
 			"52HELP12-34XX-XXPXX-1ME234",
 			CreditCard.maskCreditCardNumber("52HELP12-3456-78P90-1ME234")
 		);
+	}
+	// </editor-fold>
+
+	// <editor-fold defaultstate="collapsed" desc="Test validateExpirationMonth">
+	@Test
+	public void testValidateExpirationMonthValidAllowUnknown() {
+		assertEquals(
+			(byte)1,
+			CreditCard.validateExpirationMonth((byte)1, true)
+		);
+		assertEquals(
+			(byte)12,
+			CreditCard.validateExpirationMonth((byte)12, true)
+		);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationMonthTooLowAllowUnknown() {
+		CreditCard.validateExpirationMonth((byte)0, true);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationMonthTooHighAllowUnknown() {
+		CreditCard.validateExpirationMonth((byte)13, true);
+	}
+
+	@Test
+	public void testValidateExpirationMonthUnknownAllowUnknown() {
+		assertEquals(
+			CreditCard.UNKNOWN_EXPRIATION_MONTH,
+			CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPRIATION_MONTH, true)
+		);
+	}
+
+	@Test
+	public void testValidateExpirationMonthValidDisallowUnknown() {
+		assertEquals(
+			(byte)1,
+			CreditCard.validateExpirationMonth((byte)1, false)
+		);
+		assertEquals(
+			(byte)12,
+			CreditCard.validateExpirationMonth((byte)12, false)
+		);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationMonthTooLowDisallowUnknown() {
+		CreditCard.validateExpirationMonth((byte)0, false);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationMonthTooHighDisllowUnknown() {
+		CreditCard.validateExpirationMonth((byte)13, false);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationMonthUnknownDisallowUnknown() {
+		CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPRIATION_MONTH, false);
+	}
+	// </editor-fold>
+
+	// <editor-fold defaultstate="collapsed" desc="Test validateExpirationYear">
+	@Test
+	public void testValidateExpirationYearValidAllowUnknown() {
+		assertEquals(
+			CreditCard.MIN_EXPIRATION_YEAR,
+			CreditCard.validateExpirationYear(CreditCard.MIN_EXPIRATION_YEAR, true)
+		);
+		int max = Calendar.getInstance().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+		assertEquals(
+			max,
+			CreditCard.validateExpirationYear(SafeMath.castShort(max), true)
+		);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationYearTooLowAllowUnknown() {
+		CreditCard.validateExpirationYear(SafeMath.castShort(CreditCard.MIN_EXPIRATION_YEAR - 1), true);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationYearTooHighAllowUnknown() {
+		int max = Calendar.getInstance().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+		CreditCard.validateExpirationYear(SafeMath.castShort(max + 1), true);
+	}
+
+	@Test
+	public void testValidateExpirationYearUnknownAllowUnknown() {
+		assertEquals(
+			CreditCard.UNKNOWN_EXPRIATION_YEAR,
+			CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPRIATION_YEAR, true)
+		);
+	}
+
+	@Test
+	public void testValidateExpirationYearValidDisallowUnknown() {
+		assertEquals(
+			CreditCard.MIN_EXPIRATION_YEAR,
+			CreditCard.validateExpirationYear(CreditCard.MIN_EXPIRATION_YEAR, false)
+		);
+		int max = Calendar.getInstance().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+		assertEquals(
+			max,
+			CreditCard.validateExpirationYear(SafeMath.castShort(max), false)
+		);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationYearTooLowDisallowUnknown() {
+		CreditCard.validateExpirationYear(SafeMath.castShort(CreditCard.MIN_EXPIRATION_YEAR - 1), false);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationYearTooHighDisllowUnknown() {
+		int max = Calendar.getInstance().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+		CreditCard.validateExpirationYear(SafeMath.castShort(max + 1), false);
+	}
+
+	@Test(expected = LocalizedIllegalArgumentException.class)
+	public void testValidateExpirationYearUnknownDisallowUnknown() {
+		CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPRIATION_YEAR, false);
 	}
 	// </editor-fold>
 }

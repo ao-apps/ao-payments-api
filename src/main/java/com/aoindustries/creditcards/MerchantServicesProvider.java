@@ -104,8 +104,8 @@ public interface MerchantServicesProvider {
 	void updateCreditCardNumberAndExpiration(
 		CreditCard creditCard,
 		String cardNumber,
-		byte expirationMonth,
-		short expirationYear,
+		byte expirationMonth, // TODO: 2.0: Make nullable Byte
+		short expirationYear, // TODO: 2.0: Make nullable Short
 		String cardCode
 	) throws IOException;
 
@@ -116,9 +116,9 @@ public interface MerchantServicesProvider {
 	 */
 	void updateCreditCardExpiration(
 		CreditCard creditCard,
-		byte expirationMonth,
-		short expirationYear
-		// TODO: 2.0: cardCode (optionally) here, too
+		byte expirationMonth, // TODO: 2.0: Make nullable Byte
+		short expirationYear // TODO: 2.0: Make nullable Short
+		// TODO: 1.1.0: cardCode (optionally) here, too
 	) throws IOException;
 
 	/**

@@ -24,7 +24,9 @@ package com.aoindustries.creditcards;
 
 import static com.aoindustries.creditcards.ApplicationResourcesAccessor.accessor;
 import com.aoindustries.lang.LocalizedIllegalArgumentException;
+import com.aoindustries.math.SafeMath;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import org.apache.commons.validator.GenericValidator;
 
@@ -51,7 +53,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * The character used representing a masked digit.
 	 */
-	// TODO: 2.0: Change to '*', document, adapt data as loaded, display as Unicode bullet in web interface
+	// TODO: 2.0: Change to '*', document, adapt data as loaded
 	public static final char MASK_CHARACTER = 'X';
 
 	/**
@@ -66,6 +68,37 @@ public class CreditCard implements Cloneable {
 	 * as a filler between beginning and end of the card number.
 	 */
 	public static final char UNKNOWN_MIDDLE = '…';
+
+	/**
+	 * Value used to represent an unknown expiration month.
+	 */
+	public static final byte UNKNOWN_EXPRIATION_MONTH = -1;
+
+	/**
+	 * Value used to represent an unknown expiration year.
+	 */
+	// TODO: 2.0: Nullable expiration fields, this constant won't apply anymore
+	public static final short UNKNOWN_EXPRIATION_YEAR = -1;
+
+	/**
+	 * The minimum expected expiration year.
+	 */
+	public static final short MIN_EXPIRATION_YEAR = 1977;
+
+	/**
+	 * The maximum number of years in the future expected for an expiration year.
+	 */
+	public static final short EXPIRATION_YEARS_FUTURE = 12;
+
+	/**
+	 * The prefix used for {@link #getCardNumberDisplay(java.lang.String)
+	 */
+	public static final String CARD_NUMBER_DISPLAY_PREFIX = "•••• ";
+
+	/**
+	 * The middle separator used for {@link #getExpirationDisplay(byte, short)}.
+	 */
+	public static final String EXPIRATION_DISPLAY_SEPARATOR = " / ";
 
 	/**
 	 * Only keeps the first {@link #MASK_START_DIGITS} and last {@link #MASK_END_DIGITS} digits of a card number after trimming.
@@ -144,13 +177,17 @@ public class CreditCard implements Cloneable {
 		return numbersOnly(value, false);
 	}
 
-	public static String getCardDisplay(String cardNumber) {
+	/**
+	 * @see  #CARD_NUMBER_DISPLAY_PREFIX
+	 * @see  #getCardNumberDisplay()
+	 */
+	public static String getCardNumberDisplay(String cardNumber) {
 		if(cardNumber == null) return null;
 		cardNumber = cardNumber.trim();
 		if(cardNumber.isEmpty()) return "";
 		String digits = numbersOnly(cardNumber, true);
-		StringBuilder result = new StringBuilder(9);
-		result.append("•••• ");
+		StringBuilder result = new StringBuilder(CARD_NUMBER_DISPLAY_PREFIX.length() + MASK_END_DIGITS);
+		result.append(CARD_NUMBER_DISPLAY_PREFIX);
 		int digLen = digits.length();
 		if(digLen < MASK_END_DIGITS) {
 			for(int i = digLen; i < MASK_END_DIGITS; i++) result.append(UNKNOWN_DIGIT);
@@ -161,22 +198,126 @@ public class CreditCard implements Cloneable {
 		return result.toString();
 	}
 
+	public static byte validateExpirationMonth(byte expirationMonth, boolean allowUnknownDate) throws IllegalArgumentException {
+		if(
+			(
+				!allowUnknownDate
+				|| expirationMonth != UNKNOWN_EXPRIATION_MONTH
+			) && (
+				expirationMonth < 1
+				|| expirationMonth > 12
+			)
+		) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.validateExpirationMonth.expirationMonth.invalid");
+		return expirationMonth;
+	}
+
+	private static class CurrentYearLock {}
+	private static final CurrentYearLock currentYearLock = new CurrentYearLock();
+	private static long currentYearMillis = Long.MIN_VALUE;
+	private static short currentYear;
+
+	/**
+	 * Gets the current year, cached for up to a second to avoid the overhead of repeated Calendar creation.
+	 */
+	private static short getCurrentYear() {
+		synchronized(currentYearLock) {
+			long currentTime = System.currentTimeMillis();
+			if(
+				currentYearMillis == Long.MIN_VALUE
+				|| currentTime <= (currentYearMillis - 1000)
+				|| currentTime >= (currentYearMillis + 1000)
+			) {
+				currentYear = SafeMath.castShort(new GregorianCalendar().get(Calendar.YEAR));
+				currentYearMillis = currentTime;
+			}
+			return currentYear;
+		}
+	}
+
+	public static short validateExpirationYear(short expirationYear, boolean allowUnknownDate) throws IllegalArgumentException {
+		if(
+			(
+				!allowUnknownDate
+				|| expirationYear != UNKNOWN_EXPRIATION_YEAR
+			) && (
+				expirationYear < MIN_EXPIRATION_YEAR
+				|| expirationYear > (getCurrentYear() + EXPIRATION_YEARS_FUTURE)
+			)
+		) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.validateExpirationYear.expirationYear.invalid");
+		return expirationYear;
+	}
+
 	/**
 	 * Gets an expiration date in MMYY format.
 	 *
+	 * @param  expirationMonth  the month or {@link #UNKNOWN_EXPRIATION_MONTH} when unknown
+	 * @param  expirationYear  the year or {@link #UNKNOWN_EXPRIATION_YEAR} when unknown
+	 * @param  allowUnknownDigit  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
+	 *
 	 * @throws  IllegalArgumentException  if invalid date
 	 */
-	public static String getExpirationDateMMYY(byte month, short year) {
-		// TODO: 2.0: Change range, allow Nullable?
-		if(month==-1) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.setExpirationMonth.expirationMonth.invalid");
-		if(year==-1) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.setExpirationYear.expirationYear.invalid");
+	// TODO: 2.0: Allow Nullable expirationMonth and expirationDate
+	public static String getExpirationDateMMYY(byte expirationMonth, short expirationYear, boolean allowUnknownDate) throws IllegalArgumentException {
+		validateExpirationMonth(expirationMonth, allowUnknownDate);
+		validateExpirationYear(expirationYear, allowUnknownDate);
 		StringBuilder SB = new StringBuilder(4);
-		if(month<10) SB.append('0');
-		SB.append(month);
-		int modYear = year%100;
-		if(modYear<10) SB.append('0');
-		SB.append(modYear);
+		if(expirationMonth == UNKNOWN_EXPRIATION_MONTH) {
+			SB.append(UNKNOWN_DIGIT).append(UNKNOWN_DIGIT);
+		} else {
+			if(expirationMonth < 10) SB.append('0');
+			SB.append(expirationMonth);
+		}
+		if(expirationYear == UNKNOWN_EXPRIATION_YEAR) {
+			SB.append(UNKNOWN_DIGIT).append(UNKNOWN_DIGIT);
+		} else {
+			int modYear = expirationYear % 100;
+			if(modYear < 10) SB.append('0');
+			SB.append(modYear);
+		}
 		return SB.toString();
+	}
+
+	/**
+	 * Gets an expiration date in MMYY format,
+	 * not including any {@link #UNKNOWN_DIGIT}.
+	 *
+	 * @deprecated  Please use {@link #getExpirationDateMMYY(byte, short, boolean)} allowing for unknown expirations
+	 */
+	@Deprecated
+	public static String getExpirationDateMMYY(byte expirationMonth, short expirationYear) {
+		return getExpirationDateMMYY(expirationMonth, expirationYear, false);
+	}
+
+	/**
+	 * Gets the expiration display in "MM / YYYY" format or {@code null} when both month and year are unknown.
+	 *
+	 * @see  #EXPIRATION_DISPLAY_SEPARATOR
+	 * @see  #getExpirationDisplay()
+	 *
+	 * @throws  IllegalArgumentException  if invalid date
+	 */
+	public static String getExpirationDisplay(byte expirationMonth, short expirationYear) throws IllegalArgumentException {
+		validateExpirationMonth(expirationMonth, true);
+		validateExpirationYear(expirationYear, true);
+		final int MONTH_DIGITS = 2;
+		final int YEAR_DIGITS = 4;
+		if(expirationMonth == UNKNOWN_EXPRIATION_MONTH && expirationYear == UNKNOWN_EXPRIATION_YEAR) return null;
+		StringBuilder result = new StringBuilder(MONTH_DIGITS + EXPIRATION_DISPLAY_SEPARATOR.length() + YEAR_DIGITS);
+		if(expirationMonth == UNKNOWN_EXPRIATION_MONTH) {
+			for(int i = 0; i < MONTH_DIGITS; i++) result.append(UNKNOWN_DIGIT);
+		} else {
+			String monthStr = Byte.toString(expirationMonth);
+			for(int i = monthStr.length(); i < MONTH_DIGITS ; i++) result.append('0');
+			result.append(monthStr);
+		}
+		if(expirationYear == UNKNOWN_EXPRIATION_YEAR) {
+			for(int i = 0; i < YEAR_DIGITS; i++) result.append(UNKNOWN_DIGIT);
+		} else {
+			String yearStr = Short.toString(expirationYear);
+			for(int i = yearStr.length(); i < YEAR_DIGITS ; i++) result.append('0');
+			result.append(yearStr);
+		}
+		return result.toString();
 	}
 
 	/**
@@ -202,8 +343,9 @@ public class CreditCard implements Cloneable {
 	private String cardNumber;
 	// TODO: 2.0: Store separate type and masked card numbers
 	private String maskedCardNumber;
-	private byte expirationMonth = -1; // TODO: 2.0: Make nullable Byte
-	private short expirationYear = -1; // TODO: 2.0: Make nullable Short
+	// TODO: 2.0: A value type to encapsulate Month and Year here and other parts of the API
+	private byte expirationMonth = UNKNOWN_EXPRIATION_MONTH; // TODO: 2.0: Make nullable Byte
+	private short expirationYear = UNKNOWN_EXPRIATION_YEAR; // TODO: 2.0: Make nullable Short
 	private String cardCode;
 	private String firstName;
 	private String lastName;
@@ -414,7 +556,16 @@ public class CreditCard implements Cloneable {
 	}
 
 	/**
+	 * @see  #getCardNumberDisplay(java.lang.String)
+	 */
+	public String getCardNumberDisplay() {
+		return getCardNumberDisplay(maskedCardNumber);
+	}
+
+	/**
 	 * Gets the expiration month, where 1 is January and 12 is December.
+	 *
+	 * @see  #UNKNOWN_EXPRIATION_MONTH
 	 */
 	// TODO: 2.0: Make nullable Byte
 	public byte getExpirationMonth() {
@@ -425,15 +576,18 @@ public class CreditCard implements Cloneable {
 	 * Sets the expiration month, where 1 is January and 12 is December.
 	 *
 	 * @throws  IllegalArgumentException  if out of range.
+	 *
+	 * @see  #UNKNOWN_EXPRIATION_MONTH
 	 */
 	// TODO: 2.0: Make nullable Byte
 	public void setExpirationMonth(byte expirationMonth) {
-		if(expirationMonth!=-1 && (expirationMonth<1 || expirationMonth>12)) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.setExpirationMonth.expirationMonth.invalid");
-		this.expirationMonth = expirationMonth;
+		this.expirationMonth = validateExpirationMonth(expirationMonth, true);
 	}
 
 	/**
-	 * Gets the expiration year, such as <code>2007</code>.
+	 * Gets the expiration year, such as {@code 2007}.
+	 *
+	 * @see  #UNKNOWN_EXPRIATION_YEAR
 	 */
 	// TODO: 2.0: Make nullable Short
 	public short getExpirationYear() {
@@ -441,30 +595,53 @@ public class CreditCard implements Cloneable {
 	}
 
 	/**
-	 * Sets the expiration year, such as <code>2007</code>.
-	 * It also accepts values 0 <= year <= 99.  These values will be automatically
+	 * Sets the expiration year, such as {@code 2007}.
+	 * It also accepts values 0 &lt;= year &lt;= 99.  These values will be automatically
 	 * added to the current century.
 	 *
-	 * @throws  IllegalArgumentException  if the resolved year is < 1977 or > (current year + 12)
+	 * @throws  IllegalArgumentException  if the resolved year is &lt; {@link #MIN_EXPIRATION_YEAR} or &gt; (current year + {@link #EXPIRATION_YEARS_FUTURE})
+	 *
+	 * @see  #UNKNOWN_EXPRIATION_YEAR
 	 */
 	// TODO: 2.0: Make nullable Short
 	public void setExpirationYear(short expirationYear) {
-		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		if(expirationYear>=0 && expirationYear<=99) {
-			expirationYear = (short)((currentYear/100)*100 + expirationYear);
+		// Allow 0 - 99 moved to current century
+		if(expirationYear >= 0 && expirationYear <= 99) {
+			expirationYear = SafeMath.castShort((getCurrentYear() / 100) * 100 + expirationYear);
 		}
-		if(expirationYear!=-1 && (expirationYear<1977 || expirationYear>(currentYear+12))) throw new LocalizedIllegalArgumentException(accessor, "CreditCard.setExpirationYear.expirationYear.invalid");
-		this.expirationYear = expirationYear;
+		this.expirationYear = validateExpirationYear(expirationYear, true);
 	}
 
 	/**
-	 * Gets the expiration date in MMYY format.
+	 * Gets the expiration date in MMYY format,
+	 * not including any {@link #UNKNOWN_DIGIT}.
+	 *
+	 * @param  allowUnknownDigit  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
 	 *
 	 * @throws  IllegalArgumentException  if invalid date
 	 */
-	// TODO: 2.0: Return null when no expiration?
+	public String getExpirationDateMMYY(boolean allowUnknownDate) {
+		return getExpirationDateMMYY(getExpirationMonth(), getExpirationYear(), allowUnknownDate);
+	}
+
+	/**
+	 * Gets the expiration date in MMYY format,
+	 * not including any {@link #UNKNOWN_DIGIT}.
+	 *
+	 * @throws  IllegalArgumentException  if invalid date
+	 *
+	 * @deprecated  Please use {@link #getExpirationDateMMYY(boolean)} allowing for unknown expirations
+	 */
+	@Deprecated
 	public String getExpirationDateMMYY() {
-		return getExpirationDateMMYY(getExpirationMonth(), getExpirationYear());
+		return getExpirationDateMMYY(false);
+	}
+
+	/**
+	 * @see  #getExpirationDisplay(byte, short)
+	 */
+	public String getExpirationDisplay() {
+		return getExpirationDisplay(expirationMonth, expirationYear);
 	}
 
 	/**

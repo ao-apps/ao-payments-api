@@ -145,7 +145,10 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	private final String providerReplacementMaskedCardNumber;
 	// TODO: 2.0: Store separate type and masked card numbers
 	private final String replacementMaskedCardNumber;
-	// TODO: 2.0: replacementExpirationMonth and replacementExpirationYear
+	private final String providerReplacementExpiration;
+	// TODO: 2.0: A value type to encapsulate Month and Year here and other parts of the API
+	private final Byte replacementExpirationMonth;
+	private final Short replacementExpirationYear;
 	private final String providerApprovalResult;
 	private final ApprovalResult approvalResult;
 	private final String providerDeclineReason;
@@ -168,7 +171,9 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		String providerReplacementMaskedCardNumber,
 		// TODO: 2.0: Store separate type and masked card numbers
 		String replacementMaskedCardNumber,
-		// TODO: 2.0: replacementExpirationMonth and replacementExpirationYear
+		String providerReplacementExpiration,
+		Byte replacementExpirationMonth,
+		Short replacementExpirationYear,
 		String providerApprovalResult,
 		ApprovalResult approvalResult,
 		String providerDeclineReason,
@@ -192,7 +197,9 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		this.providerReplacementMaskedCardNumber = providerReplacementMaskedCardNumber;
 		// TODO: 2.0: Store separate type and masked card numbers
 		this.replacementMaskedCardNumber = replacementMaskedCardNumber;
-		// TODO: 2.0: replacementExpirationMonth and replacementExpirationYear
+		this.providerReplacementExpiration = providerReplacementExpiration;
+		this.replacementExpirationMonth = replacementExpirationMonth;
+		this.replacementExpirationYear = replacementExpirationYear;
 		this.providerApprovalResult = providerApprovalResult;
 		this.approvalResult = approvalResult;
 		this.providerDeclineReason = providerDeclineReason;
@@ -238,6 +245,9 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 			providerUniqueId,
 			null, // providerReplacementMaskedCardNumber
 			null, // replacementMaskedCardNumber
+			null, // providerReplacementExpiration
+			null, // replacementExpirationMonth
+			null, // replacementExpirationYear
 			providerApprovalResult,
 			approvalResult,
 			providerDeclineReason,
@@ -273,17 +283,47 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	// TODO: 2.0: Store separate type and masked card numbers
 
 	/**
-	 * Gets the masked card number used for this authorization.
+	 * Gets a replacement masked card number used for this authorization.
 	 * This may be updated by the provider when new card information is available.
 	 * This updated number may be then stored back into any local persistence.
 	 *
-	 * @return  the new masked card number of {@code null} when unchanged or auto-replacements not supported
+	 * @return  the new masked card number or {@code null} when unchanged or auto-replacements not supported
 	 */
 	public String getReplacementMaskedCardNumber() {
 		return replacementMaskedCardNumber;
 	}
 
-	// TODO: 2.0: replacementExpirationMonth and replacementExpirationYear
+	/**
+	 * Gets the provider-specific replacement expiration date used for this authorization.
+	 *
+	 * @see  #getReplacementExpirationMonth()
+	 * @see  #getReplacementExpirationYear()
+	 */
+	public String getProviderReplacementExpiration() {
+		return providerReplacementExpiration;
+	}
+
+	/**
+	 * Gets a replacement expiration month used for this authorization.
+	 * This may be updated by the provider when new card information is available.
+	 * This updated expiration may be then stored back into any local persistence.
+	 *
+	 * @return  the new expiration month or {@code null} when unchanged or auto-replacements not supported
+	 */
+	public Byte getReplacementExpirationMonth() {
+		return replacementExpirationMonth;
+	}
+
+	/**
+	 * Gets a replacement expiration year used for this authorization.
+	 * This may be updated by the provider when new card information is available.
+	 * This updated expiration may be then stored back into any local persistence.
+	 *
+	 * @return  the new expiration year or {@code null} when unchanged or auto-replacements not supported
+	 */
+	public Short getReplacementExpirationYear() {
+		return replacementExpirationYear;
+	}
 
 	/**
 	 * Gets the provider-specific approval response.
