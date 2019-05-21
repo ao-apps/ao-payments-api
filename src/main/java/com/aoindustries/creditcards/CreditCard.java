@@ -88,6 +88,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * The maximum number of years in the future expected for an expiration year.
 	 */
+	// TODO: Stripe goes up to the year 2038 in their dashboard currently, which is +19 years
 	public static final short EXPIRATION_YEARS_FUTURE = 12;
 
 	/**
