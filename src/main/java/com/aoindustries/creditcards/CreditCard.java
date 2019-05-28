@@ -894,8 +894,9 @@ public class CreditCard implements Cloneable {
 
 	/**
 	 * Gets the card holder's two-digit ISO 3166-1 alpha-2 country code.
-	 *
-	 * See <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
+	 * <p>
+	 * See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
+	 * </p>
 	 */
 	public String getCountryCode() {
 		return countryCode;
@@ -903,8 +904,9 @@ public class CreditCard implements Cloneable {
 
 	/**
 	 * Trims, converts to upper case, and sets the card holder's two-digit ISO 3166-1 alpha-2 country code.
-	 *
-	 * See <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
+	 * <p>
+	 * See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
+	 * </p>
 	 *
 	 * @throws  IllegalArgumentException  if not a two-character code (after trimming).
 	 */

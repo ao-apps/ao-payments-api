@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-0500"
-		dateModified="2019-05-20T23:21:51-0500"
+		dateModified="2019-05-28T13:56:11-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-credit-cards-api:pom.version}" />
@@ -61,7 +61,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 						Masked card numbers now keep up to the first six digits instead of only four.
 						The number of first digits kept may be lower, depending on card type.
 						This allows for more complete card type determination per
-						<ao:a href="https://en.wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_.28IIN.29">Issuer identification number (IIN)</ao:a>.
+						<ao:a href="https://wikipedia.org/wiki/Payment_card_number#Issuer_identification_number_.28IIN.29">Issuer identification number (IIN)</ao:a>.
 					</li>
 					<li>
 						Authorization results now include an optional replacement masked card number.

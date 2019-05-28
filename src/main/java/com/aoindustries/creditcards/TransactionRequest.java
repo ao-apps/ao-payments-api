@@ -487,8 +487,9 @@ public class TransactionRequest implements Cloneable {
 
 	/**
 	 * Gets the shipping two-digit ISO 3166-1 alpha-2 country code.
-	 *
-	 * See <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
+	 * <p>
+	 * See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
+	 * </p>
 	 */
 	public String getShippingCountryCode() {
 		return shippingCountryCode;
@@ -496,8 +497,9 @@ public class TransactionRequest implements Cloneable {
 
 	/**
 	 * Trims, converts to upper case, and sets the shipping two-digit ISO 3166-1 alpha-2 country code.
-	 *
-	 * See <a href="http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
+	 * <p>
+	 * See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
+	 * </p>
 	 *
 	 * @throws  IllegalArgumentException  if not a two-character code (after trimming).
 	 */
