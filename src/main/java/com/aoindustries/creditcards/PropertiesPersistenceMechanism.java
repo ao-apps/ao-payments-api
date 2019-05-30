@@ -583,6 +583,20 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		return map;
 	}
 
+	@Override
+	public synchronized Map<String,CreditCard> getCreditCards(Principal principal, String providerId) throws SQLException {
+		loadIfNeeded();
+		Map<String,CreditCard> map = new LinkedHashMap<>(internalCreditCards.size() *4/3+1);
+		for(CreditCard internalCreditCard : internalCreditCards) {
+			if(providerId.equals(internalCreditCard.getProviderId())) {
+				CreditCard copy = internalCreditCard.clone();
+				String persistenceUniqueId = copy.getPersistenceUniqueId();
+				if(map.put(persistenceUniqueId, copy) != null) throw new SQLException("Duplicate persistenceUniqueId: " + persistenceUniqueId);
+			}
+		}
+		return map;
+	}
+
 	/**
 	 * Card numbers and expiration dates are not persisted to the properties files - encrypted local storage not supported.
 	 */

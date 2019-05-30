@@ -51,11 +51,12 @@ public interface PersistenceMechanism {
 	/**
 	 * Gets all the stored cards.
 	 * <p>
-	 * Each element is a defensive copy.  Modifications will not update the
-	 * underling persistence.
+	 * Each element is a defensive copy.
+	 * Modifications will not update the underling persistence.
 	 * </p>
 	 * <p>
 	 * The returned map must be modifiable.
+	 * Modifications to the returned map will not update the underlying persistence.
 	 * </p>
 	 *
 	 * @return  The modifiable mapping from {@link CreditCard#getPersistenceUniqueId()} to defensive copies of all the stored cards
@@ -66,6 +67,29 @@ public interface PersistenceMechanism {
 	 * @see  #updateExpiration(java.security.Principal, com.aoindustries.creditcards.CreditCard, byte, short)
 	 */
 	Map<String,CreditCard> getCreditCards(Principal principal) throws SQLException;
+
+	/**
+	 * Gets all the stored cards for a given <code>providerId</code>.
+	 * <p>
+	 * Each element is a defensive copy.
+	 * Modifications will not update the underling persistence.
+	 * </p>
+	 * <p>
+	 * The returned map must be modifiable.
+	 * Modifications to the returned map will not update the underlying persistence.
+	 * </p>
+	 *
+	 * @param  principal  The entity performing the query (person, software component, ...)
+	 * @param  providerId  The ID of the provider to get all cards for
+	 *
+	 * @return  The modifiable mapping from {@link CreditCard#getPersistenceUniqueId()} to defensive copies of all the stored cards
+	 *
+	 * @see  CreditCard#clone()
+	 * @see  #updateCreditCard(java.security.Principal, com.aoindustries.creditcards.CreditCard)
+	 * @see  #updateCardNumber(java.security.Principal, com.aoindustries.creditcards.CreditCard, java.lang.String, byte, short)
+	 * @see  #updateExpiration(java.security.Principal, com.aoindustries.creditcards.CreditCard, byte, short)
+	 */
+	Map<String,CreditCard> getCreditCards(Principal principal, String providerId) throws SQLException;
 
 	/**
 	 * Updates the stored credit card details, all except the card number and expiration, for a credit card.
