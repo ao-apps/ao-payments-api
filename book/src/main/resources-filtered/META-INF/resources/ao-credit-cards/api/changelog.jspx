@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-0500"
-		dateModified="2019-05-28T13:56:11-0500"
+		dateModified="2019-05-29T19:38:08-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-credit-cards-api:pom.version}" />
@@ -88,6 +88,17 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 					</li>
 					<li>Increased maximum future card expiration year from +12 years to +20 years.</li>
 					<li>Added SQL implementation in alternate "sql" classifier.</li>
+					<li>
+						Persistent storage may now be synchronized against the provider in the background, allowing replacement masked card numbers and expirations
+						to be persisted in a timely manner.  This is in addition to the replacement values made available during authorization.
+						<ol>
+							<li>New method: <ao:a href="apidocs/com/aoindustries/creditcards/PersistenceMechanism#getCreditCard-java.security.Principal-java.lang.String-">PersistenceMechanism.getCreditCard(Principal, String)</ao:a>.</li>
+							<li>New method: <ao:a href="apidocs/com/aoindustries/creditcards/PersistenceMechanism#getCreditCards-java.security.Principal-">PersistenceMechanism.getCreditCards(Principal)</ao:a>.</li>
+							<li>TODO: New method to check if can cards from provider</li>
+							<li>TODO: New method to get cards from provider</li>
+							<li>TODO: New method to synchronize</li>
+						</ol>
+					</li>
 					<li>Please note: the next major release of this project will be renamed to <code>ao-payment-api</code>.</li>
 					<!--
 						TODO: Version 2.0: Have a constructor given a mapping of String->String (or Properties) as configuration,

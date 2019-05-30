@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -561,6 +562,27 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		return uniqueId;
 	}
 
+	@Override
+	public synchronized CreditCard getCreditCard(Principal principal, String persistenceUniqueId) throws SQLException {
+		loadIfNeeded();
+		for(CreditCard internalCreditCard : internalCreditCards) {
+			if(persistenceUniqueId.equals(internalCreditCard.getPersistenceUniqueId())) return internalCreditCard.clone();
+		}
+		return null;
+	}
+
+	@Override
+	public synchronized Map<String,CreditCard> getCreditCards(Principal principal) throws SQLException {
+		loadIfNeeded();
+		Map<String,CreditCard> map = new LinkedHashMap<>(internalCreditCards.size() *4/3+1);
+		for(CreditCard internalCreditCard : internalCreditCards) {
+			CreditCard copy = internalCreditCard.clone();
+			String persistenceUniqueId = copy.getPersistenceUniqueId();
+			if(map.put(persistenceUniqueId, copy) != null) throw new SQLException("Duplicate persistenceUniqueId: " + persistenceUniqueId);
+		}
+		return map;
+	}
+
 	/**
 	 * Card numbers and expiration dates are not persisted to the properties files - encrypted local storage not supported.
 	 */
@@ -568,7 +590,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	synchronized public void updateCreditCard(Principal principal, CreditCard creditCard) throws SQLException {
 		loadIfNeeded();
 		// Find the card with matching persistence id
-		CreditCard internalCreditCard = getCreditCard(creditCard.getPersistenceUniqueId());
+		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
 		if(internalCreditCard == null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
 		internalCreditCard.setMaskedCardNumber(creditCard.getMaskedCardNumber());
 		internalCreditCard.setExpirationMonth(creditCard.getExpirationMonth());
@@ -604,7 +626,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	) throws SQLException {
 		loadIfNeeded();
 		// Find the card with matching persistence id
-		CreditCard internalCreditCard = getCreditCard(creditCard.getPersistenceUniqueId());
+		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
 		if(internalCreditCard == null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
 		// TODO: 2.0: Store separate type and masked card numbers
 		internalCreditCard.setMaskedCardNumber(CreditCard.maskCreditCardNumber(cardNumber));
@@ -625,20 +647,12 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	) throws SQLException {
 		loadIfNeeded();
 		// Find the card with matching persistence id
-		CreditCard internalCreditCard = getCreditCard(creditCard.getPersistenceUniqueId());
+		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
 		if(internalCreditCard == null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
 		// TODO: 2.0: Store separate type and masked card numbers
 		internalCreditCard.setExpirationMonth(expirationMonth);
 		internalCreditCard.setExpirationYear(expirationYear);
 		save();
-	}
-
-	synchronized private CreditCard getCreditCard(String persistenceUniqueId) throws SQLException {
-		loadIfNeeded();
-		for(CreditCard internalCreditCard : internalCreditCards) {
-			if(persistenceUniqueId.equals(internalCreditCard.getPersistenceUniqueId())) return internalCreditCard.clone();
-		}
-		return null;
 	}
 
 	@Override

@@ -25,6 +25,7 @@ package com.aoindustries.creditcards;
 import java.security.Principal;
 import java.security.acl.Group;
 import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * A persistence mechanism stores the credit card data and transaction history.
@@ -37,6 +38,34 @@ public interface PersistenceMechanism {
 	 * Stores a credit card and returns its persistenceUniqueId.
 	 */
 	String storeCreditCard(Principal principal, CreditCard creditCard) throws SQLException;
+
+	/**
+	 * Gets a defensive copy of a stored card given its {@link CreditCard#getPersistenceUniqueId() persistenceUniqueId}.
+	 *
+	 * @param  persistenceUniqueId  The card's {@link CreditCard#getPersistenceUniqueId() persistenceUniqueId}
+	 *
+	 * @return  The stored {@link CreditCard} or {@code null} if not found.
+	 */
+	CreditCard getCreditCard(Principal principal, String persistenceUniqueId) throws SQLException;
+
+	/**
+	 * Gets all the stored cards.
+	 * <p>
+	 * Each element is a defensive copy.  Modifications will not update the
+	 * underling persistence.
+	 * </p>
+	 * <p>
+	 * The returned map must be modifiable.
+	 * </p>
+	 *
+	 * @return  The modifiable mapping from {@link CreditCard#getPersistenceUniqueId()} to defensive copies of all the stored cards
+	 *
+	 * @see  CreditCard#clone()
+	 * @see  #updateCreditCard(java.security.Principal, com.aoindustries.creditcards.CreditCard)
+	 * @see  #updateCardNumber(java.security.Principal, com.aoindustries.creditcards.CreditCard, java.lang.String, byte, short)
+	 * @see  #updateExpiration(java.security.Principal, com.aoindustries.creditcards.CreditCard, byte, short)
+	 */
+	Map<String,CreditCard> getCreditCards(Principal principal) throws SQLException;
 
 	/**
 	 * Updates the stored credit card details, all except the card number and expiration, for a credit card.
