@@ -272,7 +272,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	}
 
 	/**
-	 * Gets the provider-specific replacement card number used for this authorization.
+	 * Gets the provider-specific replacement masked card number used for this authorization.
 	 *
 	 * @see  #getReplacementMaskedCardNumber()
 	 */
@@ -283,7 +283,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	// TODO: 2.0: Store separate type and masked card numbers
 
 	/**
-	 * Gets a replacement masked card number used for this authorization.
+	 * Gets the replacement masked card number used for this authorization.
 	 * This may be updated by the provider when new card information is available.
 	 * This updated number may be then stored back into any local persistence.
 	 *
@@ -304,7 +304,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	}
 
 	/**
-	 * Gets a replacement expiration month used for this authorization.
+	 * Gets the replacement expiration month used for this authorization.
 	 * This may be updated by the provider when new card information is available.
 	 * This updated expiration may be then stored back into any local persistence.
 	 *
@@ -315,7 +315,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	}
 
 	/**
-	 * Gets a replacement expiration year used for this authorization.
+	 * Gets the replacement expiration year used for this authorization.
 	 * This may be updated by the provider when new card information is available.
 	 * This updated expiration may be then stored back into any local persistence.
 	 *
