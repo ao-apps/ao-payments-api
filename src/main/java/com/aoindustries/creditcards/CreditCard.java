@@ -101,7 +101,7 @@ public class CreditCard implements Cloneable {
 	public static final String CARD_NUMBER_DISPLAY_PREFIX = "•••• ";
 
 	/**
-	 * The middle separator used for {@link #getExpirationDisplay(byte, short)}.
+	 * The middle separator used for {@link #getExpirationDisplay(java.lang.Byte, java.lang.Short)}.
 	 */
 	public static final String EXPIRATION_DISPLAY_SEPARATOR = " / ";
 
@@ -301,25 +301,35 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @throws  IllegalArgumentException  if invalid date
 	 */
-	public static String getExpirationDisplay(byte expirationMonth, short expirationYear) throws IllegalArgumentException {
-		validateExpirationMonth(expirationMonth, true);
-		validateExpirationYear(expirationYear, true);
+	public static String getExpirationDisplay(Byte expirationMonth, Short expirationYear) throws IllegalArgumentException {
+		// Allow 0 that comes from JSP Expression Language functions
+		// TODO: Make a different function for JSP EL within the aoweb-core-taglib, and do this conversion there?
+		if(expirationMonth != null && expirationMonth == 0) expirationMonth = null;
+		if(expirationYear != null && expirationYear == 0) expirationYear = null;
+		// Validate
+		if(expirationMonth != null) validateExpirationMonth(expirationMonth, true);
+		if(expirationYear != null) validateExpirationYear(expirationYear, true);
 		final int MONTH_DIGITS = 2;
 		final int YEAR_DIGITS = 4;
-		if(expirationMonth == UNKNOWN_EXPRIATION_MONTH && expirationYear == UNKNOWN_EXPRIATION_YEAR) return null;
+		if(
+			(expirationMonth == null || expirationMonth == UNKNOWN_EXPRIATION_MONTH)
+			&& (expirationYear == null || expirationYear == UNKNOWN_EXPRIATION_YEAR)
+		) {
+			return null;
+		}
 		StringBuilder result = new StringBuilder(MONTH_DIGITS + EXPIRATION_DISPLAY_SEPARATOR.length() + YEAR_DIGITS);
-		if(expirationMonth == UNKNOWN_EXPRIATION_MONTH) {
+		if(expirationMonth == null || expirationMonth == UNKNOWN_EXPRIATION_MONTH) {
 			for(int i = 0; i < MONTH_DIGITS; i++) result.append(UNKNOWN_DIGIT);
 		} else {
-			String monthStr = Byte.toString(expirationMonth);
+			String monthStr = expirationMonth.toString();
 			for(int i = monthStr.length(); i < MONTH_DIGITS ; i++) result.append('0');
 			result.append(monthStr);
 		}
 		result.append(EXPIRATION_DISPLAY_SEPARATOR);
-		if(expirationYear == UNKNOWN_EXPRIATION_YEAR) {
+		if(expirationYear == null || expirationYear == UNKNOWN_EXPRIATION_YEAR) {
 			for(int i = 0; i < YEAR_DIGITS; i++) result.append(UNKNOWN_DIGIT);
 		} else {
-			String yearStr = Short.toString(expirationYear);
+			String yearStr = expirationYear.toString();
 			for(int i = yearStr.length(); i < YEAR_DIGITS ; i++) result.append('0');
 			result.append(yearStr);
 		}
@@ -644,7 +654,7 @@ public class CreditCard implements Cloneable {
 	}
 
 	/**
-	 * @see  #getExpirationDisplay(byte, short)
+	 * @see  #getExpirationDisplay(java.lang.Byte, java.lang.Short)
 	 */
 	public String getExpirationDisplay() {
 		return getExpirationDisplay(expirationMonth, expirationYear);

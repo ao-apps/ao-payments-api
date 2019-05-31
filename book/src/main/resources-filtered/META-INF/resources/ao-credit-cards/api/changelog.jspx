@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-0500"
-		dateModified="2019-05-30T14:36:02-0500"
+		dateModified="2019-05-31T15:31:34-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-credit-cards-api:pom.version}" />
@@ -83,7 +83,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 						Payment processors may also provide replacement expiration date in the same fashion as the replacement masked card number.
 					</li>
 					<li>
-						New function <ao:a href="apidocs/com/aoindustries/creditcards/CreditCard.html#getExpirationDisplay-byte-short-">CreditCard.getExpirationDisplay(byte,short)</ao:a>
+						New function <ao:a href="apidocs/com/aoindustries/creditcards/CreditCard.html#getExpirationDisplay-java.lang.Byte-java.lang.Short-">CreditCard.getExpirationDisplay(Byte,Short)</ao:a>
 						to format expiration dates for display.
 					</li>
 					<li>Increased maximum future card expiration year from +12 years to +20 years.</li>
