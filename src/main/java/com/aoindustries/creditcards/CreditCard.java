@@ -96,7 +96,7 @@ public class CreditCard implements Cloneable {
 	public static final short EXPIRATION_YEARS_FUTURE = 20;
 
 	/**
-	 * The prefix used for {@link #getCardNumberDisplay(java.lang.String)
+	 * The prefix used for {@link #getCardNumberDisplay(java.lang.String)}
 	 */
 	public static final String CARD_NUMBER_DISPLAY_PREFIX = "•••• ";
 

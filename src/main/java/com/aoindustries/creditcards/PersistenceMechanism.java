@@ -36,6 +36,8 @@ public interface PersistenceMechanism {
 
 	/**
 	 * Stores a credit card and returns its persistenceUniqueId.
+	 *
+	 * @see  CreditCardProcessor#storeCreditCard(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.CreditCard)
 	 */
 	String storeCreditCard(Principal principal, CreditCard creditCard) throws SQLException;
 
@@ -59,12 +61,9 @@ public interface PersistenceMechanism {
 	 * Modifications to the returned map will not update the underlying persistence.
 	 * </p>
 	 *
-	 * @return  The modifiable mapping from {@link CreditCard#getPersistenceUniqueId()} to defensive copies of all the stored cards
+	 * @return  The modifiable mapping from {@link CreditCard#getPersistenceUniqueId()} to defensive copies of the stored card
 	 *
 	 * @see  CreditCard#clone()
-	 * @see  #updateCreditCard(java.security.Principal, com.aoindustries.creditcards.CreditCard)
-	 * @see  #updateCardNumber(java.security.Principal, com.aoindustries.creditcards.CreditCard, java.lang.String, byte, short)
-	 * @see  #updateExpiration(java.security.Principal, com.aoindustries.creditcards.CreditCard, byte, short)
 	 */
 	Map<String,CreditCard> getCreditCards(Principal principal) throws SQLException;
 
@@ -82,22 +81,27 @@ public interface PersistenceMechanism {
 	 * @param  principal  The entity performing the query (person, software component, ...)
 	 * @param  providerId  The ID of the provider to get all cards for
 	 *
-	 * @return  The modifiable mapping from {@link CreditCard#getPersistenceUniqueId()} to defensive copies of all the stored cards
+	 * @return  The modifiable mapping from {@link CreditCard#getProviderUniqueId()} to defensive copies of the stored card
 	 *
 	 * @see  CreditCard#clone()
-	 * @see  #updateCreditCard(java.security.Principal, com.aoindustries.creditcards.CreditCard)
-	 * @see  #updateCardNumber(java.security.Principal, com.aoindustries.creditcards.CreditCard, java.lang.String, byte, short)
-	 * @see  #updateExpiration(java.security.Principal, com.aoindustries.creditcards.CreditCard, byte, short)
+	 *
+	 * @see  CreditCardProcessor#synchronizeStoredCards(java.security.Principal, java.io.PrintWriter, java.io.PrintWriter, java.io.PrintWriter, boolean)
 	 */
 	Map<String,CreditCard> getCreditCards(Principal principal, String providerId) throws SQLException;
 
 	/**
 	 * Updates the stored credit card details, all except the card number and expiration, for a credit card.
+	 *
+	 * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
+	 * @see  CreditCardProcessor#authorize(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
+	 * @see  CreditCardProcessor#updateCreditCard(java.security.Principal, com.aoindustries.creditcards.CreditCard)
 	 */
 	void updateCreditCard(Principal principal, CreditCard creditCard) throws SQLException;
 
 	/**
 	 * Updates the stored card number and expiration for a credit card.
+	 *
+	 * @see  CreditCardProcessor#updateCreditCardNumberAndExpiration(java.security.Principal, com.aoindustries.creditcards.CreditCard, java.lang.String, byte, short, java.lang.String)
 	 */
 	void updateCardNumber(
 		Principal principal,
@@ -109,6 +113,9 @@ public interface PersistenceMechanism {
 
 	/**
 	 * Optionally updates the expiration for a credit card.
+	 *
+	 * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
+	 * @see  CreditCardProcessor#updateCreditCardExpiration(java.security.Principal, com.aoindustries.creditcards.CreditCard, byte, short)
 	 */
 	void updateExpiration(
 		Principal principal,
@@ -119,6 +126,8 @@ public interface PersistenceMechanism {
 
 	/**
 	 * Deletes the credit card from the credit card list.
+	 *
+	 * @see  CreditCardProcessor#deleteCreditCard(java.security.Principal, com.aoindustries.creditcards.CreditCard)
 	 */
 	void deleteCreditCard(Principal principal, CreditCard creditCard) throws SQLException;
 
@@ -127,6 +136,9 @@ public interface PersistenceMechanism {
 	 *
 	 * @param  principal  <code>null</code> is acceptable
 	 * @param  group      <code>null</code> is acceptable
+	 *
+	 * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
+	 * @see  CreditCardProcessor#authorize(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
 	 */
 	String insertTransaction(Principal principal, Group group, Transaction transaction) throws SQLException;
 
@@ -140,6 +152,9 @@ public interface PersistenceMechanism {
 	 *   <li>captureResult</li>
 	 *   <li>status</li>
 	 * </ol>
+	 *
+	 * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
+	 * @see  CreditCardProcessor#capture(java.security.Principal, com.aoindustries.creditcards.Transaction)
 	 */
 	void saleCompleted(Principal principal, Transaction transaction) throws SQLException;
 
@@ -150,11 +165,15 @@ public interface PersistenceMechanism {
 	 *   <li>authorizationResult</li>
 	 *   <li>status</li>
 	 * </ol>
+	 *
+	 * @see  CreditCardProcessor#authorize(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
 	 */
 	void authorizeCompleted(Principal principal, Transaction transaction) throws SQLException;
 
 	/**
 	 * Updates a transaction in the database after the void has completed.
+	 *
+	 * @see  CreditCardProcessor#voidTransaction(java.security.Principal, com.aoindustries.creditcards.Transaction)
 	 */
 	void voidCompleted(Principal principal, Transaction transaction) throws SQLException;
 }

@@ -590,8 +590,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		for(CreditCard internalCreditCard : internalCreditCards) {
 			if(providerId.equals(internalCreditCard.getProviderId())) {
 				CreditCard copy = internalCreditCard.clone();
-				String persistenceUniqueId = copy.getPersistenceUniqueId();
-				if(map.put(persistenceUniqueId, copy) != null) throw new SQLException("Duplicate persistenceUniqueId: " + persistenceUniqueId);
+				String providerUniqueId = copy.getProviderUniqueId();
+				if(map.put(providerUniqueId, copy) != null) throw new SQLException("Duplicate providerUniqueId: " + providerUniqueId);
 			}
 		}
 		return map;
