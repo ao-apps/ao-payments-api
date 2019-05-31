@@ -22,6 +22,8 @@
  */
 package com.aoindustries.creditcards;
 
+import com.aoindustries.lang.NullArgumentException;
+
 /**
  * Minimal information available from {@link MerchantServicesProvider} for stored cards.
  *
@@ -30,7 +32,6 @@ package com.aoindustries.creditcards;
  *
  * @author  AO Industries, Inc.
  */
-// TODO: Consider a way to use this object inside of AuthorizationResult instead of duplicating all these fields
 public class TokenizedCreditCard {
 
 	private final String providerUniqueId;
@@ -51,7 +52,7 @@ public class TokenizedCreditCard {
 		Byte replacementExpirationMonth,
 		Short replacementExpirationYear
 	) {
-		this.providerUniqueId = providerUniqueId;
+		this.providerUniqueId = NullArgumentException.checkNotNull(providerUniqueId, "providerUniqueId");
 		this.providerReplacementMaskedCardNumber = providerReplacementMaskedCardNumber;
 		// TODO: 2.0: Store separate type and masked card numbers
 		this.replacementMaskedCardNumber = replacementMaskedCardNumber;

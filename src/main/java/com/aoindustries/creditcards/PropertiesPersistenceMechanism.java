@@ -206,6 +206,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 						if(persistenceUniqueId == null) break;
 						Byte expirationMonth = getPropertyByte(props, TRANS_PRE, counter, CC_SUF + ".expirationMonth");
 						Short expirationYear = getPropertyShort(props, TRANS_PRE, counter, CC_SUF + ".expirationYear");
+						String tokenizedCreditCardProviderUniqueId = getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerUniqueId");
 						Transaction newTransaction = new Transaction(
 							getProperty(props, TRANS_PRE, counter, ".providerId"),
 							persistenceUniqueId,
@@ -273,12 +274,15 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
 								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage"),
 								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId"),
-								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementMaskedCardNumber"),
-								// TODO: 2.0: Store separate type and masked card numbers
-								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementMaskedCardNumber"),
-								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementExpiration"),
-								getPropertyByte (props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementExpirationMonth"),
-								getPropertyShort(props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementExpirationYear"),
+								tokenizedCreditCardProviderUniqueId == null ? null : new TokenizedCreditCard(
+									tokenizedCreditCardProviderUniqueId,
+									getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementMaskedCardNumber"),
+									// TODO: 2.0: Store separate type and masked card numbers
+									getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementMaskedCardNumber"),
+									getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementExpiration"),
+									getPropertyByte (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationMonth"),
+									getPropertyShort(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationYear")
+								),
 								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult"),
 								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", AuthorizationResult.ApprovalResult.class),
 								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason"),
@@ -485,12 +489,16 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".errorCode", authorizationResult.getErrorCode());
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage", authorizationResult.getProviderErrorMessage());
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId", authorizationResult.getProviderUniqueId());
-					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementMaskedCardNumber", authorizationResult.getProviderReplacementMaskedCardNumber());
-					// TODO: 2.0: Store separate type and masked card numbers
-					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementMaskedCardNumber", authorizationResult.getReplacementMaskedCardNumber());
-					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReplacementExpiration", authorizationResult.getProviderReplacementExpiration());
-					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementExpirationMonth", authorizationResult.getReplacementExpirationMonth());
-					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".replacementExpirationYear", authorizationResult.getReplacementExpirationYear());
+					TokenizedCreditCard tokenizedCreditCard = authorizationResult.getTokenizedCreditCard();
+					if(tokenizedCreditCard != null) {
+						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerUniqueId", tokenizedCreditCard.getProviderUniqueId());
+						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementMaskedCardNumber", tokenizedCreditCard.getProviderReplacementMaskedCardNumber());
+						// TODO: 2.0: Store separate type and masked card numbers
+						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementMaskedCardNumber", tokenizedCreditCard.getReplacementMaskedCardNumber());
+						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementExpiration", tokenizedCreditCard.getProviderReplacementExpiration());
+						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationMonth", tokenizedCreditCard.getReplacementExpirationMonth());
+						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationYear", tokenizedCreditCard.getReplacementExpirationYear());
+					}
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult", authorizationResult.getProviderApprovalResult());
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", authorizationResult.getApprovalResult());
 					setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason", authorizationResult.getProviderDeclineReason());
@@ -598,7 +606,10 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	}
 
 	/**
-	 * Card numbers and expiration dates are not persisted to the properties files - encrypted local storage not supported.
+	 * {@inheritDoc}
+	 * <p>
+	 * Card numbers are not persisted to the properties files - encrypted local storage not supported.
+	 * </p>
 	 */
 	@Override
 	synchronized public void updateCreditCard(Principal principal, CreditCard creditCard) throws SQLException {
@@ -607,8 +618,6 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
 		if(internalCreditCard == null) throw new LocalizedSQLException(accessor, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
 		internalCreditCard.setMaskedCardNumber(creditCard.getMaskedCardNumber());
-		internalCreditCard.setExpirationMonth(creditCard.getExpirationMonth());
-		internalCreditCard.setExpirationYear(creditCard.getExpirationYear());
 		internalCreditCard.setFirstName(creditCard.getFirstName());
 		internalCreditCard.setLastName(creditCard.getLastName());
 		internalCreditCard.setCompanyName(creditCard.getCompanyName());

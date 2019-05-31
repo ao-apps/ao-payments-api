@@ -74,7 +74,7 @@ public class CreditCardProcessor {
 	 * @param  group      <code>null</code> is acceptable
 	 * @param  transactionRequest  The transaction details for this sale
 	 * @param  creditCard  The credit card to charge for this sale.
-	 *                     The masked card number might be updated during the sale, and if updated
+	 *                     The masked card number and/or expiration might be updated during the sale, and if updated
 	 *                     the changes will have already been persisted.
 	 *
 	 * @see  #authorize(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
@@ -144,22 +144,25 @@ public class CreditCardProcessor {
 
 		// Update persistence layer
 		if(creditCard.getPersistenceUniqueId() != null) {
-			String replacementMaskedCardNumber = authorizationResult.getReplacementMaskedCardNumber();
-			if(replacementMaskedCardNumber != null) {
-				creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
-				persistenceMechanism.updateCreditCard(principal, creditCard);
-			}
-			Byte replacementExpirationMonth = authorizationResult.getReplacementExpirationMonth();
-			Short replacementExpirationYear = authorizationResult.getReplacementExpirationYear();
-			if(replacementExpirationMonth != null && replacementExpirationYear != null) {
-				creditCard.setExpirationMonth(replacementExpirationMonth);
-				creditCard.setExpirationYear(replacementExpirationYear);
-				persistenceMechanism.updateExpiration(
-					principal,
-					creditCard,
-					replacementExpirationMonth,
-					replacementExpirationYear
-				);
+			TokenizedCreditCard tokenizedCreditCard = authorizationResult.getTokenizedCreditCard();
+			if(tokenizedCreditCard != null) {
+				String replacementMaskedCardNumber = tokenizedCreditCard.getReplacementMaskedCardNumber();
+				if(replacementMaskedCardNumber != null) {
+					creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
+					persistenceMechanism.updateCreditCard(principal, creditCard);
+				}
+				Byte replacementExpirationMonth = tokenizedCreditCard.getReplacementExpirationMonth();
+				Short replacementExpirationYear = tokenizedCreditCard.getReplacementExpirationYear();
+				if(replacementExpirationMonth != null && replacementExpirationYear != null) {
+					creditCard.setExpirationMonth(replacementExpirationMonth);
+					creditCard.setExpirationYear(replacementExpirationYear);
+					persistenceMechanism.updateExpiration(
+						principal,
+						creditCard,
+						replacementExpirationMonth,
+						replacementExpirationYear
+					);
+				}
 			}
 		}
 		persistenceMechanism.saleCompleted(
@@ -181,7 +184,7 @@ public class CreditCardProcessor {
 	 * @param  group      <code>null</code> is acceptable
 	 * @param  transactionRequest  The transaction details for this sale
 	 * @param  creditCard  The credit card to charge for this sale.
-	 *                     The masked card number might be updated during the sale, and if updated
+	 *                     The masked card number and/or expiration might be updated during the sale, and if updated
 	 *                     the changes will have already been persisted.
 	 * 
 	 * @see  #capture(java.security.Principal, com.aoindustries.creditcards.Transaction)
@@ -246,24 +249,25 @@ public class CreditCardProcessor {
 
 		// Update persistence layer
 		if(creditCard.getPersistenceUniqueId() != null) {
-			boolean updated = false;
-			String replacementMaskedCardNumber = authorizationResult.getReplacementMaskedCardNumber();
-			if(replacementMaskedCardNumber != null) {
-				creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
-				updated = true;
-			}
-			Byte replacementExpirationMonth = authorizationResult.getReplacementExpirationMonth();
-			if(replacementExpirationMonth != null) {
-				creditCard.setExpirationMonth(replacementExpirationMonth);
-				updated = true;
-			}
-			Short replacementExpirationYear = authorizationResult.getReplacementExpirationYear();
-			if(replacementExpirationYear != null) {
-				creditCard.setExpirationYear(replacementExpirationYear);
-				updated = true;
-			}
-			if(updated) {
-				persistenceMechanism.updateCreditCard(principal, creditCard);
+			TokenizedCreditCard tokenizedCreditCard = authorizationResult.getTokenizedCreditCard();
+			if(tokenizedCreditCard != null) {
+				String replacementMaskedCardNumber = tokenizedCreditCard.getReplacementMaskedCardNumber();
+				if(replacementMaskedCardNumber != null) {
+					creditCard.setMaskedCardNumber(replacementMaskedCardNumber);
+					persistenceMechanism.updateCreditCard(principal, creditCard);
+				}
+				Byte replacementExpirationMonth = tokenizedCreditCard.getReplacementExpirationMonth();
+				Short replacementExpirationYear = tokenizedCreditCard.getReplacementExpirationYear();
+				if(replacementExpirationMonth != null && replacementExpirationYear != null) {
+					creditCard.setExpirationMonth(replacementExpirationMonth);
+					creditCard.setExpirationYear(replacementExpirationYear);
+					persistenceMechanism.updateExpiration(
+						principal,
+						creditCard,
+						replacementExpirationMonth,
+						replacementExpirationYear
+					);
+				}
 			}
 		}
 		persistenceMechanism.authorizeCompleted(

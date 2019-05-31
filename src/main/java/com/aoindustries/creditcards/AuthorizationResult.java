@@ -142,13 +142,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		}
 	}
 
-	private final String providerReplacementMaskedCardNumber;
-	// TODO: 2.0: Store separate type and masked card numbers
-	private final String replacementMaskedCardNumber;
-	private final String providerReplacementExpiration;
-	// TODO: 2.0: A value type to encapsulate Month and Year here and other parts of the API
-	private final Byte replacementExpirationMonth;
-	private final Short replacementExpirationYear;
+	private final TokenizedCreditCard tokenizedCreditCard;
 	private final String providerApprovalResult;
 	private final ApprovalResult approvalResult;
 	private final String providerDeclineReason;
@@ -168,12 +162,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		ErrorCode errorCode,
 		String providerErrorMessage,
 		String providerUniqueId,
-		String providerReplacementMaskedCardNumber,
-		// TODO: 2.0: Store separate type and masked card numbers
-		String replacementMaskedCardNumber,
-		String providerReplacementExpiration,
-		Byte replacementExpirationMonth,
-		Short replacementExpirationYear,
+		TokenizedCreditCard tokenizedCreditCard,
 		String providerApprovalResult,
 		ApprovalResult approvalResult,
 		String providerDeclineReason,
@@ -194,12 +183,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 			providerErrorMessage,
 			providerUniqueId
 		);
-		this.providerReplacementMaskedCardNumber = providerReplacementMaskedCardNumber;
-		// TODO: 2.0: Store separate type and masked card numbers
-		this.replacementMaskedCardNumber = replacementMaskedCardNumber;
-		this.providerReplacementExpiration = providerReplacementExpiration;
-		this.replacementExpirationMonth = replacementExpirationMonth;
-		this.replacementExpirationYear = replacementExpirationYear;
+		this.tokenizedCreditCard = tokenizedCreditCard;
 		this.providerApprovalResult = providerApprovalResult;
 		this.approvalResult = approvalResult;
 		this.providerDeclineReason = providerDeclineReason;
@@ -243,11 +227,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 			errorCode,
 			providerErrorMessage,
 			providerUniqueId,
-			null, // providerReplacementMaskedCardNumber
-			null, // replacementMaskedCardNumber
-			null, // providerReplacementExpiration
-			null, // replacementExpirationMonth
-			null, // replacementExpirationYear
+			null, // tokenizedCreditCard
 			providerApprovalResult,
 			approvalResult,
 			providerDeclineReason,
@@ -272,57 +252,12 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	}
 
 	/**
-	 * Gets the provider-specific replacement masked card number used for this authorization.
+	 * Gets the tokenized card used for this authorization.
 	 *
-	 * @see  #getReplacementMaskedCardNumber()
+	 * @return  The tokenized card or {@code null} when replacement not supported
 	 */
-	public String getProviderReplacementMaskedCardNumber() {
-		return providerReplacementMaskedCardNumber;
-	}
-
-	// TODO: 2.0: Store separate type and masked card numbers
-
-	/**
-	 * Gets the replacement masked card number used for this authorization.
-	 * This may be updated by the provider when new card information is available.
-	 * This updated number may be then stored back into any local persistence.
-	 *
-	 * @return  the new masked card number or {@code null} when unchanged or auto-replacements not supported
-	 */
-	public String getReplacementMaskedCardNumber() {
-		return replacementMaskedCardNumber;
-	}
-
-	/**
-	 * Gets the provider-specific replacement expiration date used for this authorization.
-	 *
-	 * @see  #getReplacementExpirationMonth()
-	 * @see  #getReplacementExpirationYear()
-	 */
-	public String getProviderReplacementExpiration() {
-		return providerReplacementExpiration;
-	}
-
-	/**
-	 * Gets the replacement expiration month used for this authorization.
-	 * This may be updated by the provider when new card information is available.
-	 * This updated expiration may be then stored back into any local persistence.
-	 *
-	 * @return  the new expiration month or {@code null} when unchanged or auto-replacements not supported
-	 */
-	public Byte getReplacementExpirationMonth() {
-		return replacementExpirationMonth;
-	}
-
-	/**
-	 * Gets the replacement expiration year used for this authorization.
-	 * This may be updated by the provider when new card information is available.
-	 * This updated expiration may be then stored back into any local persistence.
-	 *
-	 * @return  the new expiration year or {@code null} when unchanged or auto-replacements not supported
-	 */
-	public Short getReplacementExpirationYear() {
-		return replacementExpirationYear;
+	public TokenizedCreditCard getTokenizedCreditCard() {
+		return tokenizedCreditCard;
 	}
 
 	/**

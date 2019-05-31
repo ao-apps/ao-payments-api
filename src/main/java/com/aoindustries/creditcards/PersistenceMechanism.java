@@ -90,7 +90,7 @@ public interface PersistenceMechanism {
 	Map<String,CreditCard> getCreditCards(Principal principal, String providerId) throws SQLException;
 
 	/**
-	 * Updates the stored credit card details, all except the card number and expiration, for a credit card.
+	 * Updates the stored credit card details, all except the card number, expiration, and card security code, for a credit card.
 	 *
 	 * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
 	 * @see  CreditCardProcessor#authorize(java.security.Principal, java.security.acl.Group, com.aoindustries.creditcards.TransactionRequest, com.aoindustries.creditcards.CreditCard)
