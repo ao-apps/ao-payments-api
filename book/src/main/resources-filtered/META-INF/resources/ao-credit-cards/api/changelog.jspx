@@ -93,6 +93,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 						to be persisted in a timely manner.  This is in addition to the replacement values made available during authorization.
 					</li>
 					<li>Please note: the next major release of this project will be renamed to <code>ao-payment-api</code>.</li>
+					<!-- TODO: A CreditCard replacement log, logging all automatic replacements, both manual and automatic? -->
 					<!--
 						TODO: Version 2.0: Have a constructor given a mapping of String->String (or Properties) as configuration,
 						      or use a builder pattern with JavaBeans pattern setters.
