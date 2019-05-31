@@ -214,7 +214,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	}
 
 	/**
-	 * @deprecated  Please use {@link #AuthorizationResult(java.lang.String, com.aoindustries.creditcards.TransactionResult.CommunicationResult, java.lang.String, com.aoindustries.creditcards.TransactionResult.ErrorCode, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ApprovalResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.DeclineReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ReviewReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.CvvResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.AvsResult, java.lang.String)}
+	 * @deprecated  Please use {@link #AuthorizationResult(java.lang.String, com.aoindustries.creditcards.TransactionResult.CommunicationResult, java.lang.String, com.aoindustries.creditcards.TransactionResult.ErrorCode, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Short, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ApprovalResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.DeclineReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ReviewReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.CvvResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.AvsResult, java.lang.String)
 	 */
 	@Deprecated
 	public AuthorizationResult(
