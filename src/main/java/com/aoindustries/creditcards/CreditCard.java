@@ -315,6 +315,7 @@ public class CreditCard implements Cloneable {
 			for(int i = monthStr.length(); i < MONTH_DIGITS ; i++) result.append('0');
 			result.append(monthStr);
 		}
+		result.append(EXPIRATION_DISPLAY_SEPARATOR);
 		if(expirationYear == UNKNOWN_EXPRIATION_YEAR) {
 			for(int i = 0; i < YEAR_DIGITS; i++) result.append(UNKNOWN_DIGIT);
 		} else {
