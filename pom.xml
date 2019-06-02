@@ -140,15 +140,6 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 				<groupId>commons-validator</groupId><artifactId>commons-validator</artifactId><version>1.6</version>
 			</dependency>
 			<!-- Transitive -->
-			<!-- TODO: Include all transitive projects including those we manage?  This would be a lot of work. -->
-			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-tempfiles</artifactId><version>1.0.0-validation-SNAPSHOT</version>
-			</dependency>
-			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-tempfiles</artifactId><version>1.0.0-validation-SNAPSHOT</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
 			<dependency>
 				<groupId>commons-beanutils</groupId><artifactId>commons-beanutils</artifactId><version>1.9.3</version>
 			</dependency>
