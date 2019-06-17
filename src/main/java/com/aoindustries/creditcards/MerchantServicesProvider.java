@@ -151,7 +151,6 @@ public interface MerchantServicesProvider {
 		CreditCard creditCard,
 		byte expirationMonth, // TODO: 2.0: Make nullable Byte
 		short expirationYear // TODO: 2.0: Make nullable Short
-		// TODO: 1.1.0: cardCode (optionally) here, too
 	) throws UnsupportedOperationException, IOException;
 
 	/**
