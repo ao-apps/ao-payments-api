@@ -302,10 +302,6 @@ public class CreditCard implements Cloneable {
 	 * @throws  IllegalArgumentException  if invalid date
 	 */
 	public static String getExpirationDisplay(Byte expirationMonth, Short expirationYear) throws IllegalArgumentException {
-		// Allow 0 that comes from JSP Expression Language functions
-		// TODO: Make a different function for JSP EL within the aoweb-core-taglib, and do this conversion there?
-		if(expirationMonth != null && expirationMonth == 0) expirationMonth = null;
-		if(expirationYear != null && expirationYear == 0) expirationYear = null;
 		// Validate
 		if(expirationMonth != null) validateExpirationMonth(expirationMonth, true);
 		if(expirationYear != null) validateExpirationYear(expirationYear, true);
