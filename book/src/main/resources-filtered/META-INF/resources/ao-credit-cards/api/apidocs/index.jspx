@@ -39,5 +39,4 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		datePublished="2016-10-16T21:44:00-0500"
 		dateModified="${ao:getLastModified('index.html')}"
 	/>
-	<!-- TODO: Pick-up javadocs version, not pom version, in title, here and elsewhere -->
 </jsp:root>
