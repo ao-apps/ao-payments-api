@@ -36,7 +36,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-0500"
-		dateModified="2019-06-03T14:53:35-0500"
+		dateModified="2019-06-19T09:48:11-0500"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-credit-cards-api:pom.version}" />
@@ -93,7 +93,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 					</li>
 					<li>Using managed dependencies:
 						<ol>
-							<li>This project uses transitive managed dependencies.</li>
+							<li>This project uses managed dependencies.</li>
 							<li>This project's managed dependencies may also be imported by other projects.</li>
 						</ol>
 					</li>
