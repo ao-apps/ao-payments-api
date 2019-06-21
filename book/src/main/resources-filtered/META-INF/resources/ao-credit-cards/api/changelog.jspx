@@ -66,7 +66,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 
 		<changelog:release
 			projectName="@{documented.name}"
-			version="1.0.3"
+			version="1.1.0"
 			datePublished="2019-06-20T23:27:57-0500"
 			groupId="@{documented.groupId}"
 			artifactId="@{documented.artifactId}"
