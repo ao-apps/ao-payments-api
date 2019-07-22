@@ -25,6 +25,7 @@ package com.aoindustries.creditcards;
 import com.aoindustries.lang.LocalizedIllegalArgumentException;
 import com.aoindustries.math.SafeMath;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -155,7 +156,7 @@ public class CreditCardTest {
 			CreditCard.MIN_EXPIRATION_YEAR,
 			CreditCard.validateExpirationYear(CreditCard.MIN_EXPIRATION_YEAR, true)
 		);
-		int max = Calendar.getInstance().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+		int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
 		assertEquals(
 			max,
 			CreditCard.validateExpirationYear(SafeMath.castShort(max), true)
@@ -169,7 +170,7 @@ public class CreditCardTest {
 
 	@Test(expected = LocalizedIllegalArgumentException.class)
 	public void testValidateExpirationYearTooHighAllowUnknown() {
-		int max = Calendar.getInstance().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+		int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
 		CreditCard.validateExpirationYear(SafeMath.castShort(max + 1), true);
 	}
 
@@ -187,7 +188,7 @@ public class CreditCardTest {
 			CreditCard.MIN_EXPIRATION_YEAR,
 			CreditCard.validateExpirationYear(CreditCard.MIN_EXPIRATION_YEAR, false)
 		);
-		int max = Calendar.getInstance().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+		int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
 		assertEquals(
 			max,
 			CreditCard.validateExpirationYear(SafeMath.castShort(max), false)
@@ -201,7 +202,7 @@ public class CreditCardTest {
 
 	@Test(expected = LocalizedIllegalArgumentException.class)
 	public void testValidateExpirationYearTooHighDisllowUnknown() {
-		int max = Calendar.getInstance().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+		int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
 		CreditCard.validateExpirationYear(SafeMath.castShort(max + 1), false);
 	}
 
