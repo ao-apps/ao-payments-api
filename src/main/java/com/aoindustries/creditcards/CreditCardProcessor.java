@@ -406,7 +406,7 @@ public class CreditCardProcessor {
 
 	/**
 	 * Updates the credit card details, all except the card number and expiration.  If card stored to secure storage, updates that storage.
-	 * Any desired changes must have been made to <code>creditCard</code> object preceeding this call.
+	 * Any desired changes must have been made to <code>creditCard</code> object preceding this call.
 	 *
 	 * @throws  IOException   when unable to contact the bank
 	 * @throws  SQLException  when unable to store in the persistence layer
