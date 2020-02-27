@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -257,7 +257,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @param  expirationMonth  the month or {@link #UNKNOWN_EXPRIATION_MONTH} when unknown
 	 * @param  expirationYear  the year or {@link #UNKNOWN_EXPRIATION_YEAR} when unknown
-	 * @param  allowUnknownDigit  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
+	 * @param  allowUnknownDate  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
 	 *
 	 * @throws  IllegalArgumentException  if invalid date
 	 */
@@ -628,7 +628,7 @@ public class CreditCard implements Cloneable {
 	 * Gets the expiration date in MMYY format,
 	 * not including any {@link #UNKNOWN_DIGIT}.
 	 *
-	 * @param  allowUnknownDigit  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
+	 * @param  allowUnknownDate  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
 	 *
 	 * @throws  IllegalArgumentException  if invalid date
 	 */
