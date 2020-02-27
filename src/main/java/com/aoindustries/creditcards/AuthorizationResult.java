@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -198,7 +198,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	}
 
 	/**
-	 * @deprecated  Please use {@link #AuthorizationResult(java.lang.String, com.aoindustries.creditcards.TransactionResult.CommunicationResult, java.lang.String, com.aoindustries.creditcards.TransactionResult.ErrorCode, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte, java.lang.Short, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ApprovalResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.DeclineReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ReviewReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.CvvResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.AvsResult, java.lang.String)
+	 * @deprecated  Please use {@link #AuthorizationResult(java.lang.String, com.aoindustries.creditcards.TransactionResult.CommunicationResult, java.lang.String, com.aoindustries.creditcards.TransactionResult.ErrorCode, java.lang.String, java.lang.String, com.aoindustries.creditcards.TokenizedCreditCard, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ApprovalResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.DeclineReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.ReviewReason, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.CvvResult, java.lang.String, com.aoindustries.creditcards.AuthorizationResult.AvsResult, java.lang.String)}
 	 */
 	@Deprecated
 	public AuthorizationResult(
