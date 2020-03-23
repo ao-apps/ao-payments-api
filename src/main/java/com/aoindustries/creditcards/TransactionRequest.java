@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -255,7 +255,7 @@ public class TransactionRequest implements Cloneable {
 	 *
 	 * The amount is normalized to the proper number of decimal places for the selected currency.
 	 *
-	 * @throws  IllegalArgumentException  if amount <= 0 or is incorrectly formatted for the currency.
+	 * @throws  IllegalArgumentException  if {@code amount <= 0} or is incorrectly formatted for the currency.
 	 */
 	public void setAmount(BigDecimal amount) throws IllegalArgumentException {
 		if(amount==null) {
@@ -282,7 +282,7 @@ public class TransactionRequest implements Cloneable {
 	 *
 	 * The amount is normalized to the proper number of decimal places for the selected currency.
 	 *
-	 * @throws  IllegalArgumentException  if taxAmount < 0 or is incorrectly formatted for the currency.
+	 * @throws  IllegalArgumentException  if {@code taxAmount < 0} or is incorrectly formatted for the currency.
 	 */
 	public void setTaxAmount(BigDecimal taxAmount) {
 		if(taxAmount==null) {
@@ -323,7 +323,7 @@ public class TransactionRequest implements Cloneable {
 	 *
 	 * The amount is normalized to the proper number of decimal places for the selected currency.
 	 *
-	 * @throws  IllegalArgumentException  if shippingAmount < 0 or is incorrectly formatted for the currency.
+	 * @throws  IllegalArgumentException  if {@code shippingAmount < 0} or is incorrectly formatted for the currency.
 	 */
 	public void setShippingAmount(BigDecimal shippingAmount) {
 		if(shippingAmount==null) {
@@ -350,7 +350,7 @@ public class TransactionRequest implements Cloneable {
 	 *
 	 * The amount is normalized to the proper number of decimal places for the selected currency.
 	 *
-	 * @throws  IllegalArgumentException  if dutyAmount < 0 or is incorrectly formatted for the currency.
+	 * @throws  IllegalArgumentException  if {@code dutyAmount < 0} or is incorrectly formatted for the currency.
 	 */
 	public void setDutyAmount(BigDecimal dutyAmount) {
 		if(dutyAmount==null) {

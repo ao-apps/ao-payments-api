@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -326,7 +326,6 @@ public class CreditCardProcessor {
 	 * If the void was successful, updates the status of the transaction passed in.
 	 * Transaction status must be AUTHORIZED, CAPTURED, or HOLD.
 	 *
-	 * @throws  IOException   when unable to contact the bank
 	 * @throws  SQLException  when unable to update the persistence layer
 	 * 
 	 * @see  #sale

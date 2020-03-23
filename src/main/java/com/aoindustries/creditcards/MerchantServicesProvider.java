@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -70,8 +70,6 @@ public interface MerchantServicesProvider {
 
 	/**
 	 * Voids a previous transaction.
-	 *
-	 * @throws  IOException   when unable to contact the bank
 	 *
 	 * @see  CreditCardProcessor#voidTransaction(java.security.Principal, com.aoindustries.creditcards.Transaction)
 	 */
