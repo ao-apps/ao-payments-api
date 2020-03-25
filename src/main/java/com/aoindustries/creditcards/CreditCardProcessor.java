@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * Processes credit card payments with pluggable merchant services providers and persistence mechanisms.
@@ -363,9 +364,8 @@ public class CreditCardProcessor {
 	/**
 	 * Requests a credit.
 	 */
-	@SuppressWarnings("deprecation")
 	public CreditResult credit(TransactionRequest transactionRequest, CreditCard creditCard) {
-		throw new com.aoindustries.exception.NotImplementedException();
+		throw new NotImplementedException("TODO");
 		// return provider.credit(transactionRequest, creditCard);
 	}
 
