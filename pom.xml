@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 / <a target="_top" href="${project.url}">${shortTitle}</a>]]></javadoc.breadcrumbs>
 		<shortTitle>API</shortTitle>
 		<!-- Dependencies -->
-		<org.apache.commons:commons-lang3:version>3.9</org.apache.commons:commons-lang3:version>
+		<org.apache.commons.commons-lang3.version>3.9</org.apache.commons.commons-lang3.version>
 	</properties>
 
 	<name>AO Credit Cards API</name>
@@ -110,7 +110,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 								<!-- Direct -->
 								<link>https://aoindustries.com/ao-lang/apidocs/</link>
 								<link>https://aoindustries.com/aocode-public/apidocs/</link>
-								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-${org.apache.commons:commons-lang3:version}/</link>
+								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-${org.apache.commons.commons-lang3.version}/</link>
 								<link>https://commons.apache.org/proper/commons-validator/apidocs/</link>
 							</links>
 						</configuration>
@@ -134,7 +134,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 				<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId><version>4.0.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${org.apache.commons:commons-lang3:version}</version>
+				<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${org.apache.commons.commons-lang3.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-validator</groupId><artifactId>commons-validator</artifactId><version>1.6</version>
