@@ -365,7 +365,7 @@ public class CreditCardProcessor {
 	 */
 	@SuppressWarnings("deprecation")
 	public CreditResult credit(TransactionRequest transactionRequest, CreditCard creditCard) {
-		throw new com.aoindustries.lang.NotImplementedException();
+		throw new com.aoindustries.exception.NotImplementedException();
 		// return provider.credit(transactionRequest, creditCard);
 	}
 
