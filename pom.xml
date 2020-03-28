@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 / <a target="_top" href="${project.url}">${shortTitle}</a>]]></javadoc.breadcrumbs>
 		<shortTitle>API</shortTitle>
 		<!-- Dependencies -->
-		<org.apache.commons.commons-lang3.version>3.9</org.apache.commons.commons-lang3.version>
+		<org.apache.commons.commons-lang3.version>3.10</org.apache.commons.commons-lang3.version>
 	</properties>
 
 	<name>AO Credit Cards API</name>
