@@ -140,6 +140,8 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 								<link>https://aoindustries.com/aocode-public/apidocs/</link>
 								<link>https://commons.apache.org/proper/commons-lang/javadocs/api-${org.apache.commons.commons-lang3.version}/</link>
 								<link>https://commons.apache.org/proper/commons-validator/apidocs/</link>
+								<!-- Test Direct -->
+								<link>https://junit.org/junit4/javadoc/latest/</link>
 							</links>
 						</configuration>
 					</plugin>
