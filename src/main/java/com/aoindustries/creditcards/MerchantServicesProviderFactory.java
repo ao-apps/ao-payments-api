@@ -104,7 +104,7 @@ public class MerchantServicesProviderFactory {
 		String param2,
 		String param3,
 		String param4
-	) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException { // TODO: ReflectiveOperationException only
+	) throws ReflectiveOperationException {
 		// The key in the map
 		ProviderKey processorKey = new ProviderKey(
 			providerId,
@@ -127,7 +127,9 @@ public class MerchantServicesProviderFactory {
 				try {
 					Constructor<? extends MerchantServicesProvider> constructor = clazz.getConstructor(String.class, String.class, String.class, String.class, String.class);
 					provider = constructor.newInstance(providerId, param1, param2, param3, param4);
-				} catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException err) { // TODO: ReflectiveOperationException
+				} catch(InvocationTargetException e) {
+					throw e;
+				} catch(ReflectiveOperationException ignored) {
 					// Fall through to next param set
 				}
 
@@ -136,7 +138,9 @@ public class MerchantServicesProviderFactory {
 					try {
 						Constructor<? extends MerchantServicesProvider> constructor = clazz.getConstructor(String.class, String.class, String.class, String.class);
 						provider = constructor.newInstance(providerId, param1, param2, param3);
-					} catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException err) { // TODO: ReflectiveOperationException
+					} catch(InvocationTargetException e) {
+						throw e;
+					} catch(ReflectiveOperationException ignored) {
 						// Fall through to next param set
 					}
 				}
@@ -146,7 +150,9 @@ public class MerchantServicesProviderFactory {
 					try {
 						Constructor<? extends MerchantServicesProvider> constructor = clazz.getConstructor(String.class, String.class, String.class);
 						provider = constructor.newInstance(providerId, param1, param2);
-					} catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException err) { // TODO: ReflectiveOperationException
+					} catch(InvocationTargetException e) {
+						throw e;
+					} catch(ReflectiveOperationException ignored) {
 						// Fall through to next param set
 					}
 				}
@@ -156,7 +162,9 @@ public class MerchantServicesProviderFactory {
 					try {
 						Constructor<? extends MerchantServicesProvider> constructor = clazz.getConstructor(String.class, String.class);
 						provider = constructor.newInstance(providerId, param1);
-					} catch(NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException err) { // TODO: ReflectiveOperationException
+					} catch(InvocationTargetException e) {
+						throw e;
+					} catch(ReflectiveOperationException ignored) {
 						// Fall through to next param set
 					}
 				}

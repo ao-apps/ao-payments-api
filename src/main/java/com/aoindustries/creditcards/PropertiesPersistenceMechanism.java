@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -562,7 +562,12 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 			}
 		}
 		String uniqueId = Long.toString(highest + 1);
-		CreditCard internalCreditCard = creditCard.clone();
+		CreditCard internalCreditCard;
+		try {
+			internalCreditCard = creditCard.clone();
+		} catch(CloneNotSupportedException e) {
+			throw new SQLException(e);
+		}
 		internalCreditCard.setPersistenceUniqueId(uniqueId);
 		internalCreditCards.add(internalCreditCard);
 		save();
@@ -573,7 +578,13 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	public synchronized CreditCard getCreditCard(Principal principal, String persistenceUniqueId) throws SQLException {
 		loadIfNeeded();
 		for(CreditCard internalCreditCard : internalCreditCards) {
-			if(persistenceUniqueId.equals(internalCreditCard.getPersistenceUniqueId())) return internalCreditCard.clone();
+			if(persistenceUniqueId.equals(internalCreditCard.getPersistenceUniqueId())) {
+				try {
+					return internalCreditCard.clone();
+				} catch(CloneNotSupportedException e) {
+					throw new SQLException(e);
+				}
+			}
 		}
 		return null;
 	}
@@ -583,7 +594,12 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		loadIfNeeded();
 		Map<String,CreditCard> map = new LinkedHashMap<>(internalCreditCards.size() *4/3+1);
 		for(CreditCard internalCreditCard : internalCreditCards) {
-			CreditCard copy = internalCreditCard.clone();
+			CreditCard copy;
+			try {
+				copy = internalCreditCard.clone();
+			} catch(CloneNotSupportedException e) {
+				throw new SQLException(e);
+			}
 			String persistenceUniqueId = copy.getPersistenceUniqueId();
 			if(map.put(persistenceUniqueId, copy) != null) throw new SQLException("Duplicate persistenceUniqueId: " + persistenceUniqueId);
 		}
@@ -596,7 +612,12 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		Map<String,CreditCard> map = new LinkedHashMap<>(internalCreditCards.size() *4/3+1);
 		for(CreditCard internalCreditCard : internalCreditCards) {
 			if(providerId.equals(internalCreditCard.getProviderId())) {
-				CreditCard copy = internalCreditCard.clone();
+				CreditCard copy;
+				try {
+					copy = internalCreditCard.clone();
+				} catch(CloneNotSupportedException e) {
+					throw new SQLException(e);
+				}
 				String providerUniqueId = copy.getProviderUniqueId();
 				if(map.put(providerUniqueId, copy) != null) throw new SQLException("Duplicate providerUniqueId: " + providerUniqueId);
 			}
@@ -708,7 +729,12 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 			}
 		}
 		String uniqueId = Long.toString(highest + 1);
-		Transaction internalTransaction = transaction.clone();
+		Transaction internalTransaction;
+		try {
+			internalTransaction = transaction.clone();
+		} catch(CloneNotSupportedException e) {
+			throw new SQLException(e);
+		}
 		internalTransaction.setPersistenceUniqueId(uniqueId);
 		internalTransactions.add(internalTransaction);
 		save();
@@ -736,7 +762,11 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		for(int c=0;c<internalTransactions.size();c++) {
 			Transaction internalTransaction = internalTransactions.get(c);
 			if(internalTransaction.getPersistenceUniqueId().equals(transaction.getPersistenceUniqueId())) {
-				internalTransactions.set(c, transaction.clone());
+				try {
+					internalTransactions.set(c, transaction.clone());
+				} catch(CloneNotSupportedException e) {
+					throw new SQLException(e);
+				}
 				save();
 				return;
 			}

@@ -243,12 +243,8 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 	}
 
 	@Override
-	public AuthorizationResult clone() {
-		try {
-			return (AuthorizationResult)super.clone();
-		} catch(CloneNotSupportedException err) {
-			throw new RuntimeException(err);
-		}
+	public AuthorizationResult clone() throws CloneNotSupportedException {
+		return (AuthorizationResult)super.clone();
 	}
 
 	/**

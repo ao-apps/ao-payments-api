@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-0500"
-		dateModified="2020-06-11T05:14:17-05:00"
+		dateModified="2020-09-02T20:20:29-05:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-credit-cards-api:pom.version}" />
@@ -53,6 +53,9 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
+				<ul>
+					<li>Resolved editor warnings</li>
+				</ul>
 				<!-- TODO:
 				<ul>
 					<li>A CreditCard replacement log, logging all automatic replacements, both manual and automatic?</li>

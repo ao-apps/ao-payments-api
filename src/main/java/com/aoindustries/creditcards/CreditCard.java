@@ -195,7 +195,9 @@ public class CreditCard implements Cloneable {
 		result.append(CARD_NUMBER_DISPLAY_PREFIX);
 		int digLen = digits.length();
 		if(digLen < MASK_END_DIGITS) {
-			for(int i = digLen; i < MASK_END_DIGITS; i++) result.append(UNKNOWN_DIGIT);
+			for(int i = digLen; i < MASK_END_DIGITS; i++) {
+				result.append(UNKNOWN_DIGIT);
+			}
 			result.append(digits);
 		} else {
 			result.append(digits.substring(digLen - MASK_END_DIGITS));
@@ -315,18 +317,26 @@ public class CreditCard implements Cloneable {
 		}
 		StringBuilder result = new StringBuilder(MONTH_DIGITS + EXPIRATION_DISPLAY_SEPARATOR.length() + YEAR_DIGITS);
 		if(expirationMonth == null || expirationMonth == UNKNOWN_EXPRIATION_MONTH) {
-			for(int i = 0; i < MONTH_DIGITS; i++) result.append(UNKNOWN_DIGIT);
+			for(int i = 0; i < MONTH_DIGITS; i++) {
+				result.append(UNKNOWN_DIGIT);
+			}
 		} else {
 			String monthStr = expirationMonth.toString();
-			for(int i = monthStr.length(); i < MONTH_DIGITS ; i++) result.append('0');
+			for(int i = monthStr.length(); i < MONTH_DIGITS ; i++) {
+				result.append('0');
+			}
 			result.append(monthStr);
 		}
 		result.append(EXPIRATION_DISPLAY_SEPARATOR);
 		if(expirationYear == null || expirationYear == UNKNOWN_EXPRIATION_YEAR) {
-			for(int i = 0; i < YEAR_DIGITS; i++) result.append(UNKNOWN_DIGIT);
+			for(int i = 0; i < YEAR_DIGITS; i++) {
+				result.append(UNKNOWN_DIGIT);
+			}
 		} else {
 			String yearStr = expirationYear.toString();
-			for(int i = yearStr.length(); i < YEAR_DIGITS ; i++) result.append('0');
+			for(int i = yearStr.length(); i < YEAR_DIGITS ; i++) {
+				result.append('0');
+			}
 			result.append(yearStr);
 		}
 		return result.toString();
@@ -386,6 +396,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @throws  IllegalArgumentException  if anything not valid
 	 */
+	@SuppressWarnings("OverridableMethodCallInConstructor")
 	public CreditCard(
 		String persistenceUniqueId,
 		String principalName,
@@ -443,12 +454,8 @@ public class CreditCard implements Cloneable {
 	}
 
 	@Override
-	public CreditCard clone() {
-		try {
-			return (CreditCard)super.clone();
-		} catch(CloneNotSupportedException err) {
-			throw new RuntimeException(err);
-		}
+	public CreditCard clone() throws CloneNotSupportedException {
+		return (CreditCard)super.clone();
 	}
 
 	/**

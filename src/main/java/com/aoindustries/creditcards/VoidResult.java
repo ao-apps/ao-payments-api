@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -50,11 +50,7 @@ public class VoidResult extends TransactionResult implements Cloneable {
 	}
 
 	@Override
-	public VoidResult clone() {
-		try {
-			return (VoidResult)super.clone();
-		} catch(CloneNotSupportedException err) {
-			throw new RuntimeException(err);
-		}
+	public VoidResult clone() throws CloneNotSupportedException {
+		return (VoidResult)super.clone();
 	}
 }

@@ -89,6 +89,7 @@ public class TransactionRequest implements Cloneable {
 	/**
 	 * Creates an empty TransactionRequest.  The values should be set using the appropriate setter methods.
 	 */
+	@SuppressWarnings("OverridableMethodCallInConstructor")
 	public TransactionRequest() {
 		setCurrency(Currency.getInstance(accessor.getMessage("TransactionRequest.currency.default")));
 	}
@@ -98,6 +99,7 @@ public class TransactionRequest implements Cloneable {
 	 *
 	 * @throws  IllegalArgumentException  if anything not valid
 	 */
+	@SuppressWarnings("OverridableMethodCallInConstructor")
 	public TransactionRequest(
 		boolean testMode,
 		String customerIp,
@@ -152,13 +154,10 @@ public class TransactionRequest implements Cloneable {
 	}
 
 	@Override
-	public TransactionRequest clone() {
-		try {
-			return (TransactionRequest)super.clone();
-		} catch(CloneNotSupportedException err) {
-			throw new RuntimeException(err);
-		}
+	public TransactionRequest clone() throws CloneNotSupportedException {
+		return (TransactionRequest)super.clone();
 	}
+
 	/**
 	 * Gets the test mode for this transaction.
 	 */
