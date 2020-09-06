@@ -104,7 +104,7 @@ public class MerchantServicesProviderFactory {
 		String param2,
 		String param3,
 		String param4
-	) throws ReflectiveOperationException {
+	) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		// The key in the map
 		ProviderKey processorKey = new ProviderKey(
 			providerId,
