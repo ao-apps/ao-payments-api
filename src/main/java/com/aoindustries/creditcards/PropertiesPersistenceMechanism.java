@@ -22,6 +22,7 @@
  */
 package com.aoindustries.creditcards;
 
+import com.aoindustries.collections.AoCollections;
 import static com.aoindustries.creditcards.ApplicationResourcesAccessor.accessor;
 import com.aoindustries.io.FileUtils;
 import com.aoindustries.sql.LocalizedSQLException;
@@ -39,7 +40,6 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -592,7 +592,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	@Override
 	public synchronized Map<String,CreditCard> getCreditCards(Principal principal) throws SQLException {
 		loadIfNeeded();
-		Map<String,CreditCard> map = new LinkedHashMap<>(internalCreditCards.size() *4/3+1);
+		Map<String,CreditCard> map = AoCollections.newLinkedHashMap(internalCreditCards.size());
 		for(CreditCard internalCreditCard : internalCreditCards) {
 			CreditCard copy;
 			try {
@@ -609,7 +609,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	@Override
 	public synchronized Map<String,CreditCard> getCreditCards(Principal principal, String providerId) throws SQLException {
 		loadIfNeeded();
-		Map<String,CreditCard> map = new LinkedHashMap<>(internalCreditCards.size() *4/3+1);
+		Map<String,CreditCard> map = AoCollections.newLinkedHashMap(internalCreditCards.size());
 		for(CreditCard internalCreditCard : internalCreditCards) {
 			if(providerId.equals(internalCreditCard.getProviderId())) {
 				CreditCard copy;
