@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-0500"
-		dateModified="2020-11-12T23:15:41-06:00"
+		dateModified="2020-11-16T19:28:31-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-credit-cards-api:pom.version}" />
@@ -55,6 +55,18 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 			>
 				<ul>
 					<li>Resolved editor warnings.</li>
+					<li>
+						<p>
+							Now registering exception types for use with <code>Throwables.newSurrogate(…)</code> that supports creating new instances
+							of throwables in order to have caller stack trace.  When wrapped, the original throwable is the
+							cause of the new throwable.  When not wrapped, the original throwable is used directly and
+							caller stack trace is lost.
+						</p>
+						<p>
+							This is used to maintain exception types and states across thread boundaries, such as when an exception cause
+							is obtained from an <code>ExecutionException</code>.
+						</p>
+					</li>
 				</ul>
 				<!-- TODO:
 				<ul>

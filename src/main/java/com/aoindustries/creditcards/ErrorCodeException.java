@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,8 +22,9 @@
  */
 package com.aoindustries.creditcards;
 
-import static com.aoindustries.creditcards.ApplicationResourcesAccessor.accessor;
 import com.aoindustries.io.LocalizedIOException;
+import com.aoindustries.lang.Throwables;
+import java.io.Serializable;
 
 /**
  * Extends <code>LocalizedIOException</code> to provide exceptions along with the corresponding error code.
@@ -37,26 +38,37 @@ public class ErrorCodeException extends LocalizedIOException {
 	final private TransactionResult.ErrorCode errorCode;
 
 	public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key) {
-		super(accessor, key);
+		super(ApplicationResourcesAccessor.accessor, key);
 		this.errorCode = errorCode;
 	}
 
-	public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key, Object... args) {
-		super(accessor, key, args);
+	public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
+		super(ApplicationResourcesAccessor.accessor, key, args);
 		this.errorCode = errorCode;
 	}
 
 	public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key) {
-		super(cause, accessor, key);
+		super(cause, ApplicationResourcesAccessor.accessor, key);
 		this.errorCode = errorCode;
 	}
 
-	public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key, Object... args) {
-		super(cause, accessor, key, args);
+	public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
+		super(cause, ApplicationResourcesAccessor.accessor, key, args);
 		this.errorCode = errorCode;
 	}
 
 	public TransactionResult.ErrorCode getErrorCode() {
 		return errorCode;
+	}
+
+	static {
+		Throwables.registerSurrogateFactory(ErrorCodeException.class, (template, cause) ->
+			new ErrorCodeException(
+				cause,
+				template.errorCode,
+				template.key,
+				template.args
+			)
+		);
 	}
 }
