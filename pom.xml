@@ -29,7 +29,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		<relativePath>../../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>ao-credit-cards-api</artifactId><version>1.2.0-SNAPSHOT</version>
+	<groupId>com.aoindustries</groupId><artifactId>ao-credit-cards-api</artifactId><version>1.2.0</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -49,7 +49,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		<connection>scm:git:git://github.com/aoindustries/ao-credit-cards-api.git</connection>
 		<developerConnection>scm:git:git@github.com:aoindustries/ao-credit-cards-api.git</developerConnection>
 		<url>https://github.com/aoindustries/ao-credit-cards-api</url>
-		<tag>HEAD</tag>
+		<tag>ao-credit-cards-api-1.2.0</tag>
 	</scm>
 
 	<issueManagement>
