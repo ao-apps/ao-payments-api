@@ -135,11 +135,11 @@ public class CreditCardProcessor {
 						status = Transaction.Status.HOLD;
 						break;
 					default:
-						throw new LocalizedSQLException(accessor, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
+						throw new LocalizedSQLException("23000", accessor, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
 				}
 				break;
 			default:
-				throw new LocalizedSQLException(accessor, "CreditCardProcessor.sale.unexpectedCommunicationResult", authorizationResult.getCommunicationResult());
+				throw new LocalizedSQLException("23000", accessor, "CreditCardProcessor.sale.unexpectedCommunicationResult", authorizationResult.getCommunicationResult());
 		}
 		transaction.setStatus(status);
 
@@ -240,11 +240,11 @@ public class CreditCardProcessor {
 						status = Transaction.Status.HOLD;
 						break;
 					default:
-						throw new LocalizedSQLException(accessor, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
+						throw new LocalizedSQLException("23000", accessor, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
 				}
 				break;
 			default:
-				throw new LocalizedSQLException(accessor, "CreditCardProcessor.sale.unexpectedCommunicationResult", authorizationResult.getCommunicationResult());
+				throw new LocalizedSQLException("23000", accessor, "CreditCardProcessor.sale.unexpectedCommunicationResult", authorizationResult.getCommunicationResult());
 		}
 		transaction.setStatus(status);
 
@@ -307,7 +307,7 @@ public class CreditCardProcessor {
 				status = Transaction.Status.CAPTURED;
 				break;
 			default:
-				throw new LocalizedSQLException(accessor, "CreditCardProcessor.capture.unexpectedCommunicationResult", captureResult.getCommunicationResult());
+				throw new LocalizedSQLException("23000", accessor, "CreditCardProcessor.capture.unexpectedCommunicationResult", captureResult.getCommunicationResult());
 		}
 		transaction.setStatus(status);
 
