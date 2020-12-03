@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2018, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2018, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,7 +22,7 @@
  */
 package com.aoindustries.creditcards;
 
-import static com.aoindustries.creditcards.ApplicationResourcesAccessor.accessor;
+import static com.aoindustries.creditcards.Resources.RESOURCES;
 
 /**
  * Encapsulates the results of any type of transaction with the merchant services provider.
@@ -40,7 +40,7 @@ abstract public class TransactionResult {
 
 		@Override
 		public String toString() {
-			return accessor.getMessage("TransactionResult.CommunicationResult."+name());
+			return RESOURCES.getMessage("TransactionResult.CommunicationResult."+name());
 		}
 	}
 
@@ -111,7 +111,7 @@ abstract public class TransactionResult {
 
 		@Override
 		public String toString() {
-			return accessor.getMessage("TransactionResult.ErrorCode."+name());
+			return RESOURCES.getMessage("TransactionResult.ErrorCode."+name());
 		}
 	}
 

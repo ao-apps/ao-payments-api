@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
+Copyright (C) 2020  AO Industries, Inc.
+    support@aoindustries.com
+    7262 Bull Pen Cir
+    Mobile, AL 36695
+
+This file is part of ao-credit-cards-api.
+
+ao-credit-cards-api is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ao-credit-cards-api is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.aoindustries</groupId><artifactId>ao-oss-parent</artifactId><version>1.12.0-POST-SNAPSHOT</version>
+		<relativePath>../../../ao-oss-parent/pom.xml</relativePath>
+	</parent>
+
+	<groupId>com.aoindustries</groupId><artifactId>ao-credit-cards-api-devel</artifactId><version>1.3.0-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+
+	<name>AO Credit Cards API Devel</name>
+	<url>https://aoindustries.com/ao-credit-cards/api/</url>
+	<description>Development-only components of AO Credit Cards API.</description>
+	<inceptionYear>2020</inceptionYear>
+
+	<scm>
+		<connection>scm:git:git://github.com/aoindustries/ao-credit-cards-api.git</connection>
+		<developerConnection>scm:git:git@github.com:aoindustries/ao-credit-cards-api.git</developerConnection>
+		<url>https://github.com/aoindustries/ao-credit-cards-api</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/aoindustries/ao-credit-cards-api/issues</url>
+	</issueManagement>
+
+	<build>
+		<plugins>
+			<!-- Never generate Javadocs: local development only -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId>
+				<configuration><skip>true</skip></configuration>
+			</plugin>
+			<!-- Never attach sources: local development only -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-source-plugin</artifactId>
+				<configuration><skipSource>true</skipSource></configuration>
+			</plugin>
+			<!-- Never sign: local development only -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-gpg-plugin</artifactId>
+				<configuration><skip>true</skip></configuration>
+			</plugin>
+			<!-- Never deploy: local development only -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-deploy-plugin</artifactId>
+				<configuration><skip>true</skip></configuration>
+			</plugin>
+			<!-- Never stage: local development only -->
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId><artifactId>nexus-staging-maven-plugin</artifactId>
+				<configuration>
+					<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Direct -->
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.8.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId><version>4.4.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+			</dependency>
+			<!-- Transitive -->
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId><version>1.2.0${POST-SNAPSHOT}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aoindustries</groupId><artifactId>ao-tempfiles</artifactId><version>2.0.0${POST-SNAPSHOT}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- Direct -->
+		<dependency>
+			<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.aoindustries</groupId><artifactId>aocode-public</artifactId>
+		</dependency>
+	</dependencies>
+</project>

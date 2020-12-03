@@ -38,22 +38,22 @@ public class ErrorCodeException extends LocalizedIOException {
 	final private TransactionResult.ErrorCode errorCode;
 
 	public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key) {
-		super(ApplicationResourcesAccessor.accessor, key);
+		super(Resources.RESOURCES, key);
 		this.errorCode = errorCode;
 	}
 
 	public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
-		super(ApplicationResourcesAccessor.accessor, key, args);
+		super(Resources.RESOURCES, key, args);
 		this.errorCode = errorCode;
 	}
 
 	public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key) {
-		super(cause, ApplicationResourcesAccessor.accessor, key);
+		super(cause, Resources.RESOURCES, key);
 		this.errorCode = errorCode;
 	}
 
 	public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
-		super(cause, ApplicationResourcesAccessor.accessor, key, args);
+		super(cause, Resources.RESOURCES, key, args);
 		this.errorCode = errorCode;
 	}
 

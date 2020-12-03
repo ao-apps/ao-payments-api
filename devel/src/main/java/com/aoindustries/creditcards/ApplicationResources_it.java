@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2013, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,20 +26,15 @@ import com.aoindustries.util.i18n.EditableResourceBundle;
 import java.util.Locale;
 
 /**
- * Do not use directly.
- *
  * @author  AO Industries, Inc.
  */
-public final class ApplicationResources_zh extends EditableResourceBundle {
+public final class ApplicationResources_it extends EditableResourceBundle {
 
-	/**
-	 * Do not use directly.
-	 */
-	public ApplicationResources_zh() {
+	public ApplicationResources_it() {
 		super(
-			Locale.CHINESE,
+			Locale.ITALIAN,
 			ApplicationResources.bundleSet,
-			ApplicationResources.getSourceDirectories("ApplicationResources_zh.properties")
+			ApplicationResources.getSourceFile("ApplicationResources_it.properties")
 		);
 	}
 }

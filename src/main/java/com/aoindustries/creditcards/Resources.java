@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2013, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2013, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -22,24 +22,16 @@
  */
 package com.aoindustries.creditcards;
 
-import com.aoindustries.util.i18n.EditableResourceBundle;
-import java.util.Locale;
-
 /**
- * Do not use directly.
- *
- * @author  AO Industries, Inc.
+ * Provides a simplified interface for obtaining localized values from the ApplicationResources.properties files.
  */
-public final class ApplicationResources_ar extends EditableResourceBundle {
+final public class Resources {
+
+	public static final com.aoindustries.i18n.Resources RESOURCES =
+		com.aoindustries.i18n.Resources.getResources(Resources.class.getPackage());
 
 	/**
-	 * Do not use directly.
+	 * Make no instances.
 	 */
-	public ApplicationResources_ar() {
-		super(
-			new Locale("ar"),
-			ApplicationResources.bundleSet,
-			ApplicationResources.getSourceDirectories("ApplicationResources_ar.properties")
-		);
-	}
+	private Resources() {}
 }

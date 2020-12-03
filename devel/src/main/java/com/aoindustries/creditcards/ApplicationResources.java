@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -24,34 +24,30 @@ package com.aoindustries.creditcards;
 
 import com.aoindustries.util.i18n.EditableResourceBundle;
 import com.aoindustries.util.i18n.EditableResourceBundleSet;
+import com.aoindustries.util.i18n.Locales;
 import java.io.File;
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * Do not use directly.
- *
  * @author  AO Industries, Inc.
  */
 public final class ApplicationResources extends EditableResourceBundle {
 
 	public static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
-		ApplicationResources.class.getName(),
-		Arrays.asList(
-			Locale.ROOT,
-			new Locale("ar"),
-			Locale.GERMAN,
-			Locale.ENGLISH,
-			new Locale("es"),
-			Locale.FRENCH,
-			Locale.ITALIAN,
-			Locale.JAPANESE,
-			new Locale("pt"),
-			Locale.CHINESE
-		)
+		ApplicationResources.class,
+		Locale.ROOT,
+		Locales.ARABIC,
+		Locale.GERMAN,
+		Locale.ENGLISH,
+		Locales.SPANISH,
+		Locale.FRENCH,
+		Locale.ITALIAN,
+		Locale.JAPANESE,
+		Locales.PORTUGUESE,
+		Locale.CHINESE
 	);
 
-	static File[] getSourceDirectories(String filename) {
+	static File[] getSourceFile(String filename) {
 		return new File[] {
 			// AO build
 			new File(System.getProperty("user.home")+"/maven2/ao/ao-credit-cards/ao-credit-cards-api/src/main/java/com/aoindustries/creditcards", filename),
@@ -60,14 +56,7 @@ public final class ApplicationResources extends EditableResourceBundle {
 		};
 	}
 
-	/**
-	 * Do not use directly.
-	 */
 	public ApplicationResources() {
-		super(
-			Locale.ROOT,
-			bundleSet,
-			getSourceDirectories("ApplicationResources.properties")
-		);
+		super(Locale.ROOT, bundleSet, getSourceFile("ApplicationResources.properties"));
 	}
 }
