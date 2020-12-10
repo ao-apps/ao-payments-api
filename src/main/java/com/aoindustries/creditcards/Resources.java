@@ -25,9 +25,9 @@ package com.aoindustries.creditcards;
 /**
  * Provides a simplified interface for obtaining localized values from the ApplicationResources.properties files.
  */
-final public class Resources {
+public final class Resources {
 
-	public static final com.aoindustries.i18n.Resources RESOURCES =
+	public static final com.aoindustries.i18n.Resources PACKAGE_RESOURCES =
 		com.aoindustries.i18n.Resources.getResources(Resources.class.getPackage());
 
 	/**

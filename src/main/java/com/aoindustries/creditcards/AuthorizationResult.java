@@ -22,7 +22,7 @@
  */
 package com.aoindustries.creditcards;
 
-import static com.aoindustries.creditcards.Resources.RESOURCES;
+import static com.aoindustries.creditcards.Resources.PACKAGE_RESOURCES;
 
 /**
  * Encapsulates the results of an authorization.
@@ -44,7 +44,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		 */
 		@Override
 		public String toString() {
-			return RESOURCES.getMessage("AuthorizationResult.ApprovalResult."+name());
+			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ApprovalResult."+name());
 		}
 	}
 
@@ -79,7 +79,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		 */
 		@Override
 		public String toString() {
-			return RESOURCES.getMessage("AuthorizationResult.DeclineReason."+name());
+			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.DeclineReason."+name());
 		}
 	}
 
@@ -94,7 +94,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		 */
 		@Override
 		public String toString() {
-			return RESOURCES.getMessage("AuthorizationResult.ReviewReason."+name());
+			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ReviewReason."+name());
 		}
 	}
 
@@ -112,7 +112,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		 */
 		@Override
 		public String toString() {
-			return RESOURCES.getMessage("AuthorizationResult.CvvResult."+name());
+			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.CvvResult."+name());
 		}
 	}
 
@@ -138,7 +138,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
 		 */
 		@Override
 		public String toString() {
-			return RESOURCES.getMessage("AuthorizationResult.AvsResult."+name());
+			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.AvsResult."+name());
 		}
 	}
 

@@ -22,7 +22,7 @@
  */
 package com.aoindustries.creditcards;
 
-import static com.aoindustries.creditcards.Resources.RESOURCES;
+import static com.aoindustries.creditcards.Resources.PACKAGE_RESOURCES;
 
 /**
  * Encapsulates all the details of one transaction, including request, credit card details, and response.
@@ -47,7 +47,7 @@ public class Transaction implements Cloneable {
 
 		@Override
 		public String toString() {
-			return RESOURCES.getMessage("Transaction.Status."+name());
+			return PACKAGE_RESOURCES.getMessage("Transaction.Status."+name());
 		}
 	}
 

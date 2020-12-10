@@ -23,7 +23,7 @@
 package com.aoindustries.creditcards;
 
 import com.aoindustries.collections.AoCollections;
-import static com.aoindustries.creditcards.Resources.RESOURCES;
+import static com.aoindustries.creditcards.Resources.PACKAGE_RESOURCES;
 import com.aoindustries.io.FileUtils;
 import com.aoindustries.sql.LocalizedSQLException;
 import com.aoindustries.util.PropertiesUtils;
@@ -637,7 +637,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		loadIfNeeded();
 		// Find the card with matching persistence id
 		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
-		if(internalCreditCard == null) throw new LocalizedSQLException("23000", RESOURCES, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
+		if(internalCreditCard == null) throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
 		internalCreditCard.setMaskedCardNumber(creditCard.getMaskedCardNumber());
 		internalCreditCard.setFirstName(creditCard.getFirstName());
 		internalCreditCard.setLastName(creditCard.getLastName());
@@ -671,7 +671,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		loadIfNeeded();
 		// Find the card with matching persistence id
 		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
-		if(internalCreditCard == null) throw new LocalizedSQLException("23000", RESOURCES, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
+		if(internalCreditCard == null) throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
 		// TODO: 2.0: Store separate type and masked card numbers
 		internalCreditCard.setMaskedCardNumber(CreditCard.maskCreditCardNumber(cardNumber));
 		internalCreditCard.setExpirationMonth(expirationMonth);
@@ -692,7 +692,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		loadIfNeeded();
 		// Find the card with matching persistence id
 		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
-		if(internalCreditCard == null) throw new LocalizedSQLException("23000", RESOURCES, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
+		if(internalCreditCard == null) throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
 		// TODO: 2.0: Store separate type and masked card numbers
 		internalCreditCard.setExpirationMonth(expirationMonth);
 		internalCreditCard.setExpirationYear(expirationYear);
@@ -772,6 +772,6 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 				return;
 			}
 		}
-		throw new LocalizedSQLException("23000", RESOURCES, "PersistenceMechanism.updateTransaction.unableToFindTransaction", transaction.getPersistenceUniqueId());
+		throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "PersistenceMechanism.updateTransaction.unableToFindTransaction", transaction.getPersistenceUniqueId());
 	}
 }
