@@ -444,7 +444,10 @@ public class CreditCard implements Cloneable {
 		setProviderUniqueId(providerUniqueId);
 		setCardNumber(cardNumber);
 		// TODO: 2.0: Store separate type and masked card numbers
-		if(cardNumber==null) setMaskedCardNumber(maskedCardNumber);
+		if(maskedCardNumber != null) {
+			maskedCardNumber = maskedCardNumber.trim();
+			if(!maskedCardNumber.isEmpty()) setMaskedCardNumber(maskedCardNumber);
+		}
 		setExpirationMonth(expirationMonth);
 		setExpirationYear(expirationYear);
 		setCardCode(cardCode);
@@ -553,7 +556,7 @@ public class CreditCard implements Cloneable {
 	 * @throws  IllegalArgumentException  if invalid credit card number
 	 */
 	public void setCardNumber(String cardNumber) {
-		if(cardNumber!=null && cardNumber.length()>0) {
+		if(cardNumber != null && !(cardNumber = cardNumber.trim()).isEmpty()) {
 			cardNumber = numbersOnly(cardNumber);
 			if(
 				//!"4222222222222222".equals(cardNumber)
@@ -579,11 +582,9 @@ public class CreditCard implements Cloneable {
 
 	/**
 	 * Sets the masked card number.
-	 *
-	 * For internal API use only.
 	 */
-	void setMaskedCardNumber(String maskedCardNumber) {
-		this.maskedCardNumber = maskedCardNumber;
+	public void setMaskedCardNumber(String maskedCardNumber) {
+		this.maskedCardNumber = (maskedCardNumber == null) ? null : maskedCardNumber.trim();
 	}
 
 	/**
