@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -43,7 +43,7 @@ public class TransactionRequest implements Cloneable {
 	/**
 	 * The default number of seconds for duplication detection.
 	 */
-	private static final int DEFAULT_DUPLICATE_WINDOW = 120;
+	public static final int DEFAULT_DUPLICATE_WINDOW = 120;
 
 	/**
 	 * Adds-up all amounts into a total amount.
