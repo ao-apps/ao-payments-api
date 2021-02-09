@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -181,8 +181,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 							null, // cardNumber
 							// TODO: 2.0: Store separate type and masked card numbers
 							getProperty(props, CC_PRE, counter, ".maskedCardNumber"),
-							expirationMonth == null ? CreditCard.UNKNOWN_EXPRIATION_MONTH : expirationMonth, // TODO: 2.0: Make nullable Byte
-							expirationYear == null ? CreditCard.UNKNOWN_EXPRIATION_YEAR : expirationYear, // TODO: 2.0: Make nullable Short
+							expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 2.0: Make nullable Byte
+							expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 2.0: Make nullable Short
 							null, // cardCode
 							getProperty(props, CC_PRE, counter, ".firstName"),
 							getProperty(props, CC_PRE, counter, ".lastName"),
@@ -247,8 +247,8 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 								null, // cardNumber
 								// TODO: 2.0: Store separate type and masked card numbers
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".maskedCardNumber"),
-								expirationMonth == null ? CreditCard.UNKNOWN_EXPRIATION_MONTH : expirationMonth, // TODO: 2.0: Make nullable Byte
-								expirationYear == null ? CreditCard.UNKNOWN_EXPRIATION_YEAR : expirationYear, // TODO: 2.0: Make nullable Short
+								expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 2.0: Make nullable Byte
+								expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 2.0: Make nullable Short
 								null, // cardCode
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".firstName"),
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".lastName"),
@@ -390,9 +390,9 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 			long counter = 1;
 			for(CreditCard internalCreditCard : internalCreditCards) {
 				Byte expirationMonth = internalCreditCard.getExpirationMonth(); // TODO: 2.0: Make nullable Byte
-				if(expirationMonth == CreditCard.UNKNOWN_EXPRIATION_MONTH) expirationMonth = null;
+				if(expirationMonth == CreditCard.UNKNOWN_EXPIRATION_MONTH) expirationMonth = null;
 				Short expirationYear = internalCreditCard.getExpirationYear(); // TODO: 2.0: Make nullable Short
-				if(expirationYear == CreditCard.UNKNOWN_EXPRIATION_YEAR) expirationYear = null;
+				if(expirationYear == CreditCard.UNKNOWN_EXPIRATION_YEAR) expirationYear = null;
 				setProperty(props, CC_PRE, counter, ".persistenceUniqueId", internalCreditCard.getPersistenceUniqueId());
 				setProperty(props, CC_PRE, counter, ".principalName", internalCreditCard.getPrincipalName());
 				setProperty(props, CC_PRE, counter, ".groupName", internalCreditCard.getGroupName());
@@ -455,9 +455,9 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 				CreditCard creditCard = internalTransaction.getCreditCard();
 				if(creditCard != null) {
 					Byte expirationMonth = creditCard.getExpirationMonth(); // TODO: 2.0: Make nullable Byte
-					if(expirationMonth == CreditCard.UNKNOWN_EXPRIATION_MONTH) expirationMonth = null;
+					if(expirationMonth == CreditCard.UNKNOWN_EXPIRATION_MONTH) expirationMonth = null;
 					Short expirationYear = creditCard.getExpirationYear(); // TODO: 2.0: Make nullable Short
-					if(expirationYear == CreditCard.UNKNOWN_EXPRIATION_YEAR) expirationYear = null;
+					if(expirationYear == CreditCard.UNKNOWN_EXPIRATION_YEAR) expirationYear = null;
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".principalName", creditCard.getPrincipalName());
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".groupName", creditCard.getGroupName());
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".providerUniqueId", creditCard.getProviderUniqueId());

@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -72,13 +72,25 @@ public class CreditCard implements Cloneable {
 	/**
 	 * Value used to represent an unknown expiration month.
 	 */
-	public static final byte UNKNOWN_EXPRIATION_MONTH = -1;
+	public static final byte UNKNOWN_EXPIRATION_MONTH = -1;
+
+	/**
+	 * @deprecated  Please use {@link #UNKNOWN_EXPIRATION_MONTH} instead.
+	 */
+	@Deprecated
+	public static final byte UNKNOWN_EXPRIATION_MONTH = UNKNOWN_EXPIRATION_MONTH;
 
 	/**
 	 * Value used to represent an unknown expiration year.
 	 */
 	// TODO: 2.0: Nullable expiration fields, this constant won't apply anymore
-	public static final short UNKNOWN_EXPRIATION_YEAR = -1;
+	public static final short UNKNOWN_EXPIRATION_YEAR = -1;
+
+	/**
+	 * @deprecated  Please use {@link #UNKNOWN_EXPIRATION_YEAR} instead.
+	 */
+	@Deprecated
+	public static final short UNKNOWN_EXPRIATION_YEAR = UNKNOWN_EXPIRATION_YEAR;
 
 	/**
 	 * The minimum expected expiration year.
@@ -209,7 +221,7 @@ public class CreditCard implements Cloneable {
 		if(
 			(
 				!allowUnknownDate
-				|| expirationMonth != UNKNOWN_EXPRIATION_MONTH
+				|| expirationMonth != UNKNOWN_EXPIRATION_MONTH
 			) && (
 				expirationMonth < 1
 				|| expirationMonth > 12
@@ -245,7 +257,7 @@ public class CreditCard implements Cloneable {
 		if(
 			(
 				!allowUnknownDate
-				|| expirationYear != UNKNOWN_EXPRIATION_YEAR
+				|| expirationYear != UNKNOWN_EXPIRATION_YEAR
 			) && (
 				expirationYear < MIN_EXPIRATION_YEAR
 				|| expirationYear > (getCurrentYear() + EXPIRATION_YEARS_FUTURE)
@@ -257,8 +269,8 @@ public class CreditCard implements Cloneable {
 	/**
 	 * Gets an expiration date in MMYY format.
 	 *
-	 * @param  expirationMonth  the month or {@link #UNKNOWN_EXPRIATION_MONTH} when unknown
-	 * @param  expirationYear  the year or {@link #UNKNOWN_EXPRIATION_YEAR} when unknown
+	 * @param  expirationMonth  the month or {@link #UNKNOWN_EXPIRATION_MONTH} when unknown
+	 * @param  expirationYear  the year or {@link #UNKNOWN_EXPIRATION_YEAR} when unknown
 	 * @param  allowUnknownDate  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
 	 *
 	 * @throws  IllegalArgumentException  if invalid date
@@ -268,13 +280,13 @@ public class CreditCard implements Cloneable {
 		validateExpirationMonth(expirationMonth, allowUnknownDate);
 		validateExpirationYear(expirationYear, allowUnknownDate);
 		StringBuilder SB = new StringBuilder(4);
-		if(expirationMonth == UNKNOWN_EXPRIATION_MONTH) {
+		if(expirationMonth == UNKNOWN_EXPIRATION_MONTH) {
 			SB.append(UNKNOWN_DIGIT).append(UNKNOWN_DIGIT);
 		} else {
 			if(expirationMonth < 10) SB.append('0');
 			SB.append(expirationMonth);
 		}
-		if(expirationYear == UNKNOWN_EXPRIATION_YEAR) {
+		if(expirationYear == UNKNOWN_EXPIRATION_YEAR) {
 			SB.append(UNKNOWN_DIGIT).append(UNKNOWN_DIGIT);
 		} else {
 			int modYear = expirationYear % 100;
@@ -310,13 +322,13 @@ public class CreditCard implements Cloneable {
 		final int MONTH_DIGITS = 2;
 		final int YEAR_DIGITS = 4;
 		if(
-			(expirationMonth == null || expirationMonth == UNKNOWN_EXPRIATION_MONTH)
-			&& (expirationYear == null || expirationYear == UNKNOWN_EXPRIATION_YEAR)
+			(expirationMonth == null || expirationMonth == UNKNOWN_EXPIRATION_MONTH)
+			&& (expirationYear == null || expirationYear == UNKNOWN_EXPIRATION_YEAR)
 		) {
 			return null;
 		}
 		StringBuilder result = new StringBuilder(MONTH_DIGITS + EXPIRATION_DISPLAY_SEPARATOR.length() + YEAR_DIGITS);
-		if(expirationMonth == null || expirationMonth == UNKNOWN_EXPRIATION_MONTH) {
+		if(expirationMonth == null || expirationMonth == UNKNOWN_EXPIRATION_MONTH) {
 			for(int i = 0; i < MONTH_DIGITS; i++) {
 				result.append(UNKNOWN_DIGIT);
 			}
@@ -328,7 +340,7 @@ public class CreditCard implements Cloneable {
 			result.append(monthStr);
 		}
 		result.append(EXPIRATION_DISPLAY_SEPARATOR);
-		if(expirationYear == null || expirationYear == UNKNOWN_EXPRIATION_YEAR) {
+		if(expirationYear == null || expirationYear == UNKNOWN_EXPIRATION_YEAR) {
 			for(int i = 0; i < YEAR_DIGITS; i++) {
 				result.append(UNKNOWN_DIGIT);
 			}
@@ -366,8 +378,8 @@ public class CreditCard implements Cloneable {
 	// TODO: 2.0: Store separate type and masked card numbers
 	private String maskedCardNumber;
 	// TODO: 2.0: A value type to encapsulate Month and Year here and other parts of the API
-	private byte expirationMonth = UNKNOWN_EXPRIATION_MONTH; // TODO: 2.0: Make nullable Byte
-	private short expirationYear = UNKNOWN_EXPRIATION_YEAR; // TODO: 2.0: Make nullable Short
+	private byte expirationMonth = UNKNOWN_EXPIRATION_MONTH; // TODO: 2.0: Make nullable Byte
+	private short expirationYear = UNKNOWN_EXPIRATION_YEAR; // TODO: 2.0: Make nullable Short
 	private String cardCode;
 	private String firstName;
 	private String lastName;
@@ -584,7 +596,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * Gets the expiration month, where 1 is January and 12 is December.
 	 *
-	 * @see  #UNKNOWN_EXPRIATION_MONTH
+	 * @see  #UNKNOWN_EXPIRATION_MONTH
 	 */
 	// TODO: 2.0: Make nullable Byte
 	public byte getExpirationMonth() {
@@ -596,7 +608,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @throws  IllegalArgumentException  if out of range.
 	 *
-	 * @see  #UNKNOWN_EXPRIATION_MONTH
+	 * @see  #UNKNOWN_EXPIRATION_MONTH
 	 */
 	// TODO: 2.0: Make nullable Byte
 	public void setExpirationMonth(byte expirationMonth) {
@@ -606,7 +618,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * Gets the expiration year, such as {@code 2007}.
 	 *
-	 * @see  #UNKNOWN_EXPRIATION_YEAR
+	 * @see  #UNKNOWN_EXPIRATION_YEAR
 	 */
 	// TODO: 2.0: Make nullable Short
 	public short getExpirationYear() {
@@ -620,7 +632,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @throws  IllegalArgumentException  if the resolved year is &lt; {@link #MIN_EXPIRATION_YEAR} or &gt; (current year + {@link #EXPIRATION_YEARS_FUTURE})
 	 *
-	 * @see  #UNKNOWN_EXPRIATION_YEAR
+	 * @see  #UNKNOWN_EXPIRATION_YEAR
 	 */
 	// TODO: 2.0: Make nullable Short
 	public void setExpirationYear(short expirationYear) {

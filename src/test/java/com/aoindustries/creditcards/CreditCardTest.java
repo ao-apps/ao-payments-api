@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2019  AO Industries, Inc.
+ * Copyright (C) 2019, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -116,8 +116,8 @@ public class CreditCardTest {
 	@Test
 	public void testValidateExpirationMonthUnknownAllowUnknown() {
 		assertEquals(
-			CreditCard.UNKNOWN_EXPRIATION_MONTH,
-			CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPRIATION_MONTH, true)
+			CreditCard.UNKNOWN_EXPIRATION_MONTH,
+			CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPIRATION_MONTH, true)
 		);
 	}
 
@@ -145,7 +145,7 @@ public class CreditCardTest {
 
 	@Test(expected = LocalizedIllegalArgumentException.class)
 	public void testValidateExpirationMonthUnknownDisallowUnknown() {
-		CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPRIATION_MONTH, false);
+		CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPIRATION_MONTH, false);
 	}
 	// </editor-fold>
 
@@ -177,8 +177,8 @@ public class CreditCardTest {
 	@Test
 	public void testValidateExpirationYearUnknownAllowUnknown() {
 		assertEquals(
-			CreditCard.UNKNOWN_EXPRIATION_YEAR,
-			CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPRIATION_YEAR, true)
+			CreditCard.UNKNOWN_EXPIRATION_YEAR,
+			CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPIRATION_YEAR, true)
 		);
 	}
 
@@ -208,7 +208,7 @@ public class CreditCardTest {
 
 	@Test(expected = LocalizedIllegalArgumentException.class)
 	public void testValidateExpirationYearUnknownDisallowUnknown() {
-		CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPRIATION_YEAR, false);
+		CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPIRATION_YEAR, false);
 	}
 	// </editor-fold>
 }
