@@ -57,7 +57,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 
 	private static final Logger logger = Logger.getLogger(PropertiesPersistenceMechanism.class.getName());
 
-	private static final Map<String,PropertiesPersistenceMechanism> ppms = new HashMap<>();
+	private static final Map<String, PropertiesPersistenceMechanism> ppms = new HashMap<>();
 
 	/**
 	 * For intra-JVM reusability, only one instance is made per unique path.
@@ -591,9 +591,9 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	}
 
 	@Override
-	public synchronized Map<String,CreditCard> getCreditCards(Principal principal) throws SQLException {
+	public synchronized Map<String, CreditCard> getCreditCards(Principal principal) throws SQLException {
 		loadIfNeeded();
-		Map<String,CreditCard> map = AoCollections.newLinkedHashMap(internalCreditCards.size());
+		Map<String, CreditCard> map = AoCollections.newLinkedHashMap(internalCreditCards.size());
 		for(CreditCard internalCreditCard : internalCreditCards) {
 			CreditCard copy;
 			try {
@@ -608,9 +608,9 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	}
 
 	@Override
-	public synchronized Map<String,CreditCard> getCreditCards(Principal principal, String providerId) throws SQLException {
+	public synchronized Map<String, CreditCard> getCreditCards(Principal principal, String providerId) throws SQLException {
 		loadIfNeeded();
-		Map<String,CreditCard> map = AoCollections.newLinkedHashMap(internalCreditCards.size());
+		Map<String, CreditCard> map = AoCollections.newLinkedHashMap(internalCreditCards.size());
 		for(CreditCard internalCreditCard : internalCreditCards) {
 			if(providerId.equals(internalCreditCard.getProviderId())) {
 				CreditCard copy;

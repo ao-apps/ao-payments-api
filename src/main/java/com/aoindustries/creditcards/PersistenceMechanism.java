@@ -1,6 +1,6 @@
 /*
  * ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -65,7 +65,7 @@ public interface PersistenceMechanism {
 	 *
 	 * @see  CreditCard#clone()
 	 */
-	Map<String,CreditCard> getCreditCards(Principal principal) throws SQLException;
+	Map<String, CreditCard> getCreditCards(Principal principal) throws SQLException;
 
 	/**
 	 * Gets all the stored cards for a given <code>providerId</code>.
@@ -87,7 +87,7 @@ public interface PersistenceMechanism {
 	 *
 	 * @see  CreditCardProcessor#synchronizeStoredCards(java.security.Principal, java.io.PrintWriter, java.io.PrintWriter, java.io.PrintWriter, boolean)
 	 */
-	Map<String,CreditCard> getCreditCards(Principal principal, String providerId) throws SQLException;
+	Map<String, CreditCard> getCreditCards(Principal principal, String providerId) throws SQLException;
 
 	/**
 	 * Updates the stored credit card details, all except the card number, expiration, and card security code, for a credit card.
