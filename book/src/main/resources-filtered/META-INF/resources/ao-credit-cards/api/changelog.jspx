@@ -37,7 +37,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-05:00"
-		dateModified="2021-02-09T09:11:42-06:00"
+		dateModified="2021-05-25T18:54:28-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -47,15 +47,16 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 				artifactId="@{documented.artifactId}"
 				scmUrl="@{project.scm.url}"
 			>
-				<!-- TODO:
 				<ul>
+					<li>Updated dependencies.</li>
+					<!-- TODO:
 					<li>A CreditCard replacement log, logging all automatic replacements, both manual and automatic?</li>
 					<li>
 						Version 2.0: Have a constructor given a mapping of String->String (or Properties) as configuration,
 						or use a builder pattern with JavaBeans pattern setters.
 					</li>
+					-->
 				</ul>
-				-->
 			</changelog:release>
 		</c:if>
 
