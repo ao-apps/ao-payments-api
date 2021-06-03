@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-ao-credit-cards-api - Credit card processing API supporting multiple payment gateways.
+ao-payments-api - Payment processing API supporting multiple payment gateways.
 Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
 
-This file is part of ao-credit-cards-api.
+This file is part of ao-payments-api.
 
-ao-credit-cards-api is free software: you can redistribute it and/or modify
+ao-payments-api is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-ao-credit-cards-api is distributed in the hope that it will be useful,
+ao-payments-api is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public License
-along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
+along with ao-payments-api.  If not, see <http://www.gnu.org/licenses />.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.aoindustries</groupId><artifactId>ao-oss-parent</artifactId><version>1.16.0-SNAPSHOT</version>
-		<relativePath>../../ao-oss-parent/pom.xml</relativePath>
+		<groupId>com.aoapps</groupId><artifactId>ao-oss-parent</artifactId><version>1.16.0-SNAPSHOT</version>
+		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>ao-credit-cards-api</artifactId><version>1.4.0-SNAPSHOT</version>
+	<groupId>com.aoapps</groupId><artifactId>ao-payments-api</artifactId><version>1.4.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
-		<javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://aoindustries.com/ao-credit-cards/">AO Credit Cards</a>
-/ <a target="${javadoc.target}" href="${project.url}">${shortTitle}</a>]]></javadoc.breadcrumbs>
-		<shortTitle>API</shortTitle>
+		<javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
+/ <a target="${javadoc.target}" href="https://oss.aoapps.com/payments/">Payments</a>
+/ <a target="${javadoc.target}" href="${project.url}">API</a>]]></javadoc.breadcrumbs>
 		<!-- Dependencies -->
 		<commons-lang3.version>3.12.0</commons-lang3.version>
 	</properties>
 
-	<name>AO Credit Cards API</name>
-	<url>https://aoindustries.com/ao-credit-cards/api/</url>
-	<description>Credit card processing API supporting multiple payment gateways.</description>
+	<name>AO Payments API</name>
+	<url>https://oss.aoapps.com/payments/api/</url>
+	<description>Payment processing API supporting multiple payment gateways.</description>
 	<inceptionYear>2007</inceptionYear>
 
 	<licenses>
@@ -69,15 +69,15 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 	</developers>
 
 	<scm>
-		<connection>scm:git:git://github.com/aoindustries/ao-credit-cards-api.git</connection>
-		<developerConnection>scm:git:git@github.com:aoindustries/ao-credit-cards-api.git</developerConnection>
-		<url>https://github.com/aoindustries/ao-credit-cards-api</url>
+		<connection>scm:git:git://github.com/aoindustries/ao-payments-api.git</connection>
+		<developerConnection>scm:git:git@github.com:aoindustries/ao-payments-api.git</developerConnection>
+		<url>https://github.com/aoindustries/ao-payments-api</url>
 		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
 		<system>GitHub Issues</system>
-		<url>https://github.com/aoindustries/ao-credit-cards-api/issues</url>
+		<url>https://github.com/aoindustries/ao-payments-api/issues</url>
 	</issueManagement>
 
 	<build>
@@ -147,14 +147,14 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 									<artifactItems>
 										<!-- Direct -->
 										<artifactItem>
-											<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId><classifier>javadoc</classifier>
+											<groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId><classifier>javadoc</classifier>
 											<includes>element-list, package-list</includes>
-											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/ao-collections</outputDirectory>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoapps/ao-collections</outputDirectory>
 										</artifactItem>
 										<artifactItem>
-											<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><classifier>javadoc</classifier>
+											<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><classifier>javadoc</classifier>
 											<includes>element-list, package-list</includes>
-											<outputDirectory>${project.build.directory}/offlineLinks/com.aoindustries/ao-lang</outputDirectory>
+											<outputDirectory>${project.build.directory}/offlineLinks/com.aoapps/ao-lang</outputDirectory>
 										</artifactItem>
 										<artifactItem>
 											<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><classifier>javadoc</classifier>
@@ -183,12 +183,12 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 							<offlineLinks>
 								<!-- Direct -->
 								<offlineLink>
-									<url>https://aoindustries.com/ao-collections/apidocs/</url>
-									<location>${project.build.directory}/offlineLinks/com.aoindustries/ao-collections</location>
+									<url>https://oss.aoapps.com/collections/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoapps/ao-collections</location>
 								</offlineLink>
 								<offlineLink>
-									<url>https://aoindustries.com/ao-lang/apidocs/</url>
-									<location>${project.build.directory}/offlineLinks/com.aoindustries/ao-lang</location>
+									<url>https://oss.aoapps.com/lang/apidocs/</url>
+									<location>${project.build.directory}/offlineLinks/com.aoapps/ao-lang</location>
 								</offlineLink>
 								<offlineLink>
 									<url>https://javadoc.io/doc/org.apache.commons/commons-lang3/${commons-lang3.version}/</url>
@@ -206,7 +206,7 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 								<!-- Java SE -->
 								<offlineLink>
 									<url>${javadoc.link.javase}</url>
-									<location>${project.build.directory}/offlineLinks/com/aoindustries/javadoc/offline/javase/${javase.release}</location>
+									<location>${project.build.directory}/offlineLinks/com/aoapps/javadoc/offline/javase/${javase.release}</location>
 								</offlineLink>
 							</offlineLinks>
 						</configuration>
@@ -220,10 +220,10 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 		<dependencies>
 			<!-- Direct -->
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId><version>1.2.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+				<groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId><version>1.2.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
 			<dependency>
-				<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId><version>4.17.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
+				<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>4.17.1-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>${commons-lang3.version}</version>
@@ -262,10 +262,10 @@ along with ao-credit-cards-api.  If not, see <http://www.gnu.org/licenses />.
 	<dependencies>
 		<!-- Direct -->
 		<dependency>
-			<groupId>com.aoindustries</groupId><artifactId>ao-collections</artifactId>
+			<groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.aoindustries</groupId><artifactId>ao-lang</artifactId>
+			<groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
