@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2013, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,21 +20,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-payments-api.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.payments;
-
-import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
-import java.util.Locale;
-
-/**
- * @author  AO Industries, Inc.
- */
-public final class ApplicationResources_zh extends EditableResourceBundle {
-
-	public ApplicationResources_zh() {
-		super(
-			Locale.CHINESE,
-			ApplicationResources.bundleSet,
-			ApplicationResources.getSourceFile("ApplicationResources_zh.properties")
-		);
-	}
+module com.aoapps.payments.api.book {
+	// Direct
+	requires com.aoapps.badges; // <groupId>com.aoapps</groupId><artifactId>ao-badges</artifactId>
+	requires com.aoapps.taglib; // <groupId>com.aoapps</groupId><artifactId>ao-taglib</artifactId>
+	requires com.semanticcms.changelog.taglib; // <groupId>com.semanticcms</groupId><artifactId>semanticcms-changelog-taglib</artifactId>
+	requires com.semanticcms.core.taglib; // <groupId>com.semanticcms</groupId><artifactId>semanticcms-core-taglib</artifactId>
+	requires com.semanticcms.section.taglib; // <groupId>com.semanticcms</groupId><artifactId>semanticcms-section-taglib</artifactId>
+	requires taglibs.standard.spec; // <groupId>org.apache.taglibs</groupId><artifactId>taglibs-standard-spec</artifactId>
 }

@@ -20,20 +20,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-payments-api.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.payments;
+package com.aoapps.payments.i18n;
 
-import java.util.ResourceBundle;
+import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
+import com.aoapps.lang.i18n.Locales;
 
 /**
- * Provides a simplified interface for obtaining localized values from the ApplicationResources.properties files.
+ * @author  AO Industries, Inc.
  */
-public final class Resources {
+public final class ApplicationResources_ar extends EditableResourceBundle {
 
-	public static final com.aoapps.lang.i18n.Resources PACKAGE_RESOURCES =
-		com.aoapps.lang.i18n.Resources.getResources(ResourceBundle::getBundle, Resources.class.getPackage());
-
-	/**
-	 * Make no instances.
-	 */
-	private Resources() {}
+	public ApplicationResources_ar() {
+		super(
+			Locales.ARABIC,
+			ApplicationResources.bundleSet,
+			ApplicationResources.getSourceFile("ApplicationResources_ar.properties")
+		);
+	}
 }

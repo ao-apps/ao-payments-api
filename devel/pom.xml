@@ -33,9 +33,7 @@ along with ao-payments-api.  If not, see <http://www.gnu.org/licenses />.
 	<packaging>bundle</packaging>
 
 	<properties>
-		<javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
-/ <a target="${javadoc.target}" href="https://oss.aoapps.com/payments/">Payments</a>
-/ <a target="${javadoc.target}" href="${project.url}">API Devel</a>]]></javadoc.breadcrumbs>
+		<module.name>com.aoapps.payments.api.devel</module.name>
 	</properties>
 
 	<name>AO Payments API Devel</name>
@@ -77,38 +75,6 @@ along with ao-payments-api.  If not, see <http://www.gnu.org/licenses />.
 		<system>GitHub Issues</system>
 		<url>https://github.com/aoindustries/ao-payments-api/issues</url>
 	</issueManagement>
-
-	<build>
-		<plugins>
-			<!-- Never generate Javadocs: local development only -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-javadoc-plugin</artifactId>
-				<configuration><skip>true</skip></configuration>
-			</plugin>
-			<!-- Never attach sources: local development only -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-source-plugin</artifactId>
-				<configuration><skipSource>true</skipSource></configuration>
-			</plugin>
-			<!-- Never sign: local development only -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-gpg-plugin</artifactId>
-				<configuration><skip>true</skip></configuration>
-			</plugin>
-			<!-- Never deploy: local development only -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId><artifactId>maven-deploy-plugin</artifactId>
-				<configuration><skip>true</skip></configuration>
-			</plugin>
-			<!-- Never stage: local development only -->
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId><artifactId>nexus-staging-maven-plugin</artifactId>
-				<configuration>
-					<skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 	<dependencyManagement>
 		<dependencies>

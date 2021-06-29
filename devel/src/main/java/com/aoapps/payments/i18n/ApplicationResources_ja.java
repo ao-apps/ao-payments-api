@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2013, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,21 +20,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-payments-api.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.payments;
+package com.aoapps.payments.i18n;
 
 import com.aoapps.hodgepodge.i18n.EditableResourceBundle;
-import com.aoapps.lang.i18n.Locales;
+import java.util.Locale;
 
 /**
  * @author  AO Industries, Inc.
  */
-public final class ApplicationResources_pt extends EditableResourceBundle {
+public final class ApplicationResources_ja extends EditableResourceBundle {
 
-	public ApplicationResources_pt() {
+	public ApplicationResources_ja() {
 		super(
-			Locales.PORTUGUESE,
+			Locale.JAPANESE,
 			ApplicationResources.bundleSet,
-			ApplicationResources.getSourceFile("ApplicationResources_pt.properties")
+			ApplicationResources.getSourceFile("ApplicationResources_ja.properties")
 		);
 	}
 }

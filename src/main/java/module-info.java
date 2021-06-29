@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2013, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -20,20 +20,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-payments-api.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoapps.payments;
-
-import java.util.ResourceBundle;
-
-/**
- * Provides a simplified interface for obtaining localized values from the ApplicationResources.properties files.
- */
-public final class Resources {
-
-	public static final com.aoapps.lang.i18n.Resources PACKAGE_RESOURCES =
-		com.aoapps.lang.i18n.Resources.getResources(ResourceBundle::getBundle, Resources.class.getPackage());
-
-	/**
-	 * Make no instances.
-	 */
-	private Resources() {}
+module com.aoapps.payments.api {
+	exports com.aoapps.payments;
+	// Direct
+	requires com.aoapps.collections; // <groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId>
+	requires com.aoapps.lang; // <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId>
+	requires org.apache.commons.lang3; // <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId>
+	requires commons.validator; // <groupId>commons-validator</groupId><artifactId>commons-validator</artifactId>
+	// Java SE
+	requires java.logging;
+	requires java.sql;
 }

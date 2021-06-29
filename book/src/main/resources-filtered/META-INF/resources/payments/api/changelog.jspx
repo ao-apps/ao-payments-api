@@ -37,7 +37,7 @@ along with ao-payments-api.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2016-10-29T18:13:01-05:00"
-		dateModified="2021-06-03T22:53:21-05:00"
+		dateModified="2021-06-27T16:13:41-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -50,6 +50,12 @@ along with ao-payments-api.  If not, see <http://www.gnu.org/licenses />.
 			>
 				<ul>
 					<li>Minimum Java version changed from 1.8 to 11.</li>
+					<li>
+						Now supports Java 9+ modules.  Due to still having filename-based automatic module dependencies,
+						*-SNAPSHOT versions include <code>module-info.class</code> while releases include the
+						<code>Automatic-Module-Name</code> manifest entry.  To minimize the difference between these
+						modes, <code>module-info.java</code> does not perform any transitive requires.
+					</li>
 					<li>Maven artifact relocated from <code>com.aoindustries:ao-credit-cards-api</code> to <code>com.aoapps:ao-payments-api</code>.</li>
 					<li>Package renamed from <code>com.aoindustries.creditcards</code> to <code>com.aoapps.payments</code>.</li>
 					<li>SQL schema renamed from <code>com.aoindustries.creditcards</code> to <code>com.aoapps.payments</code>.</li>
@@ -90,7 +96,7 @@ along with ao-payments-api.  If not, see <http://www.gnu.org/licenses />.
 			<ul>
 				<li>
 					Defined <ao:a href="https://en.wikipedia.org/wiki/SQLSTATE">SQLSTATE</ao:a> values for all
-					<ao:a rel="nofollow" href="@{javadoc.link.javase}java/sql/SQLException.html">SQLException</ao:a>.
+					<ao:a rel="nofollow" href="@{javadoc.link.javase}java.sql/java/sql/SQLException.html">SQLException</ao:a>.
 				</li>
 				<li>
 					Split development-only classes into a new sub-project in <code>devel/</code>.  This
@@ -168,7 +174,7 @@ along with ao-payments-api.  If not, see <http://www.gnu.org/licenses />.
 		>
 			<ul>
 				<li>Minimum Java version changed from 1.6 to 1.7.</li>
-				<li>New error code: <ao:a href="apidocs/com/aoapps/payments/TransactionResult.ErrorCode.html#RATE_LIMIT">TransactionResult.ErrorCode.RATE_LIMIT</ao:a>.</li>
+				<li>New error code: <ao:a href="apidocs/com.aoapps.payments.api/com/aoapps/payments/TransactionResult.ErrorCode.html#RATE_LIMIT">TransactionResult.ErrorCode.RATE_LIMIT</ao:a>.</li>
 				<li>Finished delayed capture persistence implementation.</li>
 				<li>
 					Masked card numbers now keep up to the first six digits instead of only four.
@@ -183,11 +189,11 @@ along with ao-payments-api.  If not, see <http://www.gnu.org/licenses />.
 					The persisted value is then used to correctly represent the stored card to the user.
 				</li>
 				<li>
-					New function <ao:a href="apidocs/com/aoapps/payments/CreditCard.html#getCardNumberDisplay-java.lang.String-">CreditCard.getCardNumberDisplay(String)</ao:a>
+					New function <ao:a href="apidocs/com.aoapps.payments.api/com/aoapps/payments/CreditCard.html#getCardNumberDisplay-java.lang.String-">CreditCard.getCardNumberDisplay(String)</ao:a>
 					to format masked card numbers for display.
 				</li>
 				<li>
-					Fixed <ao:a href="apidocs/com/aoapps/payments/CreditCard.html#setCustomerTaxId-java.lang.String-">CreditCard.setCustomerTaxId(String)</ao:a>
+					Fixed <ao:a href="apidocs/com.aoapps.payments.api/com/aoapps/payments/CreditCard.html#setCustomerTaxId-java.lang.String-">CreditCard.setCustomerTaxId(String)</ao:a>
 					to validate argument as documented.
 				</li>
 				<li>
@@ -196,7 +202,7 @@ along with ao-payments-api.  If not, see <http://www.gnu.org/licenses />.
 					Payment processors may also provide replacement expiration date in the same fashion as the replacement masked card number.
 				</li>
 				<li>
-					New function <ao:a href="apidocs/com/aoapps/payments/CreditCard.html#getExpirationDisplay-java.lang.Byte-java.lang.Short-">CreditCard.getExpirationDisplay(Byte,Short)</ao:a>
+					New function <ao:a href="apidocs/com.aoapps.payments.api/com/aoapps/payments/CreditCard.html#getExpirationDisplay-java.lang.Byte-java.lang.Short-">CreditCard.getExpirationDisplay(Byte,Short)</ao:a>
 					to format expiration dates for display.
 				</li>
 				<li>Increased maximum future card expiration year from +12 years to +20 years.</li>
