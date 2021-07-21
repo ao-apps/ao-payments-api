@@ -179,10 +179,10 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 							getProperty(props, CC_PRE, counter, ".providerId"),
 							getProperty(props, CC_PRE, counter, ".providerUniqueId"),
 							null, // cardNumber
-							// TODO: 2.0: Store separate type and masked card numbers
+							// TODO: 3.0: Store separate type and masked card numbers
 							getProperty(props, CC_PRE, counter, ".maskedCardNumber"),
-							expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 2.0: Make nullable Byte
-							expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 2.0: Make nullable Short
+							expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 3.0: Make nullable Byte
+							expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 3.0: Make nullable Short
 							null, // cardCode
 							getProperty(props, CC_PRE, counter, ".firstName"),
 							getProperty(props, CC_PRE, counter, ".lastName"),
@@ -245,10 +245,10 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 								getProperty(props, TRANS_PRE, counter, ".providerId"),
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".providerUniqueId"),
 								null, // cardNumber
-								// TODO: 2.0: Store separate type and masked card numbers
+								// TODO: 3.0: Store separate type and masked card numbers
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".maskedCardNumber"),
-								expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 2.0: Make nullable Byte
-								expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 2.0: Make nullable Short
+								expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 3.0: Make nullable Byte
+								expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 3.0: Make nullable Short
 								null, // cardCode
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".firstName"),
 								getProperty(props, TRANS_PRE, counter, CC_SUF + ".lastName"),
@@ -278,7 +278,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 								tokenizedCreditCardProviderUniqueId == null ? null : new TokenizedCreditCard(
 									tokenizedCreditCardProviderUniqueId,
 									getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementMaskedCardNumber"),
-									// TODO: 2.0: Store separate type and masked card numbers
+									// TODO: 3.0: Store separate type and masked card numbers
 									getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementMaskedCardNumber"),
 									getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementExpiration"),
 									getPropertyByte (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationMonth"),
@@ -296,7 +296,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 								getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".avsResult", AuthorizationResult.AvsResult.class),
 								getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalCode")
 							),
-							coalesce(getPropertyLong(props, TRANS_PRE, counter, ".captureTime"), -1), // TODO: 2.0: Make nullable Long
+							coalesce(getPropertyLong(props, TRANS_PRE, counter, ".captureTime"), -1), // TODO: 3.0: Make nullable Long
 							getProperty(props, TRANS_PRE, counter, ".capturePrincipalName"),
 							new CaptureResult(
 								getProperty    (props, TRANS_PRE, counter, ".providerId"),
@@ -306,7 +306,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 								getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorMessage"),
 								getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerUniqueId")
 							),
-							coalesce(getPropertyLong(props, TRANS_PRE, counter, ".voidTime"), -1), // TODO: 2.0: Make nullable Long
+							coalesce(getPropertyLong(props, TRANS_PRE, counter, ".voidTime"), -1), // TODO: 3.0: Make nullable Long
 							getProperty(props, TRANS_PRE, counter, ".voidPrincipalName"),
 							new VoidResult(
 								getProperty    (props, TRANS_PRE, counter, ".providerId"),
@@ -389,16 +389,16 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 			// Add the credit cards
 			long counter = 1;
 			for(CreditCard internalCreditCard : internalCreditCards) {
-				Byte expirationMonth = internalCreditCard.getExpirationMonth(); // TODO: 2.0: Make nullable Byte
+				Byte expirationMonth = internalCreditCard.getExpirationMonth(); // TODO: 3.0: Make nullable Byte
 				if(expirationMonth == CreditCard.UNKNOWN_EXPIRATION_MONTH) expirationMonth = null;
-				Short expirationYear = internalCreditCard.getExpirationYear(); // TODO: 2.0: Make nullable Short
+				Short expirationYear = internalCreditCard.getExpirationYear(); // TODO: 3.0: Make nullable Short
 				if(expirationYear == CreditCard.UNKNOWN_EXPIRATION_YEAR) expirationYear = null;
 				setProperty(props, CC_PRE, counter, ".persistenceUniqueId", internalCreditCard.getPersistenceUniqueId());
 				setProperty(props, CC_PRE, counter, ".principalName", internalCreditCard.getPrincipalName());
 				setProperty(props, CC_PRE, counter, ".groupName", internalCreditCard.getGroupName());
 				setProperty(props, CC_PRE, counter, ".providerId", internalCreditCard.getProviderId());
 				setProperty(props, CC_PRE, counter, ".providerUniqueId", internalCreditCard.getProviderUniqueId());
-				// TODO: 2.0: Store separate type and masked card numbers
+				// TODO: 3.0: Store separate type and masked card numbers
 				setProperty(props, CC_PRE, counter, ".maskedCardNumber", internalCreditCard.getMaskedCardNumber());
 				setProperty(props, CC_PRE, counter, ".expirationMonth", expirationMonth);
 				setProperty(props, CC_PRE, counter, ".expirationYear", expirationYear);
@@ -454,14 +454,14 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 				}
 				CreditCard creditCard = internalTransaction.getCreditCard();
 				if(creditCard != null) {
-					Byte expirationMonth = creditCard.getExpirationMonth(); // TODO: 2.0: Make nullable Byte
+					Byte expirationMonth = creditCard.getExpirationMonth(); // TODO: 3.0: Make nullable Byte
 					if(expirationMonth == CreditCard.UNKNOWN_EXPIRATION_MONTH) expirationMonth = null;
-					Short expirationYear = creditCard.getExpirationYear(); // TODO: 2.0: Make nullable Short
+					Short expirationYear = creditCard.getExpirationYear(); // TODO: 3.0: Make nullable Short
 					if(expirationYear == CreditCard.UNKNOWN_EXPIRATION_YEAR) expirationYear = null;
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".principalName", creditCard.getPrincipalName());
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".groupName", creditCard.getGroupName());
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".providerUniqueId", creditCard.getProviderUniqueId());
-					// TODO: 2.0: Store separate type and masked card numbers
+					// TODO: 3.0: Store separate type and masked card numbers
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".maskedCardNumber", creditCard.getMaskedCardNumber());
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".expirationMonth", expirationMonth);
 					setProperty(props, TRANS_PRE, counter, CC_SUF + ".expirationYear", expirationYear);
@@ -494,7 +494,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 					if(tokenizedCreditCard != null) {
 						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerUniqueId", tokenizedCreditCard.getProviderUniqueId());
 						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementMaskedCardNumber", tokenizedCreditCard.getProviderReplacementMaskedCardNumber());
-						// TODO: 2.0: Store separate type and masked card numbers
+						// TODO: 3.0: Store separate type and masked card numbers
 						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementMaskedCardNumber", tokenizedCreditCard.getReplacementMaskedCardNumber());
 						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementExpiration", tokenizedCreditCard.getProviderReplacementExpiration());
 						setProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationMonth", tokenizedCreditCard.getReplacementExpirationMonth());
@@ -672,7 +672,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		// Find the card with matching persistence id
 		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
 		if(internalCreditCard == null) throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
-		// TODO: 2.0: Store separate type and masked card numbers
+		// TODO: 3.0: Store separate type and masked card numbers
 		internalCreditCard.setMaskedCardNumber(CreditCard.maskCreditCardNumber(cardNumber));
 		internalCreditCard.setExpirationMonth(expirationMonth);
 		internalCreditCard.setExpirationYear(expirationYear);
@@ -693,7 +693,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		// Find the card with matching persistence id
 		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
 		if(internalCreditCard == null) throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "PersistenceMechanism.updateCardNumber.unableToFindCard", creditCard.getPersistenceUniqueId());
-		// TODO: 2.0: Store separate type and masked card numbers
+		// TODO: 3.0: Store separate type and masked card numbers
 		internalCreditCard.setExpirationMonth(expirationMonth);
 		internalCreditCard.setExpirationYear(expirationYear);
 		save();

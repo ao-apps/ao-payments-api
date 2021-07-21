@@ -115,7 +115,7 @@ abstract public class TransactionResult {
 		}
 	}
 
-	private final String providerId; // TODO: 2.0: Should this be "processorId" instead, here and everywhere?
+	private final String providerId; // TODO: 3.0: Should this be "processorId" instead, here and everywhere?
 	private final CommunicationResult communicationResult;
 	private final String providerErrorCode;
 	private final ErrorCode errorCode;

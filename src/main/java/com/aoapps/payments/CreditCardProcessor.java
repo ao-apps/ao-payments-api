@@ -187,7 +187,7 @@ public class CreditCardProcessor {
 	 * @param  creditCard  The credit card to charge for this sale.
 	 *                     The masked card number and/or expiration might be updated during the sale, and if updated
 	 *                     the changes will have already been persisted.
-	 * 
+	 *
 	 * @see  #capture(java.security.Principal, com.aoapps.payments.Transaction)
 	 * @see  #voidTransaction(java.security.Principal, com.aoapps.payments.Transaction)
 	 */
@@ -283,7 +283,7 @@ public class CreditCardProcessor {
 	 * Captures the funds from a previous call to <code>authorize</code>.
 	 *
 	 * @param  principal  <code>null</code> is acceptable
-	 * 
+	 *
 	 * @see  #authorize(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
 	 */
 	public CaptureResult capture(Principal principal, Transaction transaction) throws SQLException {
@@ -328,7 +328,7 @@ public class CreditCardProcessor {
 	 * Transaction status must be AUTHORIZED, CAPTURED, or HOLD.
 	 *
 	 * @throws  SQLException  when unable to update the persistence layer
-	 * 
+	 *
 	 * @see  #sale
 	 * @see  #authorize
 	 * @see  #capture
@@ -442,13 +442,13 @@ public class CreditCardProcessor {
 		cardNumber = CreditCard.numbersOnly(cardNumber);
 		if(creditCard.getProviderUniqueId() != null) {
 			// Update in persistence (this also enforces security)
-			// TODO: 2.0: Store separate type and masked card numbers
+			// TODO: 3.0: Store separate type and masked card numbers
 			String maskedCardNumber = CreditCard.maskCreditCardNumber(cardNumber);
 			persistenceMechanism.updateCardNumber(principal, creditCard, cardNumber, expirationMonth, expirationYear);
 			// Update in secure storage
 			provider.updateCreditCardNumberAndExpiration(creditCard, cardNumber, expirationMonth, expirationYear, cardCode);
 			// Update the masked number
-			// TODO: 2.0: Store separate type and masked card numbers
+			// TODO: 3.0: Store separate type and masked card numbers
 			creditCard.setMaskedCardNumber(maskedCardNumber);
 			// cardCode not set here on stored card
 		} else {

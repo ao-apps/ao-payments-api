@@ -53,7 +53,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * The character used representing a masked digit.
 	 */
-	// TODO: 2.0: Change to '*', document, adapt data as loaded
+	// TODO: 3.0: Change to '*', document, adapt data as loaded
 	public static final char MASK_CHARACTER = 'X';
 
 	/**
@@ -83,7 +83,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * Value used to represent an unknown expiration year.
 	 */
-	// TODO: 2.0: Nullable expiration fields, this constant won't apply anymore
+	// TODO: 3.0: Nullable expiration fields, this constant won't apply anymore
 	public static final short UNKNOWN_EXPIRATION_YEAR = -1;
 
 	/**
@@ -275,7 +275,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @throws  IllegalArgumentException  if invalid date
 	 */
-	// TODO: 2.0: Allow Nullable expirationMonth and expirationDate
+	// TODO: 3.0: Allow Nullable expirationMonth and expirationDate
 	public static String getExpirationDateMMYY(byte expirationMonth, short expirationYear, boolean allowUnknownDate) throws IllegalArgumentException {
 		validateExpirationMonth(expirationMonth, allowUnknownDate);
 		validateExpirationYear(expirationYear, allowUnknownDate);
@@ -375,11 +375,11 @@ public class CreditCard implements Cloneable {
 	private String providerId;
 	private String providerUniqueId;
 	private String cardNumber;
-	// TODO: 2.0: Store separate type and masked card numbers
+	// TODO: 3.0: Store separate type and masked card numbers
 	private String maskedCardNumber;
-	// TODO: 2.0: A value type to encapsulate Month and Year here and other parts of the API
-	private byte expirationMonth = UNKNOWN_EXPIRATION_MONTH; // TODO: 2.0: Make nullable Byte
-	private short expirationYear = UNKNOWN_EXPIRATION_YEAR; // TODO: 2.0: Make nullable Short
+	// TODO: 3.0: A value type to encapsulate Month and Year here and other parts of the API
+	private byte expirationMonth = UNKNOWN_EXPIRATION_MONTH; // TODO: 3.0: Make nullable Byte
+	private short expirationYear = UNKNOWN_EXPIRATION_YEAR; // TODO: 3.0: Make nullable Short
 	private String cardCode;
 	private String firstName;
 	private String lastName;
@@ -416,10 +416,10 @@ public class CreditCard implements Cloneable {
 		String providerId,
 		String providerUniqueId,
 		String cardNumber,
-		// TODO: 2.0: Store separate type and masked card numbers
+		// TODO: 3.0: Store separate type and masked card numbers
 		String maskedCardNumber,
-		byte expirationMonth, // TODO: 2.0: Make nullable Byte
-		short expirationYear, // TODO: 2.0: Make nullable Short
+		byte expirationMonth, // TODO: 3.0: Make nullable Byte
+		short expirationYear, // TODO: 3.0: Make nullable Short
 		String cardCode,
 		String firstName,
 		String lastName,
@@ -443,7 +443,7 @@ public class CreditCard implements Cloneable {
 		setProviderId(providerId);
 		setProviderUniqueId(providerUniqueId);
 		setCardNumber(cardNumber);
-		// TODO: 2.0: Store separate type and masked card numbers
+		// TODO: 3.0: Store separate type and masked card numbers
 		if(maskedCardNumber != null) {
 			maskedCardNumber = maskedCardNumber.trim();
 			if(!maskedCardNumber.isEmpty()) setMaskedCardNumber(maskedCardNumber);
@@ -563,14 +563,14 @@ public class CreditCard implements Cloneable {
 				!GenericValidator.isCreditCard(cardNumber)
 			) throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "CreditCard.setCardNumber.cardNumber.invalid");
 			this.cardNumber = cardNumber;
-			// TODO: 2.0: Store separate type and masked card numbers
+			// TODO: 3.0: Store separate type and masked card numbers
 			this.maskedCardNumber = maskCreditCardNumber(cardNumber);
 		} else {
 			this.cardNumber = null;
 		}
 	}
 
-	// TODO: 2.0: Store separate type and masked card numbers
+	// TODO: 3.0: Store separate type and masked card numbers
 
 	/**
 	 * Gets the masked card number.  This contains the first two and last four digits of the card number.
@@ -599,7 +599,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @see  #UNKNOWN_EXPIRATION_MONTH
 	 */
-	// TODO: 2.0: Make nullable Byte
+	// TODO: 3.0: Make nullable Byte
 	public byte getExpirationMonth() {
 		return expirationMonth;
 	}
@@ -611,7 +611,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @see  #UNKNOWN_EXPIRATION_MONTH
 	 */
-	// TODO: 2.0: Make nullable Byte
+	// TODO: 3.0: Make nullable Byte
 	public void setExpirationMonth(byte expirationMonth) {
 		this.expirationMonth = validateExpirationMonth(expirationMonth, true);
 	}
@@ -621,7 +621,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @see  #UNKNOWN_EXPIRATION_YEAR
 	 */
-	// TODO: 2.0: Make nullable Short
+	// TODO: 3.0: Make nullable Short
 	public short getExpirationYear() {
 		return expirationYear;
 	}
@@ -635,7 +635,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @see  #UNKNOWN_EXPIRATION_YEAR
 	 */
-	// TODO: 2.0: Make nullable Short
+	// TODO: 3.0: Make nullable Short
 	public void setExpirationYear(short expirationYear) {
 		// Allow 0 - 99 moved to current century
 		if(expirationYear >= 0 && expirationYear <= 99) {
@@ -686,11 +686,11 @@ public class CreditCard implements Cloneable {
 
 	/**
 	 * Checks a card code format.
-	 * 
+	 *
 	 * @param cardCode The card code to check
 	 *
 	 * @return The card code to use
-	 * 
+	 *
 	 * @throws LocalizedIllegalArgumentException if card code invalid
 	 */
 	public static String validateCardCode(String cardCode) throws LocalizedIllegalArgumentException {

@@ -59,10 +59,10 @@ public class Transaction implements Cloneable {
 	private long authorizationTime;
 	private String authorizationPrincipalName;
 	private AuthorizationResult authorizationResult;
-	private long captureTime; // TODO: 2.0: Make nullable Long
+	private long captureTime; // TODO: 3.0: Make nullable Long
 	private String capturePrincipalName;
 	private CaptureResult captureResult;
-	private long voidTime; // TODO: 2.0: Make nullable Long
+	private long voidTime; // TODO: 3.0: Make nullable Long
 	private String voidPrincipalName;
 	private VoidResult voidResult;
 	private Status status;
@@ -86,10 +86,10 @@ public class Transaction implements Cloneable {
 		long authorizationTime,
 		String authorizationPrincipalName,
 		AuthorizationResult authorizationResult,
-		long captureTime, // TODO: 2.0: Make nullable Long
+		long captureTime, // TODO: 3.0: Make nullable Long
 		String capturePrincipalName,
 		CaptureResult captureResult,
-		long voidTime, // TODO: 2.0: Make nullable Long
+		long voidTime, // TODO: 3.0: Make nullable Long
 		String voidPrincipalName,
 		VoidResult voidResult,
 		Status status
@@ -197,12 +197,12 @@ public class Transaction implements Cloneable {
 		this.authorizationResult = authorizationResult;
 	}
 
-	// TODO: 2.0: Make nullable Long
+	// TODO: 3.0: Make nullable Long
 	public long getCaptureTime() {
 		return captureTime;
 	}
 
-	// TODO: 2.0: Make nullable Long
+	// TODO: 3.0: Make nullable Long
 	public void setCaptureTime(long captureTime) {
 		this.captureTime = captureTime;
 	}
@@ -223,12 +223,12 @@ public class Transaction implements Cloneable {
 		this.captureResult = captureResult;
 	}
 
-	// TODO: 2.0: Make nullable Long
+	// TODO: 3.0: Make nullable Long
 	public long getVoidTime() {
 		return voidTime;
 	}
 
-	// TODO: 2.0: Make nullable Long
+	// TODO: 3.0: Make nullable Long
 	public void setVoidTime(long voidTime) {
 		this.voidTime = voidTime;
 	}

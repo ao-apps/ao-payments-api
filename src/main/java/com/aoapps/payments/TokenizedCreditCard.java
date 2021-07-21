@@ -36,17 +36,17 @@ public class TokenizedCreditCard {
 
 	private final String providerUniqueId;
 	private final String providerReplacementMaskedCardNumber;
-	// TODO: 2.0: Store separate type and masked card numbers
+	// TODO: 3.0: Store separate type and masked card numbers
 	private final String replacementMaskedCardNumber;
 	private final String providerReplacementExpiration;
-	// TODO: 2.0: A value type to encapsulate Month and Year here and other parts of the API
+	// TODO: 3.0: A value type to encapsulate Month and Year here and other parts of the API
 	private final Byte replacementExpirationMonth;
 	private final Short replacementExpirationYear;
 
 	public TokenizedCreditCard(
 		String providerUniqueId,
 		String providerReplacementMaskedCardNumber,
-		// TODO: 2.0: Store separate type and masked card numbers
+		// TODO: 3.0: Store separate type and masked card numbers
 		String replacementMaskedCardNumber,
 		String providerReplacementExpiration,
 		Byte replacementExpirationMonth,
@@ -54,7 +54,7 @@ public class TokenizedCreditCard {
 	) {
 		this.providerUniqueId = NullArgumentException.checkNotNull(providerUniqueId, "providerUniqueId");
 		this.providerReplacementMaskedCardNumber = providerReplacementMaskedCardNumber;
-		// TODO: 2.0: Store separate type and masked card numbers
+		// TODO: 3.0: Store separate type and masked card numbers
 		this.replacementMaskedCardNumber = replacementMaskedCardNumber;
 		this.providerReplacementExpiration = providerReplacementExpiration;
 		this.replacementExpirationMonth = replacementExpirationMonth;
@@ -77,7 +77,7 @@ public class TokenizedCreditCard {
 		return providerReplacementMaskedCardNumber;
 	}
 
-	// TODO: 2.0: Store separate type and masked card numbers
+	// TODO: 3.0: Store separate type and masked card numbers
 
 	/**
 	 * Gets the replacement masked card number for this tokenized card.
