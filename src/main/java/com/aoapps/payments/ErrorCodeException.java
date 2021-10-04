@@ -35,7 +35,7 @@ public class ErrorCodeException extends LocalizedIOException {
 
 	private static final long serialVersionUID = 1L;
 
-	final private TransactionResult.ErrorCode errorCode;
+	private final TransactionResult.ErrorCode errorCode;
 
 	public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key) {
 		super(Resources.PACKAGE_RESOURCES, key);

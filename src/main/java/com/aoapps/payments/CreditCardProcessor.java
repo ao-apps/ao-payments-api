@@ -49,8 +49,8 @@ import org.apache.commons.lang3.NotImplementedException;
  */
 public class CreditCardProcessor {
 
-	final protected MerchantServicesProvider provider;
-	final protected PersistenceMechanism persistenceMechanism;
+	protected final MerchantServicesProvider provider;
+	protected final PersistenceMechanism persistenceMechanism;
 
 	public CreditCardProcessor(MerchantServicesProvider provider, PersistenceMechanism persistenceMechanism) {
 		this.provider = provider;

@@ -90,7 +90,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	 * The properties file path is obtained at creation time just in case the configuration mapping
 	 * changes values.  The properties file will remain the same.
 	 */
-	final protected String propertiesFilePath;
+	protected final String propertiesFilePath;
 
 	/**
 	 * The list of credit cards in the database.
@@ -633,7 +633,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	 * </p>
 	 */
 	@Override
-	synchronized public void updateCreditCard(Principal principal, CreditCard creditCard) throws SQLException {
+	public synchronized void updateCreditCard(Principal principal, CreditCard creditCard) throws SQLException {
 		loadIfNeeded();
 		// Find the card with matching persistence id
 		CreditCard internalCreditCard = getCreditCard(principal, creditCard.getPersistenceUniqueId());
@@ -661,7 +661,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	 * Card numbers are not persisted to the properties files - encrypted local storage not supported.
 	 */
 	@Override
-	synchronized public void updateCardNumber(
+	public synchronized void updateCardNumber(
 		Principal principal,
 		CreditCard creditCard,
 		String cardNumber,
@@ -700,7 +700,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	}
 
 	@Override
-	synchronized public void deleteCreditCard(Principal principal, CreditCard creditCard) throws SQLException {
+	public synchronized void deleteCreditCard(Principal principal, CreditCard creditCard) throws SQLException {
 		if(creditCard.getPersistenceUniqueId() != null) {
 			loadIfNeeded();
 			boolean modified=false;
@@ -717,7 +717,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	}
 
 	@Override
-	synchronized public String insertTransaction(Principal principal, Group group, Transaction transaction) throws SQLException {
+	public synchronized String insertTransaction(Principal principal, Group group, Transaction transaction) throws SQLException {
 		loadIfNeeded();
 		long highest = 0;
 		for(Transaction internalTransaction : internalTransactions) {
@@ -757,7 +757,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 		updateTransaction(principal, transaction);
 	}
 
-	synchronized private void updateTransaction(Principal principal, Transaction transaction) throws SQLException {
+	private synchronized void updateTransaction(Principal principal, Transaction transaction) throws SQLException {
 		loadIfNeeded();
 		// Find the transaction with the matching persistence unique ID
 		for(int c=0;c<internalTransactions.size();c++) {

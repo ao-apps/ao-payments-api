@@ -29,7 +29,7 @@ import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
  *
  * @author  AO Industries, Inc.
  */
-abstract public class TransactionResult {
+public abstract class TransactionResult {
 
 	// Matches src/main/sql/com/aoapps/payments/TransactionResult.CommunicationResult-type.sql
 	public enum CommunicationResult {

@@ -39,12 +39,12 @@ public class MerchantServicesProviderFactory {
 
 	private static class ProviderKey {
 
-		final private String providerId;
-		final private String className;
-		final private String param1;
-		final private String param2;
-		final private String param3;
-		final private String param4;
+		private final String providerId;
+		private final String className;
+		private final String param1;
+		private final String param2;
+		private final String param3;
+		private final String param4;
 
 		private ProviderKey(
 			String providerId,
@@ -90,7 +90,7 @@ public class MerchantServicesProviderFactory {
 		}
 	}
 
-	final private static Map<ProviderKey, MerchantServicesProvider> providers = new HashMap<>();
+	private static final Map<ProviderKey, MerchantServicesProvider> providers = new HashMap<>();
 
 	/**
 	 * Gets the provider for the given parameters.<br>
