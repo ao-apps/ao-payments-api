@@ -510,7 +510,7 @@ public class TransactionRequest implements Cloneable {
 			if(shippingCountryCode.length()!=2) throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "TransactionRequest.setShippingCountryCode.shippingCountryCode.mustBe2Digits");
 			this.shippingCountryCode = shippingCountryCode;
 		}
-   }
+	}
 
 	/**
 	 * Gets the flag indicating if the customer will be emailed directly by the payment gateway.
