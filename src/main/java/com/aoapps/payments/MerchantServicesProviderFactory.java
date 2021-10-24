@@ -66,11 +66,11 @@ public class MerchantServicesProviderFactory {
 		public int hashCode() {
 			return
 				providerId.hashCode()
-				+ className.hashCode()*7
-				+ (param1==null ? 0 : (param1.hashCode()*17))
-				+ (param2==null ? 0 : (param1.hashCode()*37))
-				+ (param3==null ? 0 : (param1.hashCode()*103))
-				+ (param4==null ? 0 : (param1.hashCode()*149))
+				+ className.hashCode() * 7
+				+ Objects.hashCode(param1) * 17
+				+ Objects.hashCode(param2) * 37
+				+ Objects.hashCode(param3) * 103
+				+ Objects.hashCode(param4) * 149
 			;
 		}
 
