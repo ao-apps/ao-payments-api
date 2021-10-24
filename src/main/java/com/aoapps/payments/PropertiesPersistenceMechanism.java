@@ -703,12 +703,12 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 	public synchronized void deleteCreditCard(Principal principal, CreditCard creditCard) throws SQLException {
 		if(creditCard.getPersistenceUniqueId() != null) {
 			loadIfNeeded();
-			boolean modified=false;
-			Iterator<CreditCard> I = internalCreditCards.iterator();
-			while(I.hasNext()) {
-				CreditCard internalCreditCard = I.next();
+			boolean modified = false;
+			Iterator<CreditCard> i = internalCreditCards.iterator();
+			while(i.hasNext()) {
+				CreditCard internalCreditCard = i.next();
 				if(creditCard.getPersistenceUniqueId().equals(internalCreditCard.getPersistenceUniqueId())) {
-					I.remove();
+					i.remove();
 					modified = true;
 				}
 			}

@@ -175,15 +175,15 @@ public class CreditCard implements Cloneable {
 		if(value == null) return null;
 		int len = value.length();
 		if(len == 0) return value;
-		StringBuilder SB = new StringBuilder(len);
+		StringBuilder sb = new StringBuilder(len);
 		for(int c = 0; c < len; c++) {
 			char ch = value.charAt(c);
 			if(
 				ch >= '0' && ch <= '9'
 				|| (allowUnknownDigit && ch == UNKNOWN_DIGIT)
-			) SB.append(ch);
+			) sb.append(ch);
 		}
-		return SB.length() == len ? value : SB.toString();
+		return sb.length() == len ? value : sb.toString();
 	}
 
 	/**
@@ -279,21 +279,21 @@ public class CreditCard implements Cloneable {
 	public static String getExpirationDateMMYY(byte expirationMonth, short expirationYear, boolean allowUnknownDate) throws IllegalArgumentException {
 		validateExpirationMonth(expirationMonth, allowUnknownDate);
 		validateExpirationYear(expirationYear, allowUnknownDate);
-		StringBuilder SB = new StringBuilder(4);
+		StringBuilder sb = new StringBuilder(4);
 		if(expirationMonth == UNKNOWN_EXPIRATION_MONTH) {
-			SB.append(UNKNOWN_DIGIT).append(UNKNOWN_DIGIT);
+			sb.append(UNKNOWN_DIGIT).append(UNKNOWN_DIGIT);
 		} else {
-			if(expirationMonth < 10) SB.append('0');
-			SB.append(expirationMonth);
+			if(expirationMonth < 10) sb.append('0');
+			sb.append(expirationMonth);
 		}
 		if(expirationYear == UNKNOWN_EXPIRATION_YEAR) {
-			SB.append(UNKNOWN_DIGIT).append(UNKNOWN_DIGIT);
+			sb.append(UNKNOWN_DIGIT).append(UNKNOWN_DIGIT);
 		} else {
 			int modYear = expirationYear % 100;
-			if(modYear < 10) SB.append('0');
-			SB.append(modYear);
+			if(modYear < 10) sb.append('0');
+			sb.append(modYear);
 		}
-		return SB.toString();
+		return sb.toString();
 	}
 
 	/**
