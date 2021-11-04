@@ -96,7 +96,7 @@ public class CreditCardProcessor {
 			currentTimeMillis,
 			principal == null ? null : principal.getName(),
 			null, // captureResult
-			(long)-1, // voidTime
+			-1, // voidTime
 			null, // voidPrincipalName
 			null, // voidResult
 			Transaction.Status.PROCESSING
@@ -203,10 +203,10 @@ public class CreditCardProcessor {
 			currentTimeMillis,
 			principal == null ? null : principal.getName(),
 			null, // authorizationResult
-			(long)-1, // captureTime
+			-1, // captureTime
 			null, // capturePrincipalName
 			null, // captureResult
-			(long)-1, // voidTime
+			-1, // voidTime
 			null, // voidPrincipalName
 			null, // voidResult
 			Transaction.Status.PROCESSING
