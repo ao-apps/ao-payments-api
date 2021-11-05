@@ -77,7 +77,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * @deprecated  Please use {@link #UNKNOWN_EXPIRATION_MONTH} instead.
 	 */
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	public static final byte UNKNOWN_EXPRIATION_MONTH = UNKNOWN_EXPIRATION_MONTH;
 
 	/**
@@ -89,7 +89,7 @@ public class CreditCard implements Cloneable {
 	/**
 	 * @deprecated  Please use {@link #UNKNOWN_EXPIRATION_YEAR} instead.
 	 */
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	public static final short UNKNOWN_EXPRIATION_YEAR = UNKNOWN_EXPIRATION_YEAR;
 
 	/**
@@ -302,7 +302,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @deprecated  Please use {@link #getExpirationDateMMYY(byte, short, boolean)} allowing for unknown expirations
 	 */
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	public static String getExpirationDateMMYY(byte expirationMonth, short expirationYear) {
 		return getExpirationDateMMYY(expirationMonth, expirationYear, false);
 	}
@@ -665,7 +665,7 @@ public class CreditCard implements Cloneable {
 	 *
 	 * @deprecated  Please use {@link #getExpirationDateMMYY(boolean)} allowing for unknown expirations
 	 */
-	@Deprecated
+	@Deprecated(forRemoval = true)
 	public String getExpirationDateMMYY() {
 		return getExpirationDateMMYY(false);
 	}
