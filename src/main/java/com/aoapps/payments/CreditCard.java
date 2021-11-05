@@ -230,7 +230,7 @@ public class CreditCard implements Cloneable {
 		return expirationMonth;
 	}
 
-	private static class CurrentYearLock {}
+	private static class CurrentYearLock {/* Empty lock class to help heap profile */}
 	private static final CurrentYearLock currentYearLock = new CurrentYearLock();
 	private static long currentYearMillis = Long.MIN_VALUE;
 	private static short currentYear;
@@ -401,6 +401,7 @@ public class CreditCard implements Cloneable {
 	 * Creates an empty CreditCard.  The values should be set using the appropriate setter methods.
 	 */
 	public CreditCard() {
+		// Do nothing
 	}
 
 	/**

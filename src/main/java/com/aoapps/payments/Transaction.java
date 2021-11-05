@@ -71,6 +71,7 @@ public class Transaction implements Cloneable {
 	 * Creates an empty Transaction.  The values should be set using the appropriate setter methods.
 	 */
 	public Transaction() {
+		// Do nothing
 	}
 
 	/**
