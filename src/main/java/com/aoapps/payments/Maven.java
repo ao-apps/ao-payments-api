@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2019, 2021  AO Industries, Inc.
+ * Copyright (C) 2019, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -29,7 +29,7 @@ import java.util.Properties;
 /**
  * @author  AO Industries, Inc.
  */
-abstract class Maven {
+final class Maven {
 
 	/** Make no instances. */
 	private Maven() {throw new AssertionError();}

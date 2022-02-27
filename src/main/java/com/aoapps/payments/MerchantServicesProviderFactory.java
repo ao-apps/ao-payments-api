@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,7 +35,10 @@ import java.util.Objects;
  *
  * @author  AO Industries, Inc.
  */
-public class MerchantServicesProviderFactory {
+public final class MerchantServicesProviderFactory {
+
+	/** Make no instances. */
+	private MerchantServicesProviderFactory() {throw new AssertionError();}
 
 	private static class ProviderKey {
 
@@ -179,9 +182,5 @@ public class MerchantServicesProviderFactory {
 			}
 			return provider;
 		}
-	}
-
-	private MerchantServicesProviderFactory() {
-		// Make no instances
 	}
 }
