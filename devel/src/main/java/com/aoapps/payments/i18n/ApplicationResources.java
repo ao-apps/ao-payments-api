@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -27,10 +27,14 @@ import com.aoapps.hodgepodge.i18n.EditableResourceBundleSet;
 import com.aoapps.lang.i18n.Locales;
 import java.io.File;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * @author  AO Industries, Inc.
  */
+@ThreadSafe
 public final class ApplicationResources extends EditableResourceBundle {
 
 	public static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
@@ -47,10 +51,17 @@ public final class ApplicationResources extends EditableResourceBundle {
 		Locale.CHINESE
 	);
 
-	static File[] getSourceFile(String filename) {
-		return new File[] {
-			new File(System.getProperty("user.home") + "/maven2/ao/oss/payments/api/src/main/java/com/aoapps/payments/i18n", filename)
-		};
+	static File getSourceFile(String filename) {
+		try {
+			return new File(System.getProperty("user.home") + "/maven2/ao/oss/payments/api/src/main/java/com/aoapps/payments/i18n", filename);
+		} catch(SecurityException e) {
+			Logger.getLogger(ApplicationResources.class.getName()).log(
+				Level.WARNING,
+				"Unable to locate source file: " + filename,
+				e
+			);
+			return null;
+		}
 	}
 
 	public ApplicationResources() {
