@@ -34,42 +34,42 @@ import java.io.Serializable;
  */
 public class ErrorCodeException extends LocalizedIOException {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private final TransactionResult.ErrorCode errorCode;
+  private final TransactionResult.ErrorCode errorCode;
 
-	public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key) {
-		super(Resources.PACKAGE_RESOURCES, key);
-		this.errorCode = errorCode;
-	}
+  public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key) {
+    super(Resources.PACKAGE_RESOURCES, key);
+    this.errorCode = errorCode;
+  }
 
-	public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
-		super(Resources.PACKAGE_RESOURCES, key, args);
-		this.errorCode = errorCode;
-	}
+  public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
+    super(Resources.PACKAGE_RESOURCES, key, args);
+    this.errorCode = errorCode;
+  }
 
-	public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key) {
-		super(cause, Resources.PACKAGE_RESOURCES, key);
-		this.errorCode = errorCode;
-	}
+  public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key) {
+    super(cause, Resources.PACKAGE_RESOURCES, key);
+    this.errorCode = errorCode;
+  }
 
-	public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
-		super(cause, Resources.PACKAGE_RESOURCES, key, args);
-		this.errorCode = errorCode;
-	}
+  public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
+    super(cause, Resources.PACKAGE_RESOURCES, key, args);
+    this.errorCode = errorCode;
+  }
 
-	public TransactionResult.ErrorCode getErrorCode() {
-		return errorCode;
-	}
+  public TransactionResult.ErrorCode getErrorCode() {
+    return errorCode;
+  }
 
-	static {
-		Throwables.registerSurrogateFactory(ErrorCodeException.class, (template, cause) ->
-			new ErrorCodeException(
-				cause,
-				template.errorCode,
-				template.key,
-				template.args
-			)
-		);
-	}
+  static {
+    Throwables.registerSurrogateFactory(ErrorCodeException.class, (template, cause) ->
+      new ErrorCodeException(
+        cause,
+        template.errorCode,
+        template.key,
+        template.args
+      )
+    );
+  }
 }

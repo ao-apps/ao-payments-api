@@ -37,179 +37,179 @@ import org.junit.Test;
  */
 public class CreditCardTest {
 
-	// <editor-fold defaultstate="collapsed" desc="Test maskCreditCardNumber">
-	@Test
-	public void testMaskCreditCardNumberDigitsOnly() {
-		assertEquals(
-			"521234XXXXXX1234",
-			CreditCard.maskCreditCardNumber("5212345678901234")
-		);
-	}
+  // <editor-fold defaultstate="collapsed" desc="Test maskCreditCardNumber">
+  @Test
+  public void testMaskCreditCardNumberDigitsOnly() {
+    assertEquals(
+      "521234XXXXXX1234",
+      CreditCard.maskCreditCardNumber("5212345678901234")
+    );
+  }
 
-	@Test
-	public void testMaskCreditCardNumberDigitsWithSpacesTrimmed() {
-		assertEquals(
-			"521234XXXXXX1234",
-			CreditCard.maskCreditCardNumber("    5212345678901234    ")
-		);
-	}
+  @Test
+  public void testMaskCreditCardNumberDigitsWithSpacesTrimmed() {
+    assertEquals(
+      "521234XXXXXX1234",
+      CreditCard.maskCreditCardNumber("    5212345678901234    ")
+    );
+  }
 
-	@Test
-	public void testMaskCreditCardNumberDigitsWithSpacesInside() {
-		assertEquals(
-			"5 21234XXXXXX1234",
-			CreditCard.maskCreditCardNumber("5 212345678901234")
-		);
-		assertEquals(
-			"521234XXXXXX123 4",
-			CreditCard.maskCreditCardNumber("521234567890123 4")
-		);
-		assertEquals(
-			"521234XXX XXX1234",
-			CreditCard.maskCreditCardNumber("521234567 8901234")
-		);
-		assertEquals(
-			"5 2 1 2 3 4 X X X X X X 1 2 3 4",
-			CreditCard.maskCreditCardNumber("5 2 1 2 3 4 5 6 7 8 9 0 1 2 3 4")
-		);
-	}
+  @Test
+  public void testMaskCreditCardNumberDigitsWithSpacesInside() {
+    assertEquals(
+      "5 21234XXXXXX1234",
+      CreditCard.maskCreditCardNumber("5 212345678901234")
+    );
+    assertEquals(
+      "521234XXXXXX123 4",
+      CreditCard.maskCreditCardNumber("521234567890123 4")
+    );
+    assertEquals(
+      "521234XXX XXX1234",
+      CreditCard.maskCreditCardNumber("521234567 8901234")
+    );
+    assertEquals(
+      "5 2 1 2 3 4 X X X X X X 1 2 3 4",
+      CreditCard.maskCreditCardNumber("5 2 1 2 3 4 5 6 7 8 9 0 1 2 3 4")
+    );
+  }
 
-	@Test
-	public void testMaskCreditCardNumberDigitsWithOtherCharactersInside() {
-		assertEquals(
-			"5212-34XX-XXXX-1234",
-			CreditCard.maskCreditCardNumber("5212-3456-7890-1234")
-		);
-		assertEquals(
-			"5212-34XX-XXPXX-1234",
-			CreditCard.maskCreditCardNumber("5212-3456-78P90-1234")
-		);
-		assertEquals(
-			"52HELP12-34XX-XXPXX-1ME234",
-			CreditCard.maskCreditCardNumber("52HELP12-3456-78P90-1ME234")
-		);
-	}
-	// </editor-fold>
+  @Test
+  public void testMaskCreditCardNumberDigitsWithOtherCharactersInside() {
+    assertEquals(
+      "5212-34XX-XXXX-1234",
+      CreditCard.maskCreditCardNumber("5212-3456-7890-1234")
+    );
+    assertEquals(
+      "5212-34XX-XXPXX-1234",
+      CreditCard.maskCreditCardNumber("5212-3456-78P90-1234")
+    );
+    assertEquals(
+      "52HELP12-34XX-XXPXX-1ME234",
+      CreditCard.maskCreditCardNumber("52HELP12-3456-78P90-1ME234")
+    );
+  }
+  // </editor-fold>
 
-	// <editor-fold defaultstate="collapsed" desc="Test validateExpirationMonth">
-	@Test
-	public void testValidateExpirationMonthValidAllowUnknown() {
-		assertEquals(
-			(byte)1,
-			CreditCard.validateExpirationMonth((byte)1, true)
-		);
-		assertEquals(
-			(byte)12,
-			CreditCard.validateExpirationMonth((byte)12, true)
-		);
-	}
+  // <editor-fold defaultstate="collapsed" desc="Test validateExpirationMonth">
+  @Test
+  public void testValidateExpirationMonthValidAllowUnknown() {
+    assertEquals(
+      (byte)1,
+      CreditCard.validateExpirationMonth((byte)1, true)
+    );
+    assertEquals(
+      (byte)12,
+      CreditCard.validateExpirationMonth((byte)12, true)
+    );
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationMonthTooLowAllowUnknown() {
-		CreditCard.validateExpirationMonth((byte)0, true);
-	}
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationMonthTooLowAllowUnknown() {
+    CreditCard.validateExpirationMonth((byte)0, true);
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationMonthTooHighAllowUnknown() {
-		CreditCard.validateExpirationMonth((byte)13, true);
-	}
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationMonthTooHighAllowUnknown() {
+    CreditCard.validateExpirationMonth((byte)13, true);
+  }
 
-	@Test
-	public void testValidateExpirationMonthUnknownAllowUnknown() {
-		assertEquals(
-			CreditCard.UNKNOWN_EXPIRATION_MONTH,
-			CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPIRATION_MONTH, true)
-		);
-	}
+  @Test
+  public void testValidateExpirationMonthUnknownAllowUnknown() {
+    assertEquals(
+      CreditCard.UNKNOWN_EXPIRATION_MONTH,
+      CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPIRATION_MONTH, true)
+    );
+  }
 
-	@Test
-	public void testValidateExpirationMonthValidDisallowUnknown() {
-		assertEquals(
-			(byte)1,
-			CreditCard.validateExpirationMonth((byte)1, false)
-		);
-		assertEquals(
-			(byte)12,
-			CreditCard.validateExpirationMonth((byte)12, false)
-		);
-	}
+  @Test
+  public void testValidateExpirationMonthValidDisallowUnknown() {
+    assertEquals(
+      (byte)1,
+      CreditCard.validateExpirationMonth((byte)1, false)
+    );
+    assertEquals(
+      (byte)12,
+      CreditCard.validateExpirationMonth((byte)12, false)
+    );
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationMonthTooLowDisallowUnknown() {
-		CreditCard.validateExpirationMonth((byte)0, false);
-	}
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationMonthTooLowDisallowUnknown() {
+    CreditCard.validateExpirationMonth((byte)0, false);
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationMonthTooHighDisllowUnknown() {
-		CreditCard.validateExpirationMonth((byte)13, false);
-	}
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationMonthTooHighDisllowUnknown() {
+    CreditCard.validateExpirationMonth((byte)13, false);
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationMonthUnknownDisallowUnknown() {
-		CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPIRATION_MONTH, false);
-	}
-	// </editor-fold>
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationMonthUnknownDisallowUnknown() {
+    CreditCard.validateExpirationMonth(CreditCard.UNKNOWN_EXPIRATION_MONTH, false);
+  }
+  // </editor-fold>
 
-	// <editor-fold defaultstate="collapsed" desc="Test validateExpirationYear">
-	@Test
-	public void testValidateExpirationYearValidAllowUnknown() {
-		assertEquals(
-			CreditCard.MIN_EXPIRATION_YEAR,
-			CreditCard.validateExpirationYear(CreditCard.MIN_EXPIRATION_YEAR, true)
-		);
-		int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
-		assertEquals(
-			max,
-			CreditCard.validateExpirationYear(SafeMath.castShort(max), true)
-		);
-	}
+  // <editor-fold defaultstate="collapsed" desc="Test validateExpirationYear">
+  @Test
+  public void testValidateExpirationYearValidAllowUnknown() {
+    assertEquals(
+      CreditCard.MIN_EXPIRATION_YEAR,
+      CreditCard.validateExpirationYear(CreditCard.MIN_EXPIRATION_YEAR, true)
+    );
+    int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+    assertEquals(
+      max,
+      CreditCard.validateExpirationYear(SafeMath.castShort(max), true)
+    );
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationYearTooLowAllowUnknown() {
-		CreditCard.validateExpirationYear(SafeMath.castShort(CreditCard.MIN_EXPIRATION_YEAR - 1), true);
-	}
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationYearTooLowAllowUnknown() {
+    CreditCard.validateExpirationYear(SafeMath.castShort(CreditCard.MIN_EXPIRATION_YEAR - 1), true);
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationYearTooHighAllowUnknown() {
-		int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
-		CreditCard.validateExpirationYear(SafeMath.castShort(max + 1), true);
-	}
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationYearTooHighAllowUnknown() {
+    int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+    CreditCard.validateExpirationYear(SafeMath.castShort(max + 1), true);
+  }
 
-	@Test
-	public void testValidateExpirationYearUnknownAllowUnknown() {
-		assertEquals(
-			CreditCard.UNKNOWN_EXPIRATION_YEAR,
-			CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPIRATION_YEAR, true)
-		);
-	}
+  @Test
+  public void testValidateExpirationYearUnknownAllowUnknown() {
+    assertEquals(
+      CreditCard.UNKNOWN_EXPIRATION_YEAR,
+      CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPIRATION_YEAR, true)
+    );
+  }
 
-	@Test
-	public void testValidateExpirationYearValidDisallowUnknown() {
-		assertEquals(
-			CreditCard.MIN_EXPIRATION_YEAR,
-			CreditCard.validateExpirationYear(CreditCard.MIN_EXPIRATION_YEAR, false)
-		);
-		int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
-		assertEquals(
-			max,
-			CreditCard.validateExpirationYear(SafeMath.castShort(max), false)
-		);
-	}
+  @Test
+  public void testValidateExpirationYearValidDisallowUnknown() {
+    assertEquals(
+      CreditCard.MIN_EXPIRATION_YEAR,
+      CreditCard.validateExpirationYear(CreditCard.MIN_EXPIRATION_YEAR, false)
+    );
+    int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+    assertEquals(
+      max,
+      CreditCard.validateExpirationYear(SafeMath.castShort(max), false)
+    );
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationYearTooLowDisallowUnknown() {
-		CreditCard.validateExpirationYear(SafeMath.castShort(CreditCard.MIN_EXPIRATION_YEAR - 1), false);
-	}
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationYearTooLowDisallowUnknown() {
+    CreditCard.validateExpirationYear(SafeMath.castShort(CreditCard.MIN_EXPIRATION_YEAR - 1), false);
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationYearTooHighDisllowUnknown() {
-		int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
-		CreditCard.validateExpirationYear(SafeMath.castShort(max + 1), false);
-	}
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationYearTooHighDisllowUnknown() {
+    int max = new GregorianCalendar().get(Calendar.YEAR) + CreditCard.EXPIRATION_YEARS_FUTURE;
+    CreditCard.validateExpirationYear(SafeMath.castShort(max + 1), false);
+  }
 
-	@Test(expected = LocalizedIllegalArgumentException.class)
-	public void testValidateExpirationYearUnknownDisallowUnknown() {
-		CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPIRATION_YEAR, false);
-	}
-	// </editor-fold>
+  @Test(expected = LocalizedIllegalArgumentException.class)
+  public void testValidateExpirationYearUnknownDisallowUnknown() {
+    CreditCard.validateExpirationYear(CreditCard.UNKNOWN_EXPIRATION_YEAR, false);
+  }
+  // </editor-fold>
 }

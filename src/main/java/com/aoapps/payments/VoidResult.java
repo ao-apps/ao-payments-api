@@ -32,26 +32,26 @@ package com.aoapps.payments;
  */
 public class VoidResult extends TransactionResult implements Cloneable {
 
-	public VoidResult(
-		String providerId,
-		CommunicationResult communicationResult,
-		String providerErrorCode,
-		ErrorCode errorCode,
-		String providerErrorMessage,
-		String providerUniqueId
-	) {
-		super(
-			providerId,
-			communicationResult,
-			providerErrorCode,
-			errorCode,
-			providerErrorMessage,
-			providerUniqueId
-		);
-	}
+  public VoidResult(
+    String providerId,
+    CommunicationResult communicationResult,
+    String providerErrorCode,
+    ErrorCode errorCode,
+    String providerErrorMessage,
+    String providerUniqueId
+  ) {
+    super(
+      providerId,
+      communicationResult,
+      providerErrorCode,
+      errorCode,
+      providerErrorMessage,
+      providerUniqueId
+    );
+  }
 
-	@Override
-	public VoidResult clone() throws CloneNotSupportedException {
-		return (VoidResult)super.clone();
-	}
+  @Override
+  public VoidResult clone() throws CloneNotSupportedException {
+    return (VoidResult)super.clone();
+  }
 }

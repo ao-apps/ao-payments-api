@@ -34,303 +34,303 @@ import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
  */
 public class AuthorizationResult extends TransactionResult implements Cloneable {
 
-	// Matches src/main/sql/com/aoapps/payments/AuthorizationResult.ApprovalResult-type.sql
-	public enum ApprovalResult {
-		APPROVED,
-		DECLINED,
-		HOLD;
+  // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.ApprovalResult-type.sql
+  public enum ApprovalResult {
+    APPROVED,
+    DECLINED,
+    HOLD;
 
-		/**
-		 * Gets the display value.
-		 */
-		@Override
-		public String toString() {
-			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ApprovalResult."+name());
-		}
-	}
+    /**
+     * Gets the display value.
+     */
+    @Override
+    public String toString() {
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ApprovalResult."+name());
+    }
+  }
 
-	// Matches src/main/sql/com/aoapps/payments/AuthorizationResult.DeclineReason-type.sql
-	public enum DeclineReason {
-		NO_SPECIFIC,
-		EXPIRED_CARD,
-		PICK_UP_CARD,
-		AVS_MISMATCH,
-		CVV2_MISMATCH,
-		FRAUD_DETECTED,
-		BLOCKED_IP,
-		MANUAL_REVIEW,
-		INSUFFICIENT_FUNDS,
-		MAX_SALE_EXCEEDED,
-		MIN_SALE_NOT_MET,
-		VOLUME_EXCEEDED_1_DAY,
-		USAGE_EXCEEDED_1_DAY,
-		VOLUME_EXCEEDED_3_DAYS,
-		USAGE_EXCEEDED_3_DAYS,
-		VOLUME_EXCEEDED_15_DAYS,
-		USAGE_EXCEEDED_15_DAYS,
-		VOLUME_EXCEEDED_30_DAYS,
-		USAGE_EXCEEDED_30_DAYS,
-		STOLEN_OR_LOST_CARD,
-		AVS_FAILURE,
-		NOT_PROVIDED,
-		UNKNOWN;
+  // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.DeclineReason-type.sql
+  public enum DeclineReason {
+    NO_SPECIFIC,
+    EXPIRED_CARD,
+    PICK_UP_CARD,
+    AVS_MISMATCH,
+    CVV2_MISMATCH,
+    FRAUD_DETECTED,
+    BLOCKED_IP,
+    MANUAL_REVIEW,
+    INSUFFICIENT_FUNDS,
+    MAX_SALE_EXCEEDED,
+    MIN_SALE_NOT_MET,
+    VOLUME_EXCEEDED_1_DAY,
+    USAGE_EXCEEDED_1_DAY,
+    VOLUME_EXCEEDED_3_DAYS,
+    USAGE_EXCEEDED_3_DAYS,
+    VOLUME_EXCEEDED_15_DAYS,
+    USAGE_EXCEEDED_15_DAYS,
+    VOLUME_EXCEEDED_30_DAYS,
+    USAGE_EXCEEDED_30_DAYS,
+    STOLEN_OR_LOST_CARD,
+    AVS_FAILURE,
+    NOT_PROVIDED,
+    UNKNOWN;
 
-		/**
-		 * Gets the display value.
-		 */
-		@Override
-		public String toString() {
-			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.DeclineReason."+name());
-		}
-	}
+    /**
+     * Gets the display value.
+     */
+    @Override
+    public String toString() {
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.DeclineReason."+name());
+    }
+  }
 
-	// Matches src/main/sql/com/aoapps/payments/AuthorizationResult.ReviewReason-type.sql
-	public enum ReviewReason {
-		RISK_MANAGEMENT,
-		ACCEPTED_MERCHANT_REVIEW,
-		ACCEPTED_AUTHORIZED_MERCHANT_REVIEW;
+  // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.ReviewReason-type.sql
+  public enum ReviewReason {
+    RISK_MANAGEMENT,
+    ACCEPTED_MERCHANT_REVIEW,
+    ACCEPTED_AUTHORIZED_MERCHANT_REVIEW;
 
-		/**
-		 * Gets the display value.
-		 */
-		@Override
-		public String toString() {
-			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ReviewReason."+name());
-		}
-	}
+    /**
+     * Gets the display value.
+     */
+    @Override
+    public String toString() {
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ReviewReason."+name());
+    }
+  }
 
-	// Matches src/main/sql/com/aoapps/payments/AuthorizationResult.CvvResult-type.sql
-	public enum CvvResult {
-		MATCH,
-		NO_MATCH,
-		NOT_PROCESSED,
-		CVV2_NOT_PROVIDED_BY_MERCHANT,
-		NOT_SUPPORTED_BY_ISSUER,
-		UNKNOWN;
+  // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.CvvResult-type.sql
+  public enum CvvResult {
+    MATCH,
+    NO_MATCH,
+    NOT_PROCESSED,
+    CVV2_NOT_PROVIDED_BY_MERCHANT,
+    NOT_SUPPORTED_BY_ISSUER,
+    UNKNOWN;
 
-		/**
-		 * Gets the display value.
-		 */
-		@Override
-		public String toString() {
-			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.CvvResult."+name());
-		}
-	}
+    /**
+     * Gets the display value.
+     */
+    @Override
+    public String toString() {
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.CvvResult."+name());
+    }
+  }
 
-	// Matches src/main/sql/com/aoapps/payments/AuthorizationResult.AvsResult-type.sql
-	public enum AvsResult {
-		ADDRESS_NOT_PROVIDED,
-		ADDRESS_Y_ZIP_9,
-		ADDRESS_Y_ZIP_5,
-		ADDRESS_Y_ZIP_N,
-		ADDRESS_N_ZIP_9,
-		ADDRESS_N_ZIP_5,
-		ADDRESS_N_ZIP_N,
-		UNAVAILABLE,
-		RETRY,
-		ERROR,
-		SERVICE_NOT_SUPPORTED,
-		NON_US_CARD,
-		NOT_APPLICABLE,
-		UNKNOWN;
+  // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.AvsResult-type.sql
+  public enum AvsResult {
+    ADDRESS_NOT_PROVIDED,
+    ADDRESS_Y_ZIP_9,
+    ADDRESS_Y_ZIP_5,
+    ADDRESS_Y_ZIP_N,
+    ADDRESS_N_ZIP_9,
+    ADDRESS_N_ZIP_5,
+    ADDRESS_N_ZIP_N,
+    UNAVAILABLE,
+    RETRY,
+    ERROR,
+    SERVICE_NOT_SUPPORTED,
+    NON_US_CARD,
+    NOT_APPLICABLE,
+    UNKNOWN;
 
-		/**
-		 * Gets the display value.
-		 */
-		@Override
-		public String toString() {
-			return PACKAGE_RESOURCES.getMessage("AuthorizationResult.AvsResult."+name());
-		}
-	}
+    /**
+     * Gets the display value.
+     */
+    @Override
+    public String toString() {
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.AvsResult."+name());
+    }
+  }
 
-	private final TokenizedCreditCard tokenizedCreditCard;
-	private final String providerApprovalResult;
-	private final ApprovalResult approvalResult;
-	private final String providerDeclineReason;
-	private final DeclineReason declineReason;
-	private final String providerReviewReason;
-	private final ReviewReason reviewReason;
-	private final String providerCvvResult;
-	private final CvvResult cvvResult;
-	private final String providerAvsResult;
-	private final AvsResult avsResult;
-	private final String approvalCode;
+  private final TokenizedCreditCard tokenizedCreditCard;
+  private final String providerApprovalResult;
+  private final ApprovalResult approvalResult;
+  private final String providerDeclineReason;
+  private final DeclineReason declineReason;
+  private final String providerReviewReason;
+  private final ReviewReason reviewReason;
+  private final String providerCvvResult;
+  private final CvvResult cvvResult;
+  private final String providerAvsResult;
+  private final AvsResult avsResult;
+  private final String approvalCode;
 
-	public AuthorizationResult(
-		String providerId,
-		CommunicationResult communicationResult,
-		String providerErrorCode,
-		ErrorCode errorCode,
-		String providerErrorMessage,
-		String providerUniqueId,
-		TokenizedCreditCard tokenizedCreditCard,
-		String providerApprovalResult,
-		ApprovalResult approvalResult,
-		String providerDeclineReason,
-		DeclineReason declineReason,
-		String providerReviewReason,
-		ReviewReason reviewReason,
-		String providerCvvResult,
-		CvvResult cvvResult,
-		String providerAvsResult,
-		AvsResult avsResult,
-		String approvalCode
-	) {
-		super(
-			providerId,
-			communicationResult,
-			providerErrorCode,
-			errorCode,
-			providerErrorMessage,
-			providerUniqueId
-		);
-		this.tokenizedCreditCard = tokenizedCreditCard;
-		this.providerApprovalResult = providerApprovalResult;
-		this.approvalResult = approvalResult;
-		this.providerDeclineReason = providerDeclineReason;
-		this.declineReason = declineReason;
-		this.providerReviewReason = providerReviewReason;
-		this.reviewReason = reviewReason;
-		this.providerCvvResult = providerCvvResult;
-		this.cvvResult = cvvResult;
-		this.providerAvsResult = providerAvsResult;
-		this.avsResult = avsResult;
-		this.approvalCode = approvalCode;
-	}
+  public AuthorizationResult(
+    String providerId,
+    CommunicationResult communicationResult,
+    String providerErrorCode,
+    ErrorCode errorCode,
+    String providerErrorMessage,
+    String providerUniqueId,
+    TokenizedCreditCard tokenizedCreditCard,
+    String providerApprovalResult,
+    ApprovalResult approvalResult,
+    String providerDeclineReason,
+    DeclineReason declineReason,
+    String providerReviewReason,
+    ReviewReason reviewReason,
+    String providerCvvResult,
+    CvvResult cvvResult,
+    String providerAvsResult,
+    AvsResult avsResult,
+    String approvalCode
+  ) {
+    super(
+      providerId,
+      communicationResult,
+      providerErrorCode,
+      errorCode,
+      providerErrorMessage,
+      providerUniqueId
+    );
+    this.tokenizedCreditCard = tokenizedCreditCard;
+    this.providerApprovalResult = providerApprovalResult;
+    this.approvalResult = approvalResult;
+    this.providerDeclineReason = providerDeclineReason;
+    this.declineReason = declineReason;
+    this.providerReviewReason = providerReviewReason;
+    this.reviewReason = reviewReason;
+    this.providerCvvResult = providerCvvResult;
+    this.cvvResult = cvvResult;
+    this.providerAvsResult = providerAvsResult;
+    this.avsResult = avsResult;
+    this.approvalCode = approvalCode;
+  }
 
-	/**
-	 * @deprecated  Please use {@link #AuthorizationResult(java.lang.String, com.aoapps.payments.TransactionResult.CommunicationResult, java.lang.String, com.aoapps.payments.TransactionResult.ErrorCode, java.lang.String, java.lang.String, com.aoapps.payments.TokenizedCreditCard, java.lang.String, com.aoapps.payments.AuthorizationResult.ApprovalResult, java.lang.String, com.aoapps.payments.AuthorizationResult.DeclineReason, java.lang.String, com.aoapps.payments.AuthorizationResult.ReviewReason, java.lang.String, com.aoapps.payments.AuthorizationResult.CvvResult, java.lang.String, com.aoapps.payments.AuthorizationResult.AvsResult, java.lang.String)}
-	 */
-	@Deprecated(forRemoval = true)
-	public AuthorizationResult(
-		String providerId,
-		CommunicationResult communicationResult,
-		String providerErrorCode,
-		ErrorCode errorCode,
-		String providerErrorMessage,
-		String providerUniqueId,
-		String providerApprovalResult,
-		ApprovalResult approvalResult,
-		String providerDeclineReason,
-		DeclineReason declineReason,
-		String providerReviewReason,
-		ReviewReason reviewReason,
-		String providerCvvResult,
-		CvvResult cvvResult,
-		String providerAvsResult,
-		AvsResult avsResult,
-		String approvalCode
-	) {
-		this(
-			providerId,
-			communicationResult,
-			providerErrorCode,
-			errorCode,
-			providerErrorMessage,
-			providerUniqueId,
-			null, // tokenizedCreditCard
-			providerApprovalResult,
-			approvalResult,
-			providerDeclineReason,
-			declineReason,
-			providerReviewReason,
-			reviewReason,
-			providerCvvResult,
-			cvvResult,
-			providerAvsResult,
-			avsResult,
-			approvalCode
-		);
-	}
+  /**
+   * @deprecated  Please use {@link #AuthorizationResult(java.lang.String, com.aoapps.payments.TransactionResult.CommunicationResult, java.lang.String, com.aoapps.payments.TransactionResult.ErrorCode, java.lang.String, java.lang.String, com.aoapps.payments.TokenizedCreditCard, java.lang.String, com.aoapps.payments.AuthorizationResult.ApprovalResult, java.lang.String, com.aoapps.payments.AuthorizationResult.DeclineReason, java.lang.String, com.aoapps.payments.AuthorizationResult.ReviewReason, java.lang.String, com.aoapps.payments.AuthorizationResult.CvvResult, java.lang.String, com.aoapps.payments.AuthorizationResult.AvsResult, java.lang.String)}
+   */
+  @Deprecated(forRemoval = true)
+  public AuthorizationResult(
+    String providerId,
+    CommunicationResult communicationResult,
+    String providerErrorCode,
+    ErrorCode errorCode,
+    String providerErrorMessage,
+    String providerUniqueId,
+    String providerApprovalResult,
+    ApprovalResult approvalResult,
+    String providerDeclineReason,
+    DeclineReason declineReason,
+    String providerReviewReason,
+    ReviewReason reviewReason,
+    String providerCvvResult,
+    CvvResult cvvResult,
+    String providerAvsResult,
+    AvsResult avsResult,
+    String approvalCode
+  ) {
+    this(
+      providerId,
+      communicationResult,
+      providerErrorCode,
+      errorCode,
+      providerErrorMessage,
+      providerUniqueId,
+      null, // tokenizedCreditCard
+      providerApprovalResult,
+      approvalResult,
+      providerDeclineReason,
+      declineReason,
+      providerReviewReason,
+      reviewReason,
+      providerCvvResult,
+      cvvResult,
+      providerAvsResult,
+      avsResult,
+      approvalCode
+    );
+  }
 
-	@Override
-	public AuthorizationResult clone() throws CloneNotSupportedException {
-		return (AuthorizationResult)super.clone();
-	}
+  @Override
+  public AuthorizationResult clone() throws CloneNotSupportedException {
+    return (AuthorizationResult)super.clone();
+  }
 
-	/**
-	 * Gets the tokenized card used for this authorization.
-	 *
-	 * @return  The tokenized card or {@code null} when replacement not supported
-	 */
-	public TokenizedCreditCard getTokenizedCreditCard() {
-		return tokenizedCreditCard;
-	}
+  /**
+   * Gets the tokenized card used for this authorization.
+   *
+   * @return  The tokenized card or {@code null} when replacement not supported
+   */
+  public TokenizedCreditCard getTokenizedCreditCard() {
+    return tokenizedCreditCard;
+  }
 
-	/**
-	 * Gets the provider-specific approval response.
-	 */
-	public String getProviderApprovalResult() {
-		return providerApprovalResult;
-	}
+  /**
+   * Gets the provider-specific approval response.
+   */
+  public String getProviderApprovalResult() {
+    return providerApprovalResult;
+  }
 
-	/**
-	 * Gets the provider-neutral approval response code.
-	 */
-	public ApprovalResult getApprovalResult() {
-		return approvalResult;
-	}
+  /**
+   * Gets the provider-neutral approval response code.
+   */
+  public ApprovalResult getApprovalResult() {
+    return approvalResult;
+  }
 
-	/**
-	 * Gets the provider-specific decline reason.
-	 */
-	public String getProviderDeclineReason() {
-		return providerDeclineReason;
-	}
+  /**
+   * Gets the provider-specific decline reason.
+   */
+  public String getProviderDeclineReason() {
+    return providerDeclineReason;
+  }
 
-	/**
-	 * Gets the provider-neutral decline reason.
-	 */
-	public DeclineReason getDeclineReason() {
-		return declineReason;
-	}
+  /**
+   * Gets the provider-neutral decline reason.
+   */
+  public DeclineReason getDeclineReason() {
+    return declineReason;
+  }
 
-	/**
-	 * Gets the provider-specific review reason.
-	 */
-	public String getProviderReviewReason() {
-		return providerReviewReason;
-	}
+  /**
+   * Gets the provider-specific review reason.
+   */
+  public String getProviderReviewReason() {
+    return providerReviewReason;
+  }
 
-	/**
-	 * Gets the provider-neutral review reason.
-	 */
-	public ReviewReason getReviewReason() {
-		return reviewReason;
-	}
+  /**
+   * Gets the provider-neutral review reason.
+   */
+  public ReviewReason getReviewReason() {
+    return reviewReason;
+  }
 
-	/**
-	 * Gets the provider-specific CVV result.
-	 */
-	public String getProviderCvvResult() {
-		return providerCvvResult;
-	}
+  /**
+   * Gets the provider-specific CVV result.
+   */
+  public String getProviderCvvResult() {
+    return providerCvvResult;
+  }
 
-	/**
-	 * Gets the provider-neutral CVV result.
-	 */
-	public CvvResult getCvvResult() {
-		return cvvResult;
-	}
+  /**
+   * Gets the provider-neutral CVV result.
+   */
+  public CvvResult getCvvResult() {
+    return cvvResult;
+  }
 
-	/**
-	 * Gets the provider-specific AVS result.
-	 */
-	public String getProviderAvsResult() {
-		return providerAvsResult;
-	}
+  /**
+   * Gets the provider-specific AVS result.
+   */
+  public String getProviderAvsResult() {
+    return providerAvsResult;
+  }
 
-	/**
-	 * Gets the provider-neutral AVS result.
-	 */
-	public AvsResult getAvsResult() {
-		return avsResult;
-	}
+  /**
+   * Gets the provider-neutral AVS result.
+   */
+  public AvsResult getAvsResult() {
+    return avsResult;
+  }
 
-	/**
-	 * Gets the approval code.
-	 */
-	public String getApprovalCode() {
-		return approvalCode;
-	}
+  /**
+   * Gets the approval code.
+   */
+  public String getApprovalCode() {
+    return approvalCode;
+  }
 }

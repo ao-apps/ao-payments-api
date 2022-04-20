@@ -32,15 +32,17 @@ import java.util.Properties;
  */
 final class Maven {
 
-	/** Make no instances. */
-	private Maven() {throw new AssertionError();}
+  /** Make no instances. */
+  private Maven() {
+    throw new AssertionError();
+  }
 
-	static final Properties properties;
-	static {
-		try {
-			properties = PropertiesUtils.loadFromResource(Maven.class, "Maven.properties");
-		} catch(IOException e) {
-			throw new ExceptionInInitializerError(e);
-		}
-	}
+  static final Properties properties;
+  static {
+    try {
+      properties = PropertiesUtils.loadFromResource(Maven.class, "Maven.properties");
+    } catch (IOException e) {
+      throw new ExceptionInInitializerError(e);
+    }
+  }
 }

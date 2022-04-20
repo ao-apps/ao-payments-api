@@ -30,9 +30,11 @@ import java.util.ResourceBundle;
  */
 public final class Resources {
 
-	/** Make no instances. */
-	private Resources() {throw new AssertionError();}
+  /** Make no instances. */
+  private Resources() {
+    throw new AssertionError();
+  }
 
-	public static final com.aoapps.lang.i18n.Resources PACKAGE_RESOURCES =
-		com.aoapps.lang.i18n.Resources.getResources(ResourceBundle::getBundle, Resources.class.getPackage());
+  public static final com.aoapps.lang.i18n.Resources PACKAGE_RESOURCES =
+    com.aoapps.lang.i18n.Resources.getResources(ResourceBundle::getBundle, Resources.class.getPackage());
 }

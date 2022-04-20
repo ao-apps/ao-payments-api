@@ -32,22 +32,22 @@ package com.aoapps.payments;
  */
 public class SaleResult {
 
-	private final AuthorizationResult authorizationResult;
-	private final CaptureResult captureResult;
+  private final AuthorizationResult authorizationResult;
+  private final CaptureResult captureResult;
 
-	public SaleResult(
-		AuthorizationResult authorizationResult,
-		CaptureResult captureResult
-	) {
-		this.authorizationResult = authorizationResult;
-		this.captureResult = captureResult;
-	}
+  public SaleResult(
+    AuthorizationResult authorizationResult,
+    CaptureResult captureResult
+  ) {
+    this.authorizationResult = authorizationResult;
+    this.captureResult = captureResult;
+  }
 
-	public AuthorizationResult getAuthorizationResult() {
-		return authorizationResult;
-	}
+  public AuthorizationResult getAuthorizationResult() {
+    return authorizationResult;
+  }
 
-	public CaptureResult getCaptureResult() {
-		return captureResult;
-	}
+  public CaptureResult getCaptureResult() {
+    return captureResult;
+  }
 }

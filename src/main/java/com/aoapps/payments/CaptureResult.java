@@ -32,26 +32,26 @@ package com.aoapps.payments;
  */
 public class CaptureResult extends TransactionResult implements Cloneable {
 
-	public CaptureResult(
-		String providerId,
-		CommunicationResult communicationResult,
-		String providerErrorCode,
-		ErrorCode errorCode,
-		String providerErrorMessage,
-		String providerUniqueId
-	) {
-		super(
-			providerId,
-			communicationResult,
-			providerErrorCode,
-			errorCode,
-			providerErrorMessage,
-			providerUniqueId
-		);
-	}
+  public CaptureResult(
+    String providerId,
+    CommunicationResult communicationResult,
+    String providerErrorCode,
+    ErrorCode errorCode,
+    String providerErrorMessage,
+    String providerUniqueId
+  ) {
+    super(
+      providerId,
+      communicationResult,
+      providerErrorCode,
+      errorCode,
+      providerErrorMessage,
+      providerUniqueId
+    );
+  }
 
-	@Override
-	public CaptureResult clone() throws CloneNotSupportedException {
-		return (CaptureResult)super.clone();
-	}
+  @Override
+  public CaptureResult clone() throws CloneNotSupportedException {
+    return (CaptureResult)super.clone();
+  }
 }

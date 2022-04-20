@@ -32,21 +32,21 @@ package com.aoapps.payments;
  */
 public class CreditResult extends TransactionResult {
 
-	public CreditResult(
-		String providerId,
-		CommunicationResult communicationResult,
-		String providerErrorCode,
-		ErrorCode errorCode,
-		String providerErrorMessage,
-		String providerUniqueId
-	) {
-		super(
-			providerId,
-			communicationResult,
-			providerErrorCode,
-			errorCode,
-			providerErrorMessage,
-			providerUniqueId
-		);
-	}
+  public CreditResult(
+    String providerId,
+    CommunicationResult communicationResult,
+    String providerErrorCode,
+    ErrorCode errorCode,
+    String providerErrorMessage,
+    String providerUniqueId
+  ) {
+    super(
+      providerId,
+      communicationResult,
+      providerErrorCode,
+      errorCode,
+      providerErrorMessage,
+      providerUniqueId
+    );
+  }
 }

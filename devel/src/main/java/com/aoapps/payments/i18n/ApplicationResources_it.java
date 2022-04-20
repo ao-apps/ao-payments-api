@@ -33,11 +33,11 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class ApplicationResources_it extends EditableResourceBundle {
 
-	public ApplicationResources_it() {
-		super(
-			Locale.ITALIAN,
-			ApplicationResources.bundleSet,
-			ApplicationResources.getSourceFile("ApplicationResources_it.properties")
-		);
-	}
+  public ApplicationResources_it() {
+    super(
+      Locale.ITALIAN,
+      ApplicationResources.bundleSet,
+      ApplicationResources.getSourceFile("ApplicationResources_it.properties")
+    );
+  }
 }
