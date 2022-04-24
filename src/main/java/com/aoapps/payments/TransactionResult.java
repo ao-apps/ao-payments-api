@@ -41,7 +41,7 @@ public abstract class TransactionResult {
 
     @Override
     public String toString() {
-      return PACKAGE_RESOURCES.getMessage("TransactionResult.CommunicationResult."+name());
+      return PACKAGE_RESOURCES.getMessage("TransactionResult.CommunicationResult." + name());
     }
   }
 
@@ -112,7 +112,7 @@ public abstract class TransactionResult {
 
     @Override
     public String toString() {
-      return PACKAGE_RESOURCES.getMessage("TransactionResult.ErrorCode."+name());
+      return PACKAGE_RESOURCES.getMessage("TransactionResult.ErrorCode." + name());
     }
   }
 
@@ -124,12 +124,12 @@ public abstract class TransactionResult {
   private final String providerUniqueId;
 
   protected TransactionResult(
-    String providerId,
-    CommunicationResult communicationResult,
-    String providerErrorCode,
-    ErrorCode errorCode,
-    String providerErrorMessage,
-    String providerUniqueId
+      String providerId,
+      CommunicationResult communicationResult,
+      String providerErrorCode,
+      ErrorCode errorCode,
+      String providerErrorMessage,
+      String providerUniqueId
   ) {
     this.providerId = providerId;
     this.communicationResult = communicationResult;

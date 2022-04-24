@@ -45,13 +45,13 @@ public class TokenizedCreditCard {
   private final Short replacementExpirationYear;
 
   public TokenizedCreditCard(
-    String providerUniqueId,
-    String providerReplacementMaskedCardNumber,
-    // TODO: 3.0: Store separate type and masked card numbers
-    String replacementMaskedCardNumber,
-    String providerReplacementExpiration,
-    Byte replacementExpirationMonth,
-    Short replacementExpirationYear
+      String providerUniqueId,
+      String providerReplacementMaskedCardNumber,
+      // TODO: 3.0: Store separate type and masked card numbers
+      String replacementMaskedCardNumber,
+      String providerReplacementExpiration,
+      Byte replacementExpirationMonth,
+      Short replacementExpirationYear
   ) {
     this.providerUniqueId = NullArgumentException.checkNotNull(providerUniqueId, "providerUniqueId");
     this.providerReplacementMaskedCardNumber = providerReplacementMaskedCardNumber;

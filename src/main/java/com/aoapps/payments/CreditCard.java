@@ -188,8 +188,8 @@ public class CreditCard implements Cloneable {
     for (int c = 0; c < len; c++) {
       char ch = value.charAt(c);
       if (
-        ch >= '0' && ch <= '9'
-        || (allowUnknownDigit && ch == UNKNOWN_DIGIT)
+          ch >= '0' && ch <= '9'
+              || (allowUnknownDigit && ch == UNKNOWN_DIGIT)
       ) {
         sb.append(ch);
       }
@@ -234,20 +234,22 @@ public class CreditCard implements Cloneable {
 
   public static byte validateExpirationMonth(byte expirationMonth, boolean allowUnknownDate) throws IllegalArgumentException {
     if (
-      (
-        !allowUnknownDate
-        || expirationMonth != UNKNOWN_EXPIRATION_MONTH
-      ) && (
-        expirationMonth < 1
-        || expirationMonth > 12
-      )
+        (
+            !allowUnknownDate
+                || expirationMonth != UNKNOWN_EXPIRATION_MONTH
+        ) && (
+            expirationMonth < 1
+                || expirationMonth > 12
+        )
     ) {
       throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "CreditCard.validateExpirationMonth.expirationMonth.invalid");
     }
     return expirationMonth;
   }
 
-  private static class CurrentYearLock {/* Empty lock class to help heap profile */}
+  private static class CurrentYearLock {
+    // Empty lock class to help heap profile
+  }
   private static final CurrentYearLock currentYearLock = new CurrentYearLock();
   private static long currentYearMillis = Long.MIN_VALUE;
   private static short currentYear;
@@ -259,9 +261,9 @@ public class CreditCard implements Cloneable {
     synchronized (currentYearLock) {
       long currentTime = System.currentTimeMillis();
       if (
-        currentYearMillis == Long.MIN_VALUE
-        || currentTime <= (currentYearMillis - 1000)
-        || currentTime >= (currentYearMillis + 1000)
+          currentYearMillis == Long.MIN_VALUE
+              || currentTime <= (currentYearMillis - 1000)
+              || currentTime >= (currentYearMillis + 1000)
       ) {
         currentYear = SafeMath.castShort(new GregorianCalendar().get(Calendar.YEAR));
         currentYearMillis = currentTime;
@@ -272,13 +274,13 @@ public class CreditCard implements Cloneable {
 
   public static short validateExpirationYear(short expirationYear, boolean allowUnknownDate) throws IllegalArgumentException {
     if (
-      (
-        !allowUnknownDate
-        || expirationYear != UNKNOWN_EXPIRATION_YEAR
-      ) && (
-        expirationYear < MIN_EXPIRATION_YEAR
-        || expirationYear > (getCurrentYear() + EXPIRATION_YEARS_FUTURE)
-      )
+        (
+            !allowUnknownDate
+                || expirationYear != UNKNOWN_EXPIRATION_YEAR
+        ) && (
+            expirationYear < MIN_EXPIRATION_YEAR
+                || expirationYear > (getCurrentYear() + EXPIRATION_YEARS_FUTURE)
+        )
     ) {
       throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "CreditCard.validateExpirationYear.expirationYear.invalid");
     }
@@ -349,8 +351,8 @@ public class CreditCard implements Cloneable {
     final int MONTH_DIGITS = 2;
     final int YEAR_DIGITS = 4;
     if (
-      (expirationMonth == null || expirationMonth == UNKNOWN_EXPIRATION_MONTH)
-      && (expirationYear == null || expirationYear == UNKNOWN_EXPIRATION_YEAR)
+        (expirationMonth == null || expirationMonth == UNKNOWN_EXPIRATION_MONTH)
+            && (expirationYear == null || expirationYear == UNKNOWN_EXPIRATION_YEAR)
     ) {
       return null;
     }
@@ -361,7 +363,7 @@ public class CreditCard implements Cloneable {
       }
     } else {
       String monthStr = expirationMonth.toString();
-      for (int i = monthStr.length(); i < MONTH_DIGITS ; i++) {
+      for (int i = monthStr.length(); i < MONTH_DIGITS; i++) {
         result.append('0');
       }
       result.append(monthStr);
@@ -373,7 +375,7 @@ public class CreditCard implements Cloneable {
       }
     } else {
       String yearStr = expirationYear.toString();
-      for (int i = yearStr.length(); i < YEAR_DIGITS ; i++) {
+      for (int i = yearStr.length(); i < YEAR_DIGITS; i++) {
         result.append('0');
       }
       result.append(yearStr);
@@ -391,12 +393,12 @@ public class CreditCard implements Cloneable {
       }
       return lastName.trim();
     } else {
-      firstName=firstName.trim();
+      firstName = firstName.trim();
       if (lastName == null) {
         return firstName;
       }
-      lastName=lastName.trim();
-      return (firstName+" "+lastName).trim();
+      lastName = lastName.trim();
+      return (firstName + " " + lastName).trim();
     }
   }
 
@@ -442,32 +444,32 @@ public class CreditCard implements Cloneable {
    */
   @SuppressWarnings("OverridableMethodCallInConstructor")
   public CreditCard(
-    String persistenceUniqueId,
-    String principalName,
-    String groupName,
-    String providerId,
-    String providerUniqueId,
-    String cardNumber,
-    // TODO: 3.0: Store separate type and masked card numbers
-    String maskedCardNumber,
-    byte expirationMonth, // TODO: 3.0: Make nullable Byte
-    short expirationYear, // TODO: 3.0: Make nullable Short
-    String cardCode,
-    String firstName,
-    String lastName,
-    String companyName,
-    String email,
-    String phone,
-    String fax,
-    String customerId,
-    String customerTaxId,
-    String streetAddress1,
-    String streetAddress2,
-    String city,
-    String state,
-    String postalCode,
-    String countryCode,
-    String comments
+      String persistenceUniqueId,
+      String principalName,
+      String groupName,
+      String providerId,
+      String providerUniqueId,
+      String cardNumber,
+      // TODO: 3.0: Store separate type and masked card numbers
+      String maskedCardNumber,
+      byte expirationMonth, // TODO: 3.0: Make nullable Byte
+      short expirationYear, // TODO: 3.0: Make nullable Short
+      String cardCode,
+      String firstName,
+      String lastName,
+      String companyName,
+      String email,
+      String phone,
+      String fax,
+      String customerId,
+      String customerTaxId,
+      String streetAddress1,
+      String streetAddress2,
+      String city,
+      String state,
+      String postalCode,
+      String countryCode,
+      String comments
   ) {
     setPersistenceUniqueId(persistenceUniqueId);
     setPrincipalName(principalName);
@@ -504,7 +506,7 @@ public class CreditCard implements Cloneable {
 
   @Override
   public CreditCard clone() throws CloneNotSupportedException {
-    return (CreditCard)super.clone();
+    return (CreditCard) super.clone();
   }
 
   /**
@@ -593,8 +595,8 @@ public class CreditCard implements Cloneable {
     if (cardNumber != null && !(cardNumber = cardNumber.trim()).isEmpty()) {
       cardNumber = numbersOnly(cardNumber);
       if (
-        //!"4222222222222222".equals(cardNumber)
-        !GenericValidator.isCreditCard(cardNumber)
+          //!"4222222222222222".equals(cardNumber)
+          !GenericValidator.isCreditCard(cardNumber)
       ) {
         throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "CreditCard.setCardNumber.cardNumber.invalid");
       }
@@ -742,9 +744,9 @@ public class CreditCard implements Cloneable {
       throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "CreditCard.validateCardCode.cardCode.mustBe3Or4Digits");
     }
     // Each digit must be a number
-    for (int c=0;c<cardCode.length();c++) {
+    for (int c = 0; c < cardCode.length(); c++) {
       char ch = cardCode.charAt(c);
-      if (ch<'0' || ch>'9') {
+      if (ch < '0' || ch > '9') {
         throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "CreditCard.validateCardCode.cardCode.mustBeDigits");
       }
     }

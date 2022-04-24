@@ -36,8 +36,8 @@ public class SaleResult {
   private final CaptureResult captureResult;
 
   public SaleResult(
-    AuthorizationResult authorizationResult,
-    CaptureResult captureResult
+      AuthorizationResult authorizationResult,
+      CaptureResult captureResult
   ) {
     this.authorizationResult = authorizationResult;
     this.captureResult = captureResult;

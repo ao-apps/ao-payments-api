@@ -39,17 +39,17 @@ import javax.annotation.concurrent.ThreadSafe;
 public final class ApplicationResources extends EditableResourceBundle {
 
   public static final EditableResourceBundleSet bundleSet = new EditableResourceBundleSet(
-    ApplicationResources.class,
-    Locale.ROOT,
-    Locales.ARABIC,
-    Locale.GERMAN,
-    Locale.ENGLISH,
-    Locales.SPANISH,
-    Locale.FRENCH,
-    Locale.ITALIAN,
-    Locale.JAPANESE,
-    Locales.PORTUGUESE,
-    Locale.CHINESE
+      ApplicationResources.class,
+      Locale.ROOT,
+      Locales.ARABIC,
+      Locale.GERMAN,
+      Locale.ENGLISH,
+      Locales.SPANISH,
+      Locale.FRENCH,
+      Locale.ITALIAN,
+      Locale.JAPANESE,
+      Locales.PORTUGUESE,
+      Locale.CHINESE
   );
 
   static File getSourceFile(String filename) {
@@ -57,9 +57,9 @@ public final class ApplicationResources extends EditableResourceBundle {
       return new File(System.getProperty("user.home") + "/maven2/ao/oss/payments/api/src/main/java/com/aoapps/payments/i18n", filename);
     } catch (SecurityException e) {
       Logger.getLogger(ApplicationResources.class.getName()).log(
-        Level.WARNING,
-        "Unable to locate source file: " + filename,
-        e
+          Level.WARNING,
+          "Unable to locate source file: " + filename,
+          e
       );
       return null;
     }

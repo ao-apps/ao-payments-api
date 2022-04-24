@@ -48,7 +48,7 @@ public class Transaction implements Cloneable {
 
     @Override
     public String toString() {
-      return PACKAGE_RESOURCES.getMessage("Transaction.Status."+name());
+      return PACKAGE_RESOURCES.getMessage("Transaction.Status." + name());
     }
   }
 
@@ -80,21 +80,21 @@ public class Transaction implements Cloneable {
    */
   @SuppressWarnings("OverridableMethodCallInConstructor")
   public Transaction(
-    String providerId,
-    String persistenceUniqueId,
-    String groupName,
-    TransactionRequest transactionRequest,
-    CreditCard creditCard,
-    long authorizationTime,
-    String authorizationPrincipalName,
-    AuthorizationResult authorizationResult,
-    long captureTime, // TODO: 3.0: Make nullable Long
-    String capturePrincipalName,
-    CaptureResult captureResult,
-    long voidTime, // TODO: 3.0: Make nullable Long
-    String voidPrincipalName,
-    VoidResult voidResult,
-    Status status
+      String providerId,
+      String persistenceUniqueId,
+      String groupName,
+      TransactionRequest transactionRequest,
+      CreditCard creditCard,
+      long authorizationTime,
+      String authorizationPrincipalName,
+      AuthorizationResult authorizationResult,
+      long captureTime, // TODO: 3.0: Make nullable Long
+      String capturePrincipalName,
+      CaptureResult captureResult,
+      long voidTime, // TODO: 3.0: Make nullable Long
+      String voidPrincipalName,
+      VoidResult voidResult,
+      Status status
   ) {
     setProviderId(providerId);
     setPersistenceUniqueId(persistenceUniqueId);
@@ -117,21 +117,21 @@ public class Transaction implements Cloneable {
   @SuppressWarnings("CloneDoesntCallSuperClone")
   public Transaction clone() throws CloneNotSupportedException {
     return new Transaction(
-      providerId,
-      persistenceUniqueId,
-      groupName,
-      transactionRequest == null ? null : transactionRequest.clone(),
-      creditCard == null ? null : creditCard.clone(),
-      authorizationTime,
-      authorizationPrincipalName,
-      authorizationResult == null ? null : authorizationResult.clone(),
-      captureTime,
-      capturePrincipalName,
-      captureResult == null ? null : captureResult.clone(),
-      voidTime,
-      voidPrincipalName,
-      voidResult == null ? null : voidResult.clone(),
-      status
+        providerId,
+        persistenceUniqueId,
+        groupName,
+        transactionRequest == null ? null : transactionRequest.clone(),
+        creditCard == null ? null : creditCard.clone(),
+        authorizationTime,
+        authorizationPrincipalName,
+        authorizationResult == null ? null : authorizationResult.clone(),
+        captureTime,
+        capturePrincipalName,
+        captureResult == null ? null : captureResult.clone(),
+        voidTime,
+        voidPrincipalName,
+        voidResult == null ? null : voidResult.clone(),
+        status
     );
   }
 

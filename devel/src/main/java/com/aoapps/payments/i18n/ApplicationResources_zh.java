@@ -35,9 +35,9 @@ public final class ApplicationResources_zh extends EditableResourceBundle {
 
   public ApplicationResources_zh() {
     super(
-      Locale.CHINESE,
-      ApplicationResources.bundleSet,
-      ApplicationResources.getSourceFile("ApplicationResources_zh.properties")
+        Locale.CHINESE,
+        ApplicationResources.bundleSet,
+        ApplicationResources.getSourceFile("ApplicationResources_zh.properties")
     );
   }
 }

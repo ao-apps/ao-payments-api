@@ -105,11 +105,11 @@ public interface PersistenceMechanism {
    * @see  CreditCardProcessor#updateCreditCardNumberAndExpiration(java.security.Principal, com.aoapps.payments.CreditCard, java.lang.String, byte, short, java.lang.String)
    */
   void updateCardNumber(
-    Principal principal,
-    CreditCard creditCard,
-    String cardNumber,
-    byte expirationMonth,
-    short expirationYear
+      Principal principal,
+      CreditCard creditCard,
+      String cardNumber,
+      byte expirationMonth,
+      short expirationYear
   ) throws SQLException;
 
   /**
@@ -119,10 +119,10 @@ public interface PersistenceMechanism {
    * @see  CreditCardProcessor#updateCreditCardExpiration(java.security.Principal, com.aoapps.payments.CreditCard, byte, short)
    */
   void updateExpiration(
-    Principal principal,
-    CreditCard creditCard,
-    byte expirationMonth,
-    short expirationYear
+      Principal principal,
+      CreditCard creditCard,
+      byte expirationMonth,
+      short expirationYear
   ) throws SQLException;
 
   /**

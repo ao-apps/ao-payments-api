@@ -51,10 +51,10 @@ public class TransactionRequest implements Cloneable {
    * @return   amount + tax + shipping + duty
    */
   public static BigDecimal getTotalAmount(
-    BigDecimal amount,
-    BigDecimal taxAmount,
-    BigDecimal shippingAmount,
-    BigDecimal dutyAmount
+      BigDecimal amount,
+      BigDecimal taxAmount,
+      BigDecimal shippingAmount,
+      BigDecimal dutyAmount
   ) {
     if (taxAmount != null) {
       amount = amount.add(taxAmount);
@@ -108,30 +108,30 @@ public class TransactionRequest implements Cloneable {
    */
   @SuppressWarnings("OverridableMethodCallInConstructor")
   public TransactionRequest(
-    boolean testMode,
-    String customerIp,
-    int duplicateWindow,
-    String orderNumber,
-    Currency currency,
-    BigDecimal amount,
-    BigDecimal taxAmount,
-    boolean taxExempt,
-    BigDecimal shippingAmount,
-    BigDecimal dutyAmount,
-    String shippingFirstName,
-    String shippingLastName,
-    String shippingCompanyName,
-    String shippingStreetAddress1,
-    String shippingStreetAddress2,
-    String shippingCity,
-    String shippingState,
-    String shippingPostalCode,
-    String shippingCountryCode,
-    boolean emailCustomer,
-    String merchantEmail,
-    String invoiceNumber,
-    String purchaseOrderNumber,
-    String description
+      boolean testMode,
+      String customerIp,
+      int duplicateWindow,
+      String orderNumber,
+      Currency currency,
+      BigDecimal amount,
+      BigDecimal taxAmount,
+      boolean taxExempt,
+      BigDecimal shippingAmount,
+      BigDecimal dutyAmount,
+      String shippingFirstName,
+      String shippingLastName,
+      String shippingCompanyName,
+      String shippingStreetAddress1,
+      String shippingStreetAddress2,
+      String shippingCity,
+      String shippingState,
+      String shippingPostalCode,
+      String shippingCountryCode,
+      boolean emailCustomer,
+      String merchantEmail,
+      String invoiceNumber,
+      String purchaseOrderNumber,
+      String description
   ) {
     setTestMode(testMode);
     setCustomerIp(customerIp);
@@ -165,7 +165,7 @@ public class TransactionRequest implements Cloneable {
 
   @Override
   public TransactionRequest clone() throws CloneNotSupportedException {
-    return (TransactionRequest)super.clone();
+    return (TransactionRequest) super.clone();
   }
 
   /**
@@ -307,7 +307,7 @@ public class TransactionRequest implements Cloneable {
     if (taxAmount == null) {
       this.taxAmount = null;
     } else {
-      if (taxAmount.compareTo(BigDecimal.ZERO)<0) {
+      if (taxAmount.compareTo(BigDecimal.ZERO) < 0) {
         throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "TransactionRequest.setTaxAmount.taxAmount.lessThanZero");
       }
       try {
@@ -350,7 +350,7 @@ public class TransactionRequest implements Cloneable {
     if (shippingAmount == null) {
       this.shippingAmount = null;
     } else {
-      if (shippingAmount.compareTo(BigDecimal.ZERO)<0) {
+      if (shippingAmount.compareTo(BigDecimal.ZERO) < 0) {
         throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "TransactionRequest.setShippingAmount.shippingAmount.lessThanZero");
       }
       try {
@@ -379,7 +379,7 @@ public class TransactionRequest implements Cloneable {
     if (dutyAmount == null) {
       this.dutyAmount = null;
     } else {
-      if (dutyAmount.compareTo(BigDecimal.ZERO)<0) {
+      if (dutyAmount.compareTo(BigDecimal.ZERO) < 0) {
         throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "TransactionRequest.setDutyAmount.dutyAmount.lessThanZero");
       }
       try {
@@ -529,7 +529,7 @@ public class TransactionRequest implements Cloneable {
    * @throws  IllegalArgumentException  if not a two-character code (after trimming).
    */
   public void setShippingCountryCode(String shippingCountryCode) {
-     if (shippingCountryCode == null) {
+    if (shippingCountryCode == null) {
       this.shippingCountryCode = null;
     } else {
       shippingCountryCode = shippingCountryCode.trim().toUpperCase(Locale.ENGLISH);

@@ -129,11 +129,11 @@ public interface MerchantServicesProvider {
    */
   // Java 8: default method
   void updateCreditCardNumberAndExpiration(
-    CreditCard creditCard,
-    String cardNumber,
-    byte expirationMonth, // TODO: 3.0: Make nullable Byte
-    short expirationYear, // TODO: 3.0: Make nullable Short
-    String cardCode
+      CreditCard creditCard,
+      String cardNumber,
+      byte expirationMonth, // TODO: 3.0: Make nullable Byte
+      short expirationYear, // TODO: 3.0: Make nullable Short
+      String cardCode
   ) throws UnsupportedOperationException, IOException;
 
   /**
@@ -147,9 +147,9 @@ public interface MerchantServicesProvider {
    */
   // Java 8: default method
   void updateCreditCardExpiration(
-    CreditCard creditCard,
-    byte expirationMonth, // TODO: 3.0: Make nullable Byte
-    short expirationYear // TODO: 3.0: Make nullable Short
+      CreditCard creditCard,
+      byte expirationMonth, // TODO: 3.0: Make nullable Byte
+      short expirationYear // TODO: 3.0: Make nullable Short
   ) throws UnsupportedOperationException, IOException;
 
   /**

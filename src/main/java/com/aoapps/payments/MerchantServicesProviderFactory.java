@@ -53,12 +53,12 @@ public final class MerchantServicesProviderFactory {
     private final String param4;
 
     private ProviderKey(
-      String providerId,
-      String className,
-      String param1,
-      String param2,
-      String param3,
-      String param4
+        String providerId,
+        String className,
+        String param1,
+        String param2,
+        String param3,
+        String param4
     ) {
       this.providerId = providerId;
       this.className = className;
@@ -71,12 +71,12 @@ public final class MerchantServicesProviderFactory {
     @Override
     public int hashCode() {
       return
-        providerId.hashCode()
-        + className.hashCode() * 7
-        + Objects.hashCode(param1) * 17
-        + Objects.hashCode(param2) * 37
-        + Objects.hashCode(param3) * 103
-        + Objects.hashCode(param4) * 149
+          providerId.hashCode()
+              + className.hashCode() * 7
+              + Objects.hashCode(param1) * 17
+              + Objects.hashCode(param2) * 37
+              + Objects.hashCode(param3) * 103
+              + Objects.hashCode(param4) * 149
       ;
     }
 
@@ -85,14 +85,14 @@ public final class MerchantServicesProviderFactory {
       if (!(obj instanceof ProviderKey)) {
         return false;
       }
-      ProviderKey other = (ProviderKey)obj;
+      ProviderKey other = (ProviderKey) obj;
       return
-        providerId.equals(other.providerId)
-        && className.equals(other.className)
-        && Objects.equals(param1, other.param1)
-        && Objects.equals(param2, other.param2)
-        && Objects.equals(param3, other.param3)
-        && Objects.equals(param4, other.param4)
+          providerId.equals(other.providerId)
+              && className.equals(other.className)
+              && Objects.equals(param1, other.param1)
+              && Objects.equals(param2, other.param2)
+              && Objects.equals(param3, other.param3)
+              && Objects.equals(param4, other.param4)
       ;
     }
   }
@@ -105,21 +105,21 @@ public final class MerchantServicesProviderFactory {
    * Only one instance of each unique providerId, classname and all parameters will be created.<br>
    */
   public static MerchantServicesProvider getMerchantServicesProvider(
-    String providerId,
-    String className,
-    String param1,
-    String param2,
-    String param3,
-    String param4
+      String providerId,
+      String className,
+      String param1,
+      String param2,
+      String param3,
+      String param4
   ) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
     // The key in the map
     ProviderKey processorKey = new ProviderKey(
-      providerId,
-      className,
-      param1,
-      param2,
-      param3,
-      param4
+        providerId,
+        className,
+        param1,
+        param2,
+        param3,
+        param4
     );
 
     // Now synchronize access to processors

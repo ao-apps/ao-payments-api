@@ -176,32 +176,32 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
             Byte expirationMonth = getPropertyByte(props, CC_PRE, counter, ".expirationMonth");
             Short expirationYear = getPropertyShort(props, CC_PRE, counter, ".expirationYear");
             CreditCard newCreditCard = new CreditCard(
-              persistenceUniqueId,
-              getProperty(props, CC_PRE, counter, ".principalName"),
-              getProperty(props, CC_PRE, counter, ".groupName"),
-              getProperty(props, CC_PRE, counter, ".providerId"),
-              getProperty(props, CC_PRE, counter, ".providerUniqueId"),
-              null, // cardNumber
-              // TODO: 3.0: Store separate type and masked card numbers
-              getProperty(props, CC_PRE, counter, ".maskedCardNumber"),
-              expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 3.0: Make nullable Byte
-              expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 3.0: Make nullable Short
-              null, // cardCode
-              getProperty(props, CC_PRE, counter, ".firstName"),
-              getProperty(props, CC_PRE, counter, ".lastName"),
-              getProperty(props, CC_PRE, counter, ".companyName"),
-              getProperty(props, CC_PRE, counter, ".email"),
-              getProperty(props, CC_PRE, counter, ".phone"),
-              getProperty(props, CC_PRE, counter, ".fax"),
-              getProperty(props, CC_PRE, counter, ".customerId"),
-              getProperty(props, CC_PRE, counter, ".customerTaxId"),
-              getProperty(props, CC_PRE, counter, ".streetAddress1"),
-              getProperty(props, CC_PRE, counter, ".streetAddress2"),
-              getProperty(props, CC_PRE, counter, ".city"),
-              getProperty(props, CC_PRE, counter, ".state"),
-              getProperty(props, CC_PRE, counter, ".postalCode"),
-              getProperty(props, CC_PRE, counter, ".countryCode"),
-              getProperty(props, CC_PRE, counter, ".comments")
+                persistenceUniqueId,
+                getProperty(props, CC_PRE, counter, ".principalName"),
+                getProperty(props, CC_PRE, counter, ".groupName"),
+                getProperty(props, CC_PRE, counter, ".providerId"),
+                getProperty(props, CC_PRE, counter, ".providerUniqueId"),
+                null, // cardNumber
+                // TODO: 3.0: Store separate type and masked card numbers
+                getProperty(props, CC_PRE, counter, ".maskedCardNumber"),
+                expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 3.0: Make nullable Byte
+                expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 3.0: Make nullable Short
+                null, // cardCode
+                getProperty(props, CC_PRE, counter, ".firstName"),
+                getProperty(props, CC_PRE, counter, ".lastName"),
+                getProperty(props, CC_PRE, counter, ".companyName"),
+                getProperty(props, CC_PRE, counter, ".email"),
+                getProperty(props, CC_PRE, counter, ".phone"),
+                getProperty(props, CC_PRE, counter, ".fax"),
+                getProperty(props, CC_PRE, counter, ".customerId"),
+                getProperty(props, CC_PRE, counter, ".customerTaxId"),
+                getProperty(props, CC_PRE, counter, ".streetAddress1"),
+                getProperty(props, CC_PRE, counter, ".streetAddress2"),
+                getProperty(props, CC_PRE, counter, ".city"),
+                getProperty(props, CC_PRE, counter, ".state"),
+                getProperty(props, CC_PRE, counter, ".postalCode"),
+                getProperty(props, CC_PRE, counter, ".countryCode"),
+                getProperty(props, CC_PRE, counter, ".comments")
             );
             newCreditCards.add(newCreditCard);
           }
@@ -214,114 +214,114 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
             Short expirationYear = getPropertyShort(props, TRANS_PRE, counter, CC_SUF + ".expirationYear");
             String tokenizedCreditCardProviderUniqueId = getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerUniqueId");
             Transaction newTransaction = new Transaction(
-              getProperty(props, TRANS_PRE, counter, ".providerId"),
-              persistenceUniqueId,
-              getProperty(props, TRANS_PRE, counter, ".groupName"),
-              new TransactionRequest(
-                getPropertyBoolean   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".testMode"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".customerIp"),
-                getPropertyInteger   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".duplicateWindow"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".orderNumber"),
-                getPropertyCurrency  (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".currencyCode"),
-                getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".amount"),
-                getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxAmount"),
-                getPropertyBoolean   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxExempt"),
-                getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingAmount"),
-                getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".dutyAmount"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingFirstName"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingLastName"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCompanyName"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress1"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress2"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCity"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingState"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingPostalCode"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCountryCode"),
-                getPropertyBoolean   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".emailCustomer"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".merchantEmail"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".invoiceNumber"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".purchaseOrderNumber"),
-                getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".description")
-              ),
-              new CreditCard(
-                null, // persistenceUniqueId
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".principalName"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".groupName"),
                 getProperty(props, TRANS_PRE, counter, ".providerId"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".providerUniqueId"),
-                null, // cardNumber
-                // TODO: 3.0: Store separate type and masked card numbers
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".maskedCardNumber"),
-                expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 3.0: Make nullable Byte
-                expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 3.0: Make nullable Short
-                null, // cardCode
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".firstName"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".lastName"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".companyName"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".email"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".phone"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".fax"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".customerId"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".customerTaxId"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".streetAddress1"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".streetAddress2"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".city"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".state"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".postalCode"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".countryCode"),
-                getProperty(props, TRANS_PRE, counter, CC_SUF + ".comments")
-              ),
-              Long.parseLong(getProperty(props, TRANS_PRE, counter, ".authorizationTime")),
-              getProperty(props, TRANS_PRE, counter, ".authorizationPrincipalName"),
-              new AuthorizationResult(
-                getProperty     (props, TRANS_PRE, counter, ".providerId"),
-                getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
-                getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorCode"),
-                getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
-                getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage"),
-                getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId"),
-                tokenizedCreditCardProviderUniqueId == null ? null : new TokenizedCreditCard(
-                  tokenizedCreditCardProviderUniqueId,
-                  getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementMaskedCardNumber"),
-                  // TODO: 3.0: Store separate type and masked card numbers
-                  getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementMaskedCardNumber"),
-                  getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementExpiration"),
-                  getPropertyByte (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationMonth"),
-                  getPropertyShort(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationYear")
+                persistenceUniqueId,
+                getProperty(props, TRANS_PRE, counter, ".groupName"),
+                new TransactionRequest(
+                    getPropertyBoolean   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".testMode"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".customerIp"),
+                    getPropertyInteger   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".duplicateWindow"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".orderNumber"),
+                    getPropertyCurrency  (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".currencyCode"),
+                    getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".amount"),
+                    getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxAmount"),
+                    getPropertyBoolean   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxExempt"),
+                    getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingAmount"),
+                    getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".dutyAmount"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingFirstName"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingLastName"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCompanyName"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress1"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress2"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCity"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingState"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingPostalCode"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCountryCode"),
+                    getPropertyBoolean   (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".emailCustomer"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".merchantEmail"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".invoiceNumber"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".purchaseOrderNumber"),
+                    getProperty          (props, TRANS_PRE, counter, TRANS_REQ_SUF + ".description")
                 ),
-                getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult"),
-                getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", AuthorizationResult.ApprovalResult.class),
-                getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason"),
-                getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".declineReason", AuthorizationResult.DeclineReason.class),
-                getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReviewReason"),
-                getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".reviewReason", AuthorizationResult.ReviewReason.class),
-                getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerCvvResult"),
-                getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".cvvResult", AuthorizationResult.CvvResult.class),
-                getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerAvsResult"),
-                getPropertyEnum (props, TRANS_PRE, counter, AUTH_RES_SUF + ".avsResult", AuthorizationResult.AvsResult.class),
-                getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalCode")
-              ),
-              coalesce(getPropertyLong(props, TRANS_PRE, counter, ".captureTime"), -1), // TODO: 3.0: Make nullable Long
-              getProperty(props, TRANS_PRE, counter, ".capturePrincipalName"),
-              new CaptureResult(
-                getProperty    (props, TRANS_PRE, counter, ".providerId"),
-                getPropertyEnum(props, TRANS_PRE, counter, CAP_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
-                getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorCode"),
-                getPropertyEnum(props, TRANS_PRE, counter, CAP_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
-                getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorMessage"),
-                getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerUniqueId")
-              ),
-              coalesce(getPropertyLong(props, TRANS_PRE, counter, ".voidTime"), -1), // TODO: 3.0: Make nullable Long
-              getProperty(props, TRANS_PRE, counter, ".voidPrincipalName"),
-              new VoidResult(
-                getProperty    (props, TRANS_PRE, counter, ".providerId"),
-                getPropertyEnum(props, TRANS_PRE, counter, VOID_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
-                getProperty    (props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorCode"),
-                getPropertyEnum(props, TRANS_PRE, counter, VOID_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
-                getProperty    (props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorMessage"),
-                getProperty    (props, TRANS_PRE, counter, VOID_RES_SUF + ".providerUniqueId")
-              ),
-              getPropertyEnum(props, TRANS_PRE, counter, ".status", Transaction.Status.class)
+                new CreditCard(
+                    null, // persistenceUniqueId
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".principalName"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".groupName"),
+                    getProperty(props, TRANS_PRE, counter, ".providerId"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".providerUniqueId"),
+                    null, // cardNumber
+                    // TODO: 3.0: Store separate type and masked card numbers
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".maskedCardNumber"),
+                    expirationMonth == null ? CreditCard.UNKNOWN_EXPIRATION_MONTH : expirationMonth, // TODO: 3.0: Make nullable Byte
+                    expirationYear == null ? CreditCard.UNKNOWN_EXPIRATION_YEAR : expirationYear, // TODO: 3.0: Make nullable Short
+                    null, // cardCode
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".firstName"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".lastName"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".companyName"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".email"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".phone"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".fax"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".customerId"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".customerTaxId"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".streetAddress1"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".streetAddress2"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".city"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".state"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".postalCode"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".countryCode"),
+                    getProperty(props, TRANS_PRE, counter, CC_SUF + ".comments")
+                ),
+                Long.parseLong(getProperty(props, TRANS_PRE, counter, ".authorizationTime")),
+                getProperty(props, TRANS_PRE, counter, ".authorizationPrincipalName"),
+                new AuthorizationResult(
+                    getProperty     (props, TRANS_PRE, counter, ".providerId"),
+                    getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
+                    getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorCode"),
+                    getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
+                    getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage"),
+                    getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId"),
+                    tokenizedCreditCardProviderUniqueId == null ? null : new TokenizedCreditCard(
+                        tokenizedCreditCardProviderUniqueId,
+                        getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementMaskedCardNumber"),
+                        // TODO: 3.0: Store separate type and masked card numbers
+                        getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementMaskedCardNumber"),
+                        getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementExpiration"),
+                        getPropertyByte(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationMonth"),
+                        getPropertyShort(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationYear")
+                    ),
+                    getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult"),
+                    getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", AuthorizationResult.ApprovalResult.class),
+                    getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason"),
+                    getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".declineReason", AuthorizationResult.DeclineReason.class),
+                    getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReviewReason"),
+                    getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".reviewReason", AuthorizationResult.ReviewReason.class),
+                    getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerCvvResult"),
+                    getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".cvvResult", AuthorizationResult.CvvResult.class),
+                    getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerAvsResult"),
+                    getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".avsResult", AuthorizationResult.AvsResult.class),
+                    getProperty     (props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalCode")
+                ),
+                coalesce(getPropertyLong(props, TRANS_PRE, counter, ".captureTime"), -1), // TODO: 3.0: Make nullable Long
+                getProperty(props, TRANS_PRE, counter, ".capturePrincipalName"),
+                new CaptureResult(
+                    getProperty    (props, TRANS_PRE, counter, ".providerId"),
+                    getPropertyEnum(props, TRANS_PRE, counter, CAP_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
+                    getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorCode"),
+                    getPropertyEnum(props, TRANS_PRE, counter, CAP_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
+                    getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorMessage"),
+                    getProperty    (props, TRANS_PRE, counter, CAP_RES_SUF + ".providerUniqueId")
+                ),
+                coalesce(getPropertyLong(props, TRANS_PRE, counter, ".voidTime"), -1), // TODO: 3.0: Make nullable Long
+                getProperty(props, TRANS_PRE, counter, ".voidPrincipalName"),
+                new VoidResult(
+                    getProperty    (props, TRANS_PRE, counter, ".providerId"),
+                    getPropertyEnum(props, TRANS_PRE, counter, VOID_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
+                    getProperty    (props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorCode"),
+                    getPropertyEnum(props, TRANS_PRE, counter, VOID_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
+                    getProperty    (props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorMessage"),
+                    getProperty    (props, TRANS_PRE, counter, VOID_RES_SUF + ".providerUniqueId")
+                ),
+                getPropertyEnum(props, TRANS_PRE, counter, ".status", Transaction.Status.class)
             );
             newTransactions.add(newTransaction);
           }
@@ -387,9 +387,9 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
 
   private synchronized void save() throws SQLException {
     try {
-      File newFile = new File(propertiesFilePath+".new");
+      File newFile = new File(propertiesFilePath + ".new");
       File file = new File(propertiesFilePath);
-      File backupFile = new File(propertiesFilePath+".backup");
+      File backupFile = new File(propertiesFilePath + ".backup");
       Properties props = new Properties();
       // Add the credit cards
       long counter = 1;
@@ -575,7 +575,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
     for (CreditCard internalCreditCard : internalCreditCards) {
       try {
         long id = Long.parseLong(internalCreditCard.getPersistenceUniqueId());
-        if (id>highest) {
+        if (id > highest) {
           highest = id;
         }
       } catch (NumberFormatException err) {
@@ -689,11 +689,11 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
    */
   @Override
   public synchronized void updateCardNumber(
-    Principal principal,
-    CreditCard creditCard,
-    String cardNumber,
-    byte expirationMonth,
-    short expirationYear
+      Principal principal,
+      CreditCard creditCard,
+      String cardNumber,
+      byte expirationMonth,
+      short expirationYear
   ) throws SQLException {
     loadIfNeeded();
     // Find the card with matching persistence id
@@ -713,10 +713,10 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
    */
   @Override
   public void updateExpiration(
-    Principal principal,
-    CreditCard creditCard,
-    byte expirationMonth,
-    short expirationYear
+      Principal principal,
+      CreditCard creditCard,
+      byte expirationMonth,
+      short expirationYear
   ) throws SQLException {
     loadIfNeeded();
     // Find the card with matching persistence id
@@ -756,7 +756,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
     for (Transaction internalTransaction : internalTransactions) {
       try {
         long id = Long.parseLong(internalTransaction.getPersistenceUniqueId());
-        if (id>highest) {
+        if (id > highest) {
           highest = id;
         }
       } catch (NumberFormatException err) {
@@ -795,7 +795,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
   private synchronized void updateTransaction(Principal principal, Transaction transaction) throws SQLException {
     loadIfNeeded();
     // Find the transaction with the matching persistence unique ID
-    for (int c=0;c<internalTransactions.size();c++) {
+    for (int c = 0; c < internalTransactions.size(); c++) {
       Transaction internalTransaction = internalTransactions.get(c);
       if (internalTransaction.getPersistenceUniqueId().equals(transaction.getPersistenceUniqueId())) {
         try {

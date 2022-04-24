@@ -45,7 +45,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
      */
     @Override
     public String toString() {
-      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ApprovalResult."+name());
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ApprovalResult." + name());
     }
   }
 
@@ -80,7 +80,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
      */
     @Override
     public String toString() {
-      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.DeclineReason."+name());
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.DeclineReason." + name());
     }
   }
 
@@ -95,7 +95,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
      */
     @Override
     public String toString() {
-      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ReviewReason."+name());
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.ReviewReason." + name());
     }
   }
 
@@ -113,7 +113,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
      */
     @Override
     public String toString() {
-      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.CvvResult."+name());
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.CvvResult." + name());
     }
   }
 
@@ -139,7 +139,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
      */
     @Override
     public String toString() {
-      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.AvsResult."+name());
+      return PACKAGE_RESOURCES.getMessage("AuthorizationResult.AvsResult." + name());
     }
   }
 
@@ -157,32 +157,32 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
   private final String approvalCode;
 
   public AuthorizationResult(
-    String providerId,
-    CommunicationResult communicationResult,
-    String providerErrorCode,
-    ErrorCode errorCode,
-    String providerErrorMessage,
-    String providerUniqueId,
-    TokenizedCreditCard tokenizedCreditCard,
-    String providerApprovalResult,
-    ApprovalResult approvalResult,
-    String providerDeclineReason,
-    DeclineReason declineReason,
-    String providerReviewReason,
-    ReviewReason reviewReason,
-    String providerCvvResult,
-    CvvResult cvvResult,
-    String providerAvsResult,
-    AvsResult avsResult,
-    String approvalCode
+      String providerId,
+      CommunicationResult communicationResult,
+      String providerErrorCode,
+      ErrorCode errorCode,
+      String providerErrorMessage,
+      String providerUniqueId,
+      TokenizedCreditCard tokenizedCreditCard,
+      String providerApprovalResult,
+      ApprovalResult approvalResult,
+      String providerDeclineReason,
+      DeclineReason declineReason,
+      String providerReviewReason,
+      ReviewReason reviewReason,
+      String providerCvvResult,
+      CvvResult cvvResult,
+      String providerAvsResult,
+      AvsResult avsResult,
+      String approvalCode
   ) {
     super(
-      providerId,
-      communicationResult,
-      providerErrorCode,
-      errorCode,
-      providerErrorMessage,
-      providerUniqueId
+        providerId,
+        communicationResult,
+        providerErrorCode,
+        errorCode,
+        providerErrorMessage,
+        providerUniqueId
     );
     this.tokenizedCreditCard = tokenizedCreditCard;
     this.providerApprovalResult = providerApprovalResult;
@@ -203,49 +203,49 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
    */
   @Deprecated(forRemoval = true)
   public AuthorizationResult(
-    String providerId,
-    CommunicationResult communicationResult,
-    String providerErrorCode,
-    ErrorCode errorCode,
-    String providerErrorMessage,
-    String providerUniqueId,
-    String providerApprovalResult,
-    ApprovalResult approvalResult,
-    String providerDeclineReason,
-    DeclineReason declineReason,
-    String providerReviewReason,
-    ReviewReason reviewReason,
-    String providerCvvResult,
-    CvvResult cvvResult,
-    String providerAvsResult,
-    AvsResult avsResult,
-    String approvalCode
+      String providerId,
+      CommunicationResult communicationResult,
+      String providerErrorCode,
+      ErrorCode errorCode,
+      String providerErrorMessage,
+      String providerUniqueId,
+      String providerApprovalResult,
+      ApprovalResult approvalResult,
+      String providerDeclineReason,
+      DeclineReason declineReason,
+      String providerReviewReason,
+      ReviewReason reviewReason,
+      String providerCvvResult,
+      CvvResult cvvResult,
+      String providerAvsResult,
+      AvsResult avsResult,
+      String approvalCode
   ) {
     this(
-      providerId,
-      communicationResult,
-      providerErrorCode,
-      errorCode,
-      providerErrorMessage,
-      providerUniqueId,
-      null, // tokenizedCreditCard
-      providerApprovalResult,
-      approvalResult,
-      providerDeclineReason,
-      declineReason,
-      providerReviewReason,
-      reviewReason,
-      providerCvvResult,
-      cvvResult,
-      providerAvsResult,
-      avsResult,
-      approvalCode
+        providerId,
+        communicationResult,
+        providerErrorCode,
+        errorCode,
+        providerErrorMessage,
+        providerUniqueId,
+        null, // tokenizedCreditCard
+        providerApprovalResult,
+        approvalResult,
+        providerDeclineReason,
+        declineReason,
+        providerReviewReason,
+        reviewReason,
+        providerCvvResult,
+        cvvResult,
+        providerAvsResult,
+        avsResult,
+        approvalCode
     );
   }
 
   @Override
   public AuthorizationResult clone() throws CloneNotSupportedException {
-    return (AuthorizationResult)super.clone();
+    return (AuthorizationResult) super.clone();
   }
 
   /**

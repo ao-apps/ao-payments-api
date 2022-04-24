@@ -64,12 +64,12 @@ public class ErrorCodeException extends LocalizedIOException {
 
   static {
     Throwables.registerSurrogateFactory(ErrorCodeException.class, (template, cause) ->
-      new ErrorCodeException(
-        cause,
-        template.errorCode,
-        template.key,
-        template.args
-      )
+        new ErrorCodeException(
+            cause,
+            template.errorCode,
+            template.key,
+            template.args
+        )
     );
   }
 }

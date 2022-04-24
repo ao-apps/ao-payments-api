@@ -86,21 +86,21 @@ public class CreditCardProcessor {
     // Insert into persistence layer
     long currentTimeMillis = System.currentTimeMillis();
     Transaction transaction = new Transaction(
-      provider.getProviderId(),
-      null, // persistenceUniqueId
-      group == null ? null : group.getName(),
-      transactionRequest,
-      creditCard,
-      currentTimeMillis,
-      principal == null ? null : principal.getName(),
-      null, // authorizationResult
-      currentTimeMillis,
-      principal == null ? null : principal.getName(),
-      null, // captureResult
-      -1, // voidTime
-      null, // voidPrincipalName
-      null, // voidResult
-      Transaction.Status.PROCESSING
+        provider.getProviderId(),
+        null, // persistenceUniqueId
+        group == null ? null : group.getName(),
+        transactionRequest,
+        creditCard,
+        currentTimeMillis,
+        principal == null ? null : principal.getName(),
+        null, // authorizationResult
+        currentTimeMillis,
+        principal == null ? null : principal.getName(),
+        null, // captureResult
+        -1, // voidTime
+        null, // voidPrincipalName
+        null, // voidResult
+        Transaction.Status.PROCESSING
     );
     String persistenceUniqueId = persistenceMechanism.insertTransaction(principal, group, transaction);
     transaction.setPersistenceUniqueId(persistenceUniqueId);
@@ -159,17 +159,17 @@ public class CreditCardProcessor {
           creditCard.setExpirationMonth(replacementExpirationMonth);
           creditCard.setExpirationYear(replacementExpirationYear);
           persistenceMechanism.updateExpiration(
-            principal,
-            creditCard,
-            replacementExpirationMonth,
-            replacementExpirationYear
+              principal,
+              creditCard,
+              replacementExpirationMonth,
+              replacementExpirationYear
           );
         }
       }
     }
     persistenceMechanism.saleCompleted(
-      principal,
-      transaction
+        principal,
+        transaction
     );
 
     return transaction;
@@ -196,21 +196,21 @@ public class CreditCardProcessor {
     // Insert into persistence layer
     long currentTimeMillis = System.currentTimeMillis();
     Transaction transaction = new Transaction(
-      provider.getProviderId(),
-      null, // persistenceUniqueId
-      group == null ? null : group.getName(),
-      transactionRequest,
-      creditCard,
-      currentTimeMillis,
-      principal == null ? null : principal.getName(),
-      null, // authorizationResult
-      -1, // captureTime
-      null, // capturePrincipalName
-      null, // captureResult
-      -1, // voidTime
-      null, // voidPrincipalName
-      null, // voidResult
-      Transaction.Status.PROCESSING
+        provider.getProviderId(),
+        null, // persistenceUniqueId
+        group == null ? null : group.getName(),
+        transactionRequest,
+        creditCard,
+        currentTimeMillis,
+        principal == null ? null : principal.getName(),
+        null, // authorizationResult
+        -1, // captureTime
+        null, // capturePrincipalName
+        null, // captureResult
+        -1, // voidTime
+        null, // voidPrincipalName
+        null, // voidResult
+        Transaction.Status.PROCESSING
     );
     String persistenceUniqueId = persistenceMechanism.insertTransaction(principal, group, transaction);
     transaction.setPersistenceUniqueId(persistenceUniqueId);
@@ -264,17 +264,17 @@ public class CreditCardProcessor {
           creditCard.setExpirationMonth(replacementExpirationMonth);
           creditCard.setExpirationYear(replacementExpirationYear);
           persistenceMechanism.updateExpiration(
-            principal,
-            creditCard,
-            replacementExpirationMonth,
-            replacementExpirationYear
+              principal,
+              creditCard,
+              replacementExpirationMonth,
+              replacementExpirationYear
           );
         }
       }
     }
     persistenceMechanism.authorizeCompleted(
-      principal,
-      transaction
+        principal,
+        transaction
     );
 
     return transaction;
@@ -314,8 +314,8 @@ public class CreditCardProcessor {
 
     // Update persistence layer
     persistenceMechanism.saleCompleted(
-      principal,
-      transaction
+        principal,
+        transaction
     );
 
     return captureResult;
@@ -337,15 +337,15 @@ public class CreditCardProcessor {
   public VoidResult voidTransaction(Principal principal, Transaction transaction) throws SQLException {
     Transaction.Status status = transaction.getStatus();
     if (
-      status == Transaction.Status.AUTHORIZED
-      || status == Transaction.Status.CAPTURED
-      || status == Transaction.Status.HOLD
+        status == Transaction.Status.AUTHORIZED
+            || status == Transaction.Status.CAPTURED
+            || status == Transaction.Status.HOLD
     ) {
       // Void on the merchant
       if (
-        transaction.getAuthorizationResult() != null
-        && transaction.getAuthorizationResult().getProviderUniqueId() != null
-        && transaction.getAuthorizationResult().getProviderUniqueId().length() > 0
+          transaction.getAuthorizationResult() != null
+              && transaction.getAuthorizationResult().getProviderUniqueId() != null
+              && transaction.getAuthorizationResult().getProviderUniqueId().length() > 0
       ) {
         VoidResult voidResult = provider.voidTransaction(transaction);
         // Update the status
@@ -402,8 +402,8 @@ public class CreditCardProcessor {
 
     // Third, clear card numbers (since now stored)
     creditCard.setCardNumber(null);
-    creditCard.setExpirationMonth((byte)-1);
-    creditCard.setExpirationYear((short)-1);
+    creditCard.setExpirationMonth((byte) -1);
+    creditCard.setExpirationYear((short) -1);
   }
 
   /**
@@ -414,8 +414,8 @@ public class CreditCardProcessor {
    * @throws  SQLException  when unable to store in the persistence layer
    */
   public void updateCreditCard(
-    Principal principal,
-    CreditCard creditCard
+      Principal principal,
+      CreditCard creditCard
   ) throws IOException, SQLException {
     if (creditCard.getProviderUniqueId() != null) {
       // Update in persistence (this also enforces security)
@@ -433,12 +433,12 @@ public class CreditCardProcessor {
    * @throws  SQLException  when unable to store in the persistence layer
    */
   public void updateCreditCardNumberAndExpiration(
-    Principal principal,
-    CreditCard creditCard,
-    String cardNumber,
-    byte expirationMonth,
-    short expirationYear,
-    String cardCode
+      Principal principal,
+      CreditCard creditCard,
+      String cardNumber,
+      byte expirationMonth,
+      short expirationYear,
+      String cardCode
   ) throws IOException, SQLException {
     CreditCard.validateExpirationMonth(expirationMonth, false);
     CreditCard.validateExpirationYear(expirationYear, false);
@@ -472,10 +472,10 @@ public class CreditCardProcessor {
    * @throws  IOException   when unable to contact the bank
    */
   public void updateCreditCardExpiration(
-    Principal principal,
-    CreditCard creditCard,
-    byte expirationMonth,
-    short expirationYear
+      Principal principal,
+      CreditCard creditCard,
+      byte expirationMonth,
+      short expirationYear
   ) throws IOException, SQLException  {
     CreditCard.validateExpirationMonth(expirationMonth, false);
     CreditCard.validateExpirationYear(expirationYear, false);
@@ -551,11 +551,11 @@ public class CreditCardProcessor {
           if (replacementMaskedCardNumber != null) {
             if (infoOut != null) {
               infoOut.println(
-                CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
-                + persistedCard.getPersistenceUniqueId() + ", providerUniqueId = " + providerUniqueId
-                + "): Replacing masked card number: " + persistedCard.getMaskedCardNumber()
-                + " -> " + replacementMaskedCardNumber
-                + (dryRun ? " (DRY RUN)" : "")
+                  CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
+                      + persistedCard.getPersistenceUniqueId() + ", providerUniqueId = " + providerUniqueId
+                      + "): Replacing masked card number: " + persistedCard.getMaskedCardNumber()
+                      + " -> " + replacementMaskedCardNumber
+                      + (dryRun ? " (DRY RUN)" : "")
               );
             }
             if (!dryRun) {
@@ -568,21 +568,21 @@ public class CreditCardProcessor {
           if (replacementExpirationMonth != null && replacementExpirationYear != null) {
             if (infoOut != null) {
               infoOut.println(
-                CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
-                + persistedCard.getPersistenceUniqueId() + ", providerUniqueId = " + providerUniqueId
-                + "): Replacing expiration: " + persistedCard.getExpirationDisplay()
-                + " -> " + CreditCard.getExpirationDisplay(replacementExpirationMonth, replacementExpirationYear)
-                + (dryRun ? " (DRY RUN)" : "")
+                  CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
+                      + persistedCard.getPersistenceUniqueId() + ", providerUniqueId = " + providerUniqueId
+                      + "): Replacing expiration: " + persistedCard.getExpirationDisplay()
+                      + " -> " + CreditCard.getExpirationDisplay(replacementExpirationMonth, replacementExpirationYear)
+                      + (dryRun ? " (DRY RUN)" : "")
               );
             }
             if (!dryRun) {
               persistedCard.setExpirationMonth(replacementExpirationMonth);
               persistedCard.setExpirationYear(replacementExpirationYear);
               persistenceMechanism.updateExpiration(
-                principal,
-                persistedCard,
-                replacementExpirationMonth,
-                replacementExpirationYear
+                  principal,
+                  persistedCard,
+                  replacementExpirationMonth,
+                  replacementExpirationYear
               );
             }
           }

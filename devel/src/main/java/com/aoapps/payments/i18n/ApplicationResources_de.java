@@ -35,9 +35,9 @@ public final class ApplicationResources_de extends EditableResourceBundle {
 
   public ApplicationResources_de() {
     super(
-      Locale.GERMAN,
-      ApplicationResources.bundleSet,
-      ApplicationResources.getSourceFile("ApplicationResources_de.properties")
+        Locale.GERMAN,
+        ApplicationResources.bundleSet,
+        ApplicationResources.getSourceFile("ApplicationResources_de.properties")
     );
   }
 }

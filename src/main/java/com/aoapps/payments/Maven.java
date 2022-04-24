@@ -38,6 +38,7 @@ final class Maven {
   }
 
   static final Properties properties;
+
   static {
     try {
       properties = PropertiesUtils.loadFromResource(Maven.class, "Maven.properties");
