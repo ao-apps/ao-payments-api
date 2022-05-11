@@ -44,6 +44,9 @@ public class TokenizedCreditCard {
   private final Byte replacementExpirationMonth;
   private final Short replacementExpirationYear;
 
+  /**
+   * Creates a new tokenized credit card.
+   */
   public TokenizedCreditCard(
       String providerUniqueId,
       String providerReplacementMaskedCardNumber,

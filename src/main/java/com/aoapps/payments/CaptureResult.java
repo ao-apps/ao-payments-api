@@ -32,6 +32,9 @@ package com.aoapps.payments;
  */
 public class CaptureResult extends TransactionResult implements Cloneable {
 
+  /**
+   * Creates a new capture result.
+   */
   public CaptureResult(
       String providerId,
       CommunicationResult communicationResult,

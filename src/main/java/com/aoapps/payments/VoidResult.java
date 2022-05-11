@@ -32,6 +32,9 @@ package com.aoapps.payments;
  */
 public class VoidResult extends TransactionResult implements Cloneable {
 
+  /**
+   * Creates a new void result.
+   */
   public VoidResult(
       String providerId,
       CommunicationResult communicationResult,

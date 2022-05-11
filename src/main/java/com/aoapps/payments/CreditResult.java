@@ -32,6 +32,9 @@ package com.aoapps.payments;
  */
 public class CreditResult extends TransactionResult {
 
+  /**
+   * Creates a new credit result.
+   */
   public CreditResult(
       String providerId,
       CommunicationResult communicationResult,

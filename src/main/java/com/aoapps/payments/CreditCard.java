@@ -23,9 +23,10 @@
 
 package com.aoapps.payments;
 
+import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
+
 import com.aoapps.lang.LocalizedIllegalArgumentException;
 import com.aoapps.lang.math.SafeMath;
-import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
@@ -34,8 +35,9 @@ import org.apache.commons.validator.GenericValidator;
 /**
  * Encapsulates the credit card details that are sent to the bank, retrieved from the database, or manipulated in any way.
  * The credit card details include card numbers and related billing address details.
- *
+ * <p>
  * If this card is retrieved from an encrypted/protected source, not all the information will necessarily be available.
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
@@ -76,6 +78,8 @@ public class CreditCard implements Cloneable {
   public static final byte UNKNOWN_EXPIRATION_MONTH = -1;
 
   /**
+   * Value used to represent an unknown expiration month.
+   *
    * @deprecated  Please use {@link #UNKNOWN_EXPIRATION_MONTH} instead.
    */
   @Deprecated(forRemoval = true)
@@ -88,6 +92,8 @@ public class CreditCard implements Cloneable {
   public static final short UNKNOWN_EXPIRATION_YEAR = -1;
 
   /**
+   * Value used to represent an unknown expiration year.
+   *
    * @deprecated  Please use {@link #UNKNOWN_EXPIRATION_YEAR} instead.
    */
   @Deprecated(forRemoval = true)
@@ -109,7 +115,7 @@ public class CreditCard implements Cloneable {
   public static final short EXPIRATION_YEARS_FUTURE = 20;
 
   /**
-   * The prefix used for {@link #getCardNumberDisplay(java.lang.String)}
+   * The prefix used for {@link #getCardNumberDisplay(java.lang.String)}.
    */
   public static final String CARD_NUMBER_DISPLAY_PREFIX = "•••• ";
 
@@ -206,8 +212,7 @@ public class CreditCard implements Cloneable {
   }
 
   /**
-   * @see  #CARD_NUMBER_DISPLAY_PREFIX
-   * @see  #getCardNumberDisplay()
+   * See {@link #CARD_NUMBER_DISPLAY_PREFIX} and {@link #getCardNumberDisplay()}.
    */
   public static String getCardNumberDisplay(String cardNumber) {
     if (cardNumber == null) {
@@ -232,6 +237,9 @@ public class CreditCard implements Cloneable {
     return result.toString();
   }
 
+  /**
+   * Validates an expiration month.
+   */
   public static byte validateExpirationMonth(byte expirationMonth, boolean allowUnknownDate) throws IllegalArgumentException {
     if (
         (
@@ -250,6 +258,7 @@ public class CreditCard implements Cloneable {
   private static class CurrentYearLock {
     // Empty lock class to help heap profile
   }
+
   private static final CurrentYearLock currentYearLock = new CurrentYearLock();
   private static long currentYearMillis = Long.MIN_VALUE;
   private static short currentYear;
@@ -272,6 +281,9 @@ public class CreditCard implements Cloneable {
     }
   }
 
+  /**
+   * Validates an expiration year.
+   */
   public static short validateExpirationYear(short expirationYear, boolean allowUnknownDate) throws IllegalArgumentException {
     if (
         (
@@ -348,34 +360,34 @@ public class CreditCard implements Cloneable {
     if (expirationYear != null) {
       validateExpirationYear(expirationYear, true);
     }
-    final int MONTH_DIGITS = 2;
-    final int YEAR_DIGITS = 4;
+    final int monthDigits = 2;
+    final int yearDigits = 4;
     if (
         (expirationMonth == null || expirationMonth == UNKNOWN_EXPIRATION_MONTH)
             && (expirationYear == null || expirationYear == UNKNOWN_EXPIRATION_YEAR)
     ) {
       return null;
     }
-    StringBuilder result = new StringBuilder(MONTH_DIGITS + EXPIRATION_DISPLAY_SEPARATOR.length() + YEAR_DIGITS);
+    StringBuilder result = new StringBuilder(monthDigits + EXPIRATION_DISPLAY_SEPARATOR.length() + yearDigits);
     if (expirationMonth == null || expirationMonth == UNKNOWN_EXPIRATION_MONTH) {
-      for (int i = 0; i < MONTH_DIGITS; i++) {
+      for (int i = 0; i < monthDigits; i++) {
         result.append(UNKNOWN_DIGIT);
       }
     } else {
       String monthStr = expirationMonth.toString();
-      for (int i = monthStr.length(); i < MONTH_DIGITS; i++) {
+      for (int i = monthStr.length(); i < monthDigits; i++) {
         result.append('0');
       }
       result.append(monthStr);
     }
     result.append(EXPIRATION_DISPLAY_SEPARATOR);
     if (expirationYear == null || expirationYear == UNKNOWN_EXPIRATION_YEAR) {
-      for (int i = 0; i < YEAR_DIGITS; i++) {
+      for (int i = 0; i < yearDigits; i++) {
         result.append(UNKNOWN_DIGIT);
       }
     } else {
       String yearStr = expirationYear.toString();
-      for (int i = yearStr.length(); i < YEAR_DIGITS; i++) {
+      for (int i = yearStr.length(); i < yearDigits; i++) {
         result.append('0');
       }
       result.append(yearStr);
@@ -626,7 +638,7 @@ public class CreditCard implements Cloneable {
   }
 
   /**
-   * @see  #getCardNumberDisplay(java.lang.String)
+   * See {@link #getCardNumberDisplay(java.lang.String)}.
    */
   public String getCardNumberDisplay() {
     return getCardNumberDisplay(maskedCardNumber);
@@ -708,7 +720,7 @@ public class CreditCard implements Cloneable {
   }
 
   /**
-   * @see  #getExpirationDisplay(java.lang.Byte, java.lang.Short)
+   * See {@link #getExpirationDisplay(java.lang.Byte, java.lang.Short)}.
    */
   public String getExpirationDisplay() {
     return getExpirationDisplay(expirationMonth, expirationYear);

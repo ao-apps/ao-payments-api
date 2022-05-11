@@ -23,8 +23,9 @@
 
 package com.aoapps.payments;
 
-import com.aoapps.lang.LocalizedIllegalArgumentException;
 import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
+
+import com.aoapps.lang.LocalizedIllegalArgumentException;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.Locale;
@@ -48,6 +49,7 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Adds-up all amounts into a total amount.
+   *
    * @return   amount + tax + shipping + duty
    */
   public static BigDecimal getTotalAmount(
@@ -183,14 +185,14 @@ public class TransactionRequest implements Cloneable {
   }
 
   /**
-   * Gets the customer IP
+   * Gets the customer IP.
    */
   public String getCustomerIp() {
     return customerIp;
   }
 
   /**
-   * Sets the customer IP
+   * Sets the customer IP.
    */
   public void setCustomerIp(String customerIp) {
     this.customerIp = customerIp;
@@ -269,8 +271,9 @@ public class TransactionRequest implements Cloneable {
   /**
    * Sets the amount of the transaction.  This amount should not include any tax, shipping charges, or duty.
    * Thus the total amount of the transaction is the amount + taxAmount + shippingAmount + dutyAmount.
-   *
+   * <p>
    * The amount is normalized to the proper number of decimal places for the selected currency.
+   * </p>
    *
    * @throws  IllegalArgumentException  if {@code amount <= 0} or is incorrectly formatted for the currency.
    */
@@ -298,8 +301,9 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Sets the tax amount of the transaction.
-   *
+   * <p>
    * The amount is normalized to the proper number of decimal places for the selected currency.
+   * </p>
    *
    * @throws  IllegalArgumentException  if {@code taxAmount < 0} or is incorrectly formatted for the currency.
    */
@@ -341,8 +345,9 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Sets the shipping amount of the transaction.
-   *
+   * <p>
    * The amount is normalized to the proper number of decimal places for the selected currency.
+   * </p>
    *
    * @throws  IllegalArgumentException  if {@code shippingAmount < 0} or is incorrectly formatted for the currency.
    */
@@ -370,8 +375,9 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Sets the duty charges of the transaction.
-   *
+   * <p>
    * The amount is normalized to the proper number of decimal places for the selected currency.
+   * </p>
    *
    * @throws  IllegalArgumentException  if {@code dutyAmount < 0} or is incorrectly formatted for the currency.
    */
@@ -392,6 +398,7 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Adds-up all amounts into a total amount.
+   *
    * @return   amount + tax + shipping + duty
    */
   public BigDecimal getTotalAmount() {

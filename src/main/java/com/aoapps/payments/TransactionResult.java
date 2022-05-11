@@ -33,6 +33,9 @@ import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
 public abstract class TransactionResult {
 
   // Matches src/main/sql/com/aoapps/payments/TransactionResult.CommunicationResult-type.sql
+  /**
+   * The set of supported communication results.
+   */
   public enum CommunicationResult {
     LOCAL_ERROR,
     IO_ERROR,
@@ -46,6 +49,9 @@ public abstract class TransactionResult {
   }
 
   // Matches src/main/sql/com/aoapps/payments/TransactionResult.ErrorCode-type.sql
+  /**
+   * The set of supported error codes.
+   */
   public enum ErrorCode {
     // ALL
     UNKNOWN,

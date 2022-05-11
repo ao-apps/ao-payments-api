@@ -162,13 +162,6 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId><artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <!-- TODO: Clean-up Checkstyle -->
-          <failOnViolation>false</failOnViolation>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>com.github.spotbugs</groupId><artifactId>spotbugs-maven-plugin</artifactId>
         <configuration>
           <!-- TODO: Clean-up SpotBugs -->

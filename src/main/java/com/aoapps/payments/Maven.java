@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
+ * Access to <code>Maven.properties</code>.
+ *
  * @author  AO Industries, Inc.
  */
 final class Maven {

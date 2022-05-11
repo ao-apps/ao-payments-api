@@ -23,15 +23,16 @@
 
 package com.aoapps.payments;
 
+import static org.junit.Assert.assertEquals;
+
 import com.aoapps.lang.LocalizedIllegalArgumentException;
 import com.aoapps.lang.math.SafeMath;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * @see CreditCard
+ * Tests {@link CreditCard}.
  *
  * @author  AO Industries, Inc.
  */

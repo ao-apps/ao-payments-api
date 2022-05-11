@@ -191,5 +191,10 @@ public interface MerchantServicesProvider {
    * @see  PersistenceMechanism#getCreditCards(java.security.Principal, java.lang.String)
    */
   // Java 8: default method
-  Map<String, TokenizedCreditCard> getTokenizedCreditCards(Map<String, CreditCard> persistedCards, PrintWriter verboseOut, PrintWriter infoOut, PrintWriter warningOut) throws UnsupportedOperationException, IOException;
+  Map<String, TokenizedCreditCard> getTokenizedCreditCards(
+      Map<String, CreditCard> persistedCards,
+      PrintWriter verboseOut,
+      PrintWriter infoOut,
+      PrintWriter warningOut
+  ) throws UnsupportedOperationException, IOException;
 }

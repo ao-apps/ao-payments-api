@@ -33,6 +33,9 @@ import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
 public class Transaction implements Cloneable {
 
   // Matches src/main/sql/com/aoapps/payments/Transaction.Status-type.sql
+  /**
+   * The set of supported transaction statuses.
+   */
   public enum Status {
     PROCESSING,
     LOCAL_ERROR,
@@ -43,8 +46,7 @@ public class Transaction implements Cloneable {
     DECLINED,
     HOLD,
     VOID,
-    CHARGEBACK
-    ;
+    CHARGEBACK;
 
     @Override
     public String toString() {

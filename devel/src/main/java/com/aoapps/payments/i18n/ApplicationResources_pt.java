@@ -28,11 +28,16 @@ import com.aoapps.lang.i18n.Locales;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
+ * Development-only editable resource bundle.
+ *
  * @author  AO Industries, Inc.
  */
 @ThreadSafe
 public final class ApplicationResources_pt extends EditableResourceBundle {
 
+  /**
+   * Loads the editable resource bundle.
+   */
   public ApplicationResources_pt() {
     super(
         Locales.PORTUGUESE,

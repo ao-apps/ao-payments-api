@@ -35,6 +35,9 @@ import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
 public class AuthorizationResult extends TransactionResult implements Cloneable {
 
   // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.ApprovalResult-type.sql
+  /**
+   * The set of supported approval results.
+   */
   public enum ApprovalResult {
     APPROVED,
     DECLINED,
@@ -50,6 +53,9 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
   }
 
   // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.DeclineReason-type.sql
+  /**
+   * The set of supported decline reasons.
+   */
   public enum DeclineReason {
     NO_SPECIFIC,
     EXPIRED_CARD,
@@ -85,6 +91,9 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
   }
 
   // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.ReviewReason-type.sql
+  /**
+   * The set of supported review reasons.
+   */
   public enum ReviewReason {
     RISK_MANAGEMENT,
     ACCEPTED_MERCHANT_REVIEW,
@@ -100,6 +109,9 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
   }
 
   // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.CvvResult-type.sql
+  /**
+   * The set of supported card verification results.
+   */
   public enum CvvResult {
     MATCH,
     NO_MATCH,
@@ -118,6 +130,9 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
   }
 
   // Matches src/main/sql/com/aoapps/payments/AuthorizationResult.AvsResult-type.sql
+  /**
+   * The set of supported address verification results.
+   */
   public enum AvsResult {
     ADDRESS_NOT_PROVIDED,
     ADDRESS_Y_ZIP_9,
@@ -156,6 +171,9 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
   private final AvsResult avsResult;
   private final String approvalCode;
 
+  /**
+   * Creates a new authorization result.
+   */
   public AuthorizationResult(
       String providerId,
       CommunicationResult communicationResult,
@@ -199,6 +217,8 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
   }
 
   /**
+   * Creates a new authorization result.
+   *
    * @deprecated  Please use {@link #AuthorizationResult(java.lang.String, com.aoapps.payments.TransactionResult.CommunicationResult, java.lang.String, com.aoapps.payments.TransactionResult.ErrorCode, java.lang.String, java.lang.String, com.aoapps.payments.TokenizedCreditCard, java.lang.String, com.aoapps.payments.AuthorizationResult.ApprovalResult, java.lang.String, com.aoapps.payments.AuthorizationResult.DeclineReason, java.lang.String, com.aoapps.payments.AuthorizationResult.ReviewReason, java.lang.String, com.aoapps.payments.AuthorizationResult.CvvResult, java.lang.String, com.aoapps.payments.AuthorizationResult.AvsResult, java.lang.String)}
    */
   @Deprecated(forRemoval = true)

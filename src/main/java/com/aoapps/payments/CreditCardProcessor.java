@@ -23,9 +23,10 @@
 
 package com.aoapps.payments;
 
+import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
+
 import com.aoapps.lang.LocalizedIllegalArgumentException;
 import com.aoapps.lang.sql.LocalizedSQLException;
-import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.Principal;
@@ -38,13 +39,16 @@ import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * Processes credit card payments with pluggable merchant services providers and persistence mechanisms.
- *
+ * <p>
  * TODO: Age check methods
- *
+ * </p>
+ * <p>
  * TODO: Make sure that no calls result in cross-provider data, like a card stored with on provider
  *       being used for transactions on another.
- *
+ * </p>
+ * <p>
  * TODO: Provide batch close calls?
+ * </p>
  *
  * @author  AO Industries, Inc.
  */
@@ -124,7 +128,7 @@ public class CreditCardProcessor {
       case GATEWAY_ERROR:
         status = Transaction.Status.GATEWAY_ERROR;
         break;
-      case SUCCESS:
+      case SUCCESS: {
         switch (authorizationResult.getApprovalResult()) {
           case APPROVED:
             status = Transaction.Status.CAPTURED;
@@ -139,6 +143,7 @@ public class CreditCardProcessor {
             throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
         }
         break;
+      }
       default:
         throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedCommunicationResult", authorizationResult.getCommunicationResult());
     }
@@ -229,7 +234,7 @@ public class CreditCardProcessor {
       case GATEWAY_ERROR:
         status = Transaction.Status.GATEWAY_ERROR;
         break;
-      case SUCCESS:
+      case SUCCESS: {
         switch (authorizationResult.getApprovalResult()) {
           case APPROVED:
             status = Transaction.Status.AUTHORIZED;
@@ -244,6 +249,7 @@ public class CreditCardProcessor {
             throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
         }
         break;
+      }
       default:
         throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedCommunicationResult", authorizationResult.getCommunicationResult());
     }
@@ -520,24 +526,37 @@ public class CreditCardProcessor {
    * may be fit for purpose.
    * </p>
    */
-  public void synchronizeStoredCards(Principal principal, PrintWriter verboseOut, PrintWriter infoOut, PrintWriter warningOut, boolean dryRun) throws IOException, SQLException {
+  public void synchronizeStoredCards(
+      Principal principal,
+      PrintWriter verboseOut,
+      PrintWriter infoOut,
+      PrintWriter warningOut,
+      boolean dryRun
+  ) throws IOException, SQLException {
     if (!provider.canGetTokenizedCreditCards()) {
       if (infoOut != null) {
-        infoOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: Stored card synchronization not supported: skipping");
+        infoOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId()
+            + ").synchronizeStoredCards: Stored card synchronization not supported: skipping");
       }
     } else {
       if (infoOut != null) {
-        infoOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: Synchronizing stored cards");
+        infoOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId()
+            + ").synchronizeStoredCards: Synchronizing stored cards");
       }
       // Find all the persisted cards for this provider
       Map<String, CreditCard> persistedCards = persistenceMechanism.getCreditCards(principal, provider.getProviderId());
       if (infoOut != null) {
-        infoOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: Found " + persistedCards.size() + " " + (persistedCards.size() == 1 ? "persisted card" : "persisted cards"));
+        infoOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId()
+            + ").synchronizeStoredCards: Found " + persistedCards.size() + " "
+            + (persistedCards.size() == 1 ? "persisted card" : "persisted cards"));
       }
       // Get all the tokenized cards, with possible replacement masked card numbers and/or expiration dates
-      Map<String, TokenizedCreditCard> tokenizedCards = provider.getTokenizedCreditCards(persistedCards, verboseOut, infoOut, warningOut);
+      Map<String, TokenizedCreditCard> tokenizedCards = provider.getTokenizedCreditCards(
+          persistedCards, verboseOut, infoOut, warningOut);
       if (infoOut != null) {
-        infoOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: Found " + tokenizedCards.size() + " " + (tokenizedCards.size() == 1 ? "tokenized card" : "tokenized cards"));
+        infoOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId()
+            + ").synchronizeStoredCards: Found " + tokenizedCards.size() + " "
+            + (tokenizedCards.size() == 1 ? "tokenized card" : "tokenized cards"));
       }
       List<TokenizedCreditCard> tokenizedNotFoundPersisted = new ArrayList<>();
       // Perform any replacements
@@ -551,7 +570,8 @@ public class CreditCardProcessor {
           if (replacementMaskedCardNumber != null) {
             if (infoOut != null) {
               infoOut.println(
-                  CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
+                  CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId()
+                      + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
                       + persistedCard.getPersistenceUniqueId() + ", providerUniqueId = " + providerUniqueId
                       + "): Replacing masked card number: " + persistedCard.getMaskedCardNumber()
                       + " -> " + replacementMaskedCardNumber
@@ -568,7 +588,8 @@ public class CreditCardProcessor {
           if (replacementExpirationMonth != null && replacementExpirationYear != null) {
             if (infoOut != null) {
               infoOut.println(
-                  CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
+                  CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId()
+                      + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
                       + persistedCard.getPersistenceUniqueId() + ", providerUniqueId = " + providerUniqueId
                       + "): Replacing expiration: " + persistedCard.getExpirationDisplay()
                       + " -> " + CreditCard.getExpirationDisplay(replacementExpirationMonth, replacementExpirationYear)
@@ -591,7 +612,9 @@ public class CreditCardProcessor {
       // Warn any persisted cards not found tokenized
       if (!persistedCards.isEmpty()) {
         if (warningOut != null) {
-          warningOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: Found " + persistedCards.size() + " " + (persistedCards.size() == 1 ? "persisted card" : "persisted cards") + " not tokenized ↵");
+          warningOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId()
+              + ").synchronizeStoredCards: Found " + persistedCards.size() + " "
+              + (persistedCards.size() == 1 ? "persisted card" : "persisted cards") + " not tokenized ↵");
           for (CreditCard persistedCard : persistedCards.values()) {
             warningOut.println("    persistenceUniqueId: " + persistedCard.getPersistenceUniqueId() + " ↵");
             warningOut.println("        providerUniqueId: " + persistedCard.getProviderUniqueId());
@@ -603,13 +626,20 @@ public class CreditCardProcessor {
       // Warn any tokenized cards not found persisted
       if (!tokenizedNotFoundPersisted.isEmpty()) {
         if (warningOut != null) {
-          warningOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId() + ").synchronizeStoredCards: Found " + tokenizedNotFoundPersisted.size() + " " + (tokenizedNotFoundPersisted.size() == 1 ? "tokenized card" : "tokenized cards") + " not persisted ↵");
+          warningOut.println(CreditCardProcessor.class.getSimpleName() + "(" + provider.getProviderId()
+              + ").synchronizeStoredCards: Found " + tokenizedNotFoundPersisted.size() + " "
+              + (tokenizedNotFoundPersisted.size() == 1 ? "tokenized card" : "tokenized cards") + " not persisted ↵");
           for (TokenizedCreditCard tokenizedCard : tokenizedNotFoundPersisted) {
             warningOut.println("    providerUniqueId: " + tokenizedCard.getProviderUniqueId() + " ↵");
-            warningOut.println("        providerReplacementMaskedCardNumber: " + tokenizedCard.getProviderReplacementMaskedCardNumber());
-            warningOut.println("        replacementMaskedCardNumber........: " + tokenizedCard.getReplacementMaskedCardNumber());
-            warningOut.println("        providerReplacementExpiration......: " + tokenizedCard.getProviderReplacementExpiration());
-            warningOut.println("        replacementExpiration..............: " + tokenizedCard.getReplacementExpirationMonth() + CreditCard.EXPIRATION_DISPLAY_SEPARATOR + tokenizedCard.getReplacementExpirationYear());
+            warningOut.println("        providerReplacementMaskedCardNumber: "
+                + tokenizedCard.getProviderReplacementMaskedCardNumber());
+            warningOut.println("        replacementMaskedCardNumber........: "
+                + tokenizedCard.getReplacementMaskedCardNumber());
+            warningOut.println("        providerReplacementExpiration......: "
+                + tokenizedCard.getProviderReplacementExpiration());
+            warningOut.println("        replacementExpiration..............: "
+                + tokenizedCard.getReplacementExpirationMonth() + CreditCard.EXPIRATION_DISPLAY_SEPARATOR
+                + tokenizedCard.getReplacementExpirationYear());
           }
         }
       }

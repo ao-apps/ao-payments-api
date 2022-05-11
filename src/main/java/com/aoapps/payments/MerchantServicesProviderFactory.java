@@ -76,8 +76,7 @@ public final class MerchantServicesProviderFactory {
               + Objects.hashCode(param1) * 17
               + Objects.hashCode(param2) * 37
               + Objects.hashCode(param3) * 103
-              + Objects.hashCode(param4) * 149
-      ;
+              + Objects.hashCode(param4) * 149;
     }
 
     @Override
@@ -92,8 +91,7 @@ public final class MerchantServicesProviderFactory {
               && Objects.equals(param1, other.param1)
               && Objects.equals(param2, other.param2)
               && Objects.equals(param3, other.param3)
-              && Objects.equals(param4, other.param4)
-      ;
+              && Objects.equals(param4, other.param4);
     }
   }
 
@@ -137,7 +135,7 @@ public final class MerchantServicesProviderFactory {
         } catch (InvocationTargetException e) {
           throw e;
         } catch (ReflectiveOperationException ignored) {
-          // Fall through to next param set
+          // fall-through to next param set
         }
 
         if (provider == null) {
@@ -148,7 +146,7 @@ public final class MerchantServicesProviderFactory {
           } catch (InvocationTargetException e) {
             throw e;
           } catch (ReflectiveOperationException ignored) {
-            // Fall through to next param set
+            // fall-through to next param set
           }
         }
 
@@ -160,7 +158,7 @@ public final class MerchantServicesProviderFactory {
           } catch (InvocationTargetException e) {
             throw e;
           } catch (ReflectiveOperationException ignored) {
-            // Fall through to next param set
+            // fall-through to next param set
           }
         }
 
@@ -172,7 +170,7 @@ public final class MerchantServicesProviderFactory {
           } catch (InvocationTargetException e) {
             throw e;
           } catch (ReflectiveOperationException ignored) {
-            // Fall through to next param set
+            // fall-through to next param set
           }
         }
 
