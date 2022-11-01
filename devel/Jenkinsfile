@@ -48,11 +48,11 @@ def upstreamProjects = [
  *                      Defaults to '11'                                                  *
  *                                                                                        *
  * buildJdks            The array of JDK versions that will build.                        *
- *                      Defaults to ['11', '17', '18']                                    *
+ *                      Defaults to ['11', '17', '19']                                    *
  *                      Changes must be copied to matrix axes!                            *
  *                                                                                        *
  * testJdks             The array of JDK versions that will test against every build JDK. *
- *                      Defaults to ['11', '17', '18']                                    *
+ *                      Defaults to ['11', '17', '19']                                    *
  *                      Changes must be copied to matrix axes!                            *
  *                                                                                        *
  * upstreamProjects     The array of relative paths to upstream projects.                 *
@@ -147,13 +147,13 @@ if (!binding.hasVariable('deployJdk')) {
 if (!binding.hasVariable('buildJdks')) {
   binding.setVariable(
     'buildJdks',
-    ['11', '17', '18'] // Changes must be copied to matrix axes!
+    ['11', '17', '19'] // Changes must be copied to matrix axes!
   )
 }
 if (!binding.hasVariable('testJdks')) {
   binding.setVariable(
     'testJdks',
-    ['11', '17', '18'] // Changes must be copied to matrix axes!
+    ['11', '17', '19'] // Changes must be copied to matrix axes!
   )
 }
 if (!binding.hasVariable('upstreamProjects')) {
@@ -726,7 +726,7 @@ pipeline {
         axes {
           axis {
             name 'jdk'
-            values '11', '17', '18' // buildJdks
+            values '11', '17', '19' // buildJdks
           }
         }
         stages {
@@ -775,11 +775,11 @@ pipeline {
         axes {
           axis {
             name 'jdk'
-            values '11', '17', '18' // buildJdks
+            values '11', '17', '19' // buildJdks
           }
           axis {
             name 'testJdk'
-            values '11', '17', '18' // testJdks
+            values '11', '17', '19' // testJdks
           }
         }
         stages {
