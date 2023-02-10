@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -26,11 +26,11 @@ package com.aoapps.payments;
 import static com.aoapps.payments.Resources.PACKAGE_RESOURCES;
 
 import com.aoapps.lang.LocalizedIllegalArgumentException;
+import com.aoapps.lang.security.acl.Group;
 import com.aoapps.lang.sql.LocalizedSQLException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.Principal;
-import java.security.acl.Group;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,7 @@ public class CreditCardProcessor {
    *                     The masked card number and/or expiration might be updated during the sale, and if updated
    *                     the changes will have already been persisted.
    *
-   * @see  #authorize(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  #authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    * @see  #capture(java.security.Principal, com.aoapps.payments.Transaction)
    */
   public Transaction sale(Principal principal, Group group, TransactionRequest transactionRequest, CreditCard creditCard) throws SQLException {
@@ -291,7 +291,7 @@ public class CreditCardProcessor {
    *
    * @param  principal  <code>null</code> is acceptable
    *
-   * @see  #authorize(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  #authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    */
   public CaptureResult capture(Principal principal, Transaction transaction) throws SQLException {
     CaptureResult captureResult = provider.capture(transaction.getAuthorizationResult());

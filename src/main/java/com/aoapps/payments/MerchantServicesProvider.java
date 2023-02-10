@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -48,7 +48,7 @@ public interface MerchantServicesProvider {
    *
    * @see  #authorize
    * @see  #capture
-   * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#sale(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    */
   SaleResult sale(TransactionRequest transactionRequest, CreditCard creditCard);
 
@@ -57,7 +57,7 @@ public interface MerchantServicesProvider {
    *
    * @see  #capture(com.aoapps.payments.AuthorizationResult)
    * @see  #voidTransaction(com.aoapps.payments.Transaction)
-   * @see  CreditCardProcessor#authorize(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    */
   AuthorizationResult authorize(TransactionRequest transactionRequest, CreditCard creditCard);
 
@@ -100,7 +100,7 @@ public interface MerchantServicesProvider {
    * @throws  IOException   when unable to contact the bank
    *
    * @see  #canStoreCreditCards()
-   * @see  CreditCardProcessor#storeCreditCard(java.security.Principal, java.security.acl.Group, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#storeCreditCard(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.CreditCard)
    */
   // Java 8: default method
   String storeCreditCard(CreditCard creditCard) throws UnsupportedOperationException, IOException;

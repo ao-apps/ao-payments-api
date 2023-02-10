@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2021, 2022, 2023  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -23,8 +23,8 @@
 
 package com.aoapps.payments;
 
+import com.aoapps.lang.security.acl.Group;
 import java.security.Principal;
-import java.security.acl.Group;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -38,7 +38,7 @@ public interface PersistenceMechanism {
   /**
    * Stores a credit card and returns its persistenceUniqueId.
    *
-   * @see  CreditCardProcessor#storeCreditCard(java.security.Principal, java.security.acl.Group, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#storeCreditCard(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.CreditCard)
    */
   String storeCreditCard(Principal principal, CreditCard creditCard) throws SQLException;
 
@@ -93,8 +93,8 @@ public interface PersistenceMechanism {
   /**
    * Updates the stored credit card details, all except the card number, expiration, and card security code, for a credit card.
    *
-   * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
-   * @see  CreditCardProcessor#authorize(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#sale(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    * @see  CreditCardProcessor#updateCreditCard(java.security.Principal, com.aoapps.payments.CreditCard)
    */
   void updateCreditCard(Principal principal, CreditCard creditCard) throws SQLException;
@@ -115,7 +115,7 @@ public interface PersistenceMechanism {
   /**
    * Optionally updates the expiration for a credit card.
    *
-   * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#sale(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    * @see  CreditCardProcessor#updateCreditCardExpiration(java.security.Principal, com.aoapps.payments.CreditCard, byte, short)
    */
   void updateExpiration(
@@ -138,8 +138,8 @@ public interface PersistenceMechanism {
    * @param  principal  <code>null</code> is acceptable
    * @param  group      <code>null</code> is acceptable
    *
-   * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
-   * @see  CreditCardProcessor#authorize(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#sale(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    */
   String insertTransaction(Principal principal, Group group, Transaction transaction) throws SQLException;
 
@@ -154,7 +154,7 @@ public interface PersistenceMechanism {
    *   <li>status</li>
    * </ol>
    *
-   * @see  CreditCardProcessor#sale(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#sale(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    * @see  CreditCardProcessor#capture(java.security.Principal, com.aoapps.payments.Transaction)
    */
   void saleCompleted(Principal principal, Transaction transaction) throws SQLException;
@@ -167,7 +167,7 @@ public interface PersistenceMechanism {
    *   <li>status</li>
    * </ol>
    *
-   * @see  CreditCardProcessor#authorize(java.security.Principal, java.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    */
   void authorizeCompleted(Principal principal, Transaction transaction) throws SQLException;
 
