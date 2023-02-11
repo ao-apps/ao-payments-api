@@ -261,7 +261,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
           This is caused by the project being detected as a modular build, despite the exclusions via Private-Package
           and the added Automatic-Module-Name manifest entry.
 
-          Specifically exclusing module-info.java from javadoc does not solve the issue.
+          Specifically excluding module-info.java from javadoc does not solve the issue.
 
           Could be related:
           https://issues.apache.org/jira/browse/MJAVADOC-586
