@@ -29,7 +29,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
     <relativePath>../../../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.aoapps</groupId><artifactId>ao-payments-api-devel</artifactId><version>3.0.0-SNAPSHOT</version>
+  <groupId>com.aoapps</groupId><artifactId>ao-payments-api-devel</artifactId><version>3.0.0-POST-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <properties>
