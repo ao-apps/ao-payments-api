@@ -29,11 +29,11 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
     <relativePath>../../../parent/pom.xml</relativePath>
   </parent>
 
-  <groupId>com.aoapps</groupId><artifactId>ao-payments-api-book</artifactId><version>3.0.0</version>
+  <groupId>com.aoapps</groupId><artifactId>ao-payments-api-book</artifactId><version>3.0.0-POST-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <properties>
-    <project.build.outputTimestamp>2023-02-11T20:24:43Z</project.build.outputTimestamp>
+    <project.build.outputTimestamp>2023-02-11T20:25:14Z</project.build.outputTimestamp>
     <module.name>com.aoapps.payments.api.book</module.name>
     <!-- These values are copied from the project being documented -->
     <documented.artifactId>ao-payments-api</documented.artifactId>
@@ -75,7 +75,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
     <connection>scm:git:git://github.com/ao-apps/ao-payments-api.git</connection>
     <developerConnection>scm:git:git@github.com:ao-apps/ao-payments-api.git</developerConnection>
     <url>https://github.com/ao-apps/ao-payments-api</url>
-    <tag>ao-payments-api-book-3.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
