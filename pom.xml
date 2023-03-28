@@ -38,10 +38,6 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
     <javadoc.breadcrumbs><![CDATA[<a target="${javadoc.target}" href="https://oss.aoapps.com/">AO OSS</a>
 / <a target="${javadoc.target}" href="https://oss.aoapps.com/payments/">Payments</a>
 / <a target="${javadoc.target}" href="${project.url}">API</a>]]></javadoc.breadcrumbs>
-    <!-- SonarQube -->
-    <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
-    <sonar.organization>ao-apps</sonar.organization>
-    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <!-- Dependencies -->
     <commons-lang3.version>3.12.0</commons-lang3.version>
   </properties>
