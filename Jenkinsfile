@@ -249,7 +249,7 @@ if (!binding.hasVariable('scmBrowser')) {
     scmBrowser = [$class: 'GithubWeb',
       repoUrl: 'https://github.com/newmediaworks/' + repo
     ]
-  } else if (scmUrl.startsWith('/srv/git/')) {
+  } else if (scmUrl.startsWith('/srv/git/') || scmUrl.startsWith('ssh://')) {
     // No default
     scmBrowser = null
   } else {
