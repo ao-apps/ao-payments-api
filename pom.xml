@@ -39,7 +39,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
 / <a target="${javadoc.target}" href="https://oss.aoapps.com/payments/">Payments</a>
 / <a target="${javadoc.target}" href="${project.url}">API</a>]]></javadoc.breadcrumbs>
     <!-- Dependencies -->
-    <commons-lang3.version>3.12.0</commons-lang3.version>
+    <commons-lang3.version>3.13.0</commons-lang3.version>
   </properties>
 
   <name>AO Payments API</name>
