@@ -574,7 +574,7 @@ public class CreditCardProcessor {
                       + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
                       + persistedCard.getPersistenceUniqueId() + ", providerUniqueId = " + providerUniqueId
                       + "): Replacing masked card number: " + persistedCard.getMaskedCardNumber()
-                      + " -> " + replacementMaskedCardNumber
+                      + " → " + replacementMaskedCardNumber
                       + (dryRun ? " (DRY RUN)" : "")
               );
             }
@@ -592,7 +592,7 @@ public class CreditCardProcessor {
                       + ").synchronizeStoredCards: CreditCard(persistenceUniqueId = "
                       + persistedCard.getPersistenceUniqueId() + ", providerUniqueId = " + providerUniqueId
                       + "): Replacing expiration: " + persistedCard.getExpirationDisplay()
-                      + " -> " + CreditCard.getExpirationDisplay(replacementExpirationMonth, replacementExpirationYear)
+                      + " → " + CreditCard.getExpirationDisplay(replacementExpirationMonth, replacementExpirationYear)
                       + (dryRun ? " (DRY RUN)" : "")
               );
             }
