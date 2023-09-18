@@ -35,6 +35,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
   <properties>
     <!-- Must be set to ${git.commit.time} for snapshots or ISO 8601 timestamp for releases. -->
     <project.build.outputTimestamp>${git.commit.time}</project.build.outputTimestamp>
+    <subproject.subpath>devel/</subproject.subpath>
     <module.name>com.aoapps.payments.api.devel</module.name>
   </properties>
 
