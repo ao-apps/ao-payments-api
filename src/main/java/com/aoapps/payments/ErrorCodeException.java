@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -38,21 +38,33 @@ public class ErrorCodeException extends LocalizedIOException {
 
   private final TransactionResult.ErrorCode errorCode;
 
+  /**
+   * Creates a new {@link ErrorCodeException}.
+   */
   public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key) {
     super(Resources.PACKAGE_RESOURCES, key);
     this.errorCode = errorCode;
   }
 
+  /**
+   * Creates a new {@link ErrorCodeException}.
+   */
   public ErrorCodeException(TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
     super(Resources.PACKAGE_RESOURCES, key, args);
     this.errorCode = errorCode;
   }
 
+  /**
+   * Creates a new {@link ErrorCodeException}.
+   */
   public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key) {
     super(cause, Resources.PACKAGE_RESOURCES, key);
     this.errorCode = errorCode;
   }
 
+  /**
+   * Creates a new {@link ErrorCodeException}.
+   */
   public ErrorCodeException(Throwable cause, TransactionResult.ErrorCode errorCode, String key, Serializable... args) {
     super(cause, Resources.PACKAGE_RESOURCES, key, args);
     this.errorCode = errorCode;
