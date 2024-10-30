@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -35,9 +35,8 @@ import org.apache.commons.validator.GenericValidator;
 /**
  * Encapsulates the credit card details that are sent to the bank, retrieved from the database, or manipulated in any way.
  * The credit card details include card numbers and related billing address details.
- * <p>
- * If this card is retrieved from an encrypted/protected source, not all the information will necessarily be available.
- * </p>
+ *
+ * <p>If this card is retrieved from an encrypted/protected source, not all the information will necessarily be available.</p>
  *
  * @author  AO Industries, Inc.
  */
@@ -983,9 +982,8 @@ public class CreditCard implements Cloneable {
 
   /**
    * Gets the card holder's two-digit ISO 3166-1 alpha-2 country code.
-   * <p>
-   * See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
-   * </p>
+   *
+   * <p>See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a></p>
    */
   public String getCountryCode() {
     return countryCode;
@@ -993,9 +991,8 @@ public class CreditCard implements Cloneable {
 
   /**
    * Trims, converts to upper case, and sets the card holder's two-digit ISO 3166-1 alpha-2 country code.
-   * <p>
-   * See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
-   * </p>
+   *
+   * <p>See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a></p>
    *
    * @throws  IllegalArgumentException  if not a two-character code (after trimming).
    */

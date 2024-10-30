@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -176,9 +176,8 @@ public interface MerchantServicesProvider {
 
   /**
    * Gets all stored credit cards, with optional replacement masked card numbers and/or expiration dates.
-   * <p>
-   * The returned map must be unmodifiable.
-   * </p>
+   *
+   * <p>The returned map must be unmodifiable.</p>
    *
    * @return  The unmodifiable mapping of stores cards from {@link TokenizedCreditCard#getProviderUniqueId()} to {@link TokenizedCreditCard}.
    *

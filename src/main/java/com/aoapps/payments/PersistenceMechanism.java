@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2021, 2022, 2023, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -53,14 +53,12 @@ public interface PersistenceMechanism {
 
   /**
    * Gets all the stored cards.
-   * <p>
-   * Each element is a defensive copy.
-   * Modifications will not update the underling persistence.
-   * </p>
-   * <p>
-   * The returned map must be modifiable.
-   * Modifications to the returned map will not update the underlying persistence.
-   * </p>
+   *
+   * <p>Each element is a defensive copy.
+   * Modifications will not update the underling persistence.</p>
+   *
+   * <p>The returned map must be modifiable.
+   * Modifications to the returned map will not update the underlying persistence.</p>
    *
    * @return  The modifiable mapping from {@link CreditCard#getPersistenceUniqueId()} to defensive copies of the stored card
    *
@@ -70,14 +68,12 @@ public interface PersistenceMechanism {
 
   /**
    * Gets all the stored cards for a given <code>providerId</code>.
-   * <p>
-   * Each element is a defensive copy.
-   * Modifications will not update the underling persistence.
-   * </p>
-   * <p>
-   * The returned map must be modifiable.
-   * Modifications to the returned map will not update the underlying persistence.
-   * </p>
+   *
+   * <p>Each element is a defensive copy.
+   * Modifications will not update the underling persistence.</p>
+   *
+   * <p>The returned map must be modifiable.
+   * Modifications to the returned map will not update the underlying persistence.</p>
    *
    * @param  principal  The entity performing the query (person, software component, ...)
    * @param  providerId  The ID of the provider to get all cards for

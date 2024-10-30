@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -271,9 +271,8 @@ public class TransactionRequest implements Cloneable {
   /**
    * Sets the amount of the transaction.  This amount should not include any tax, shipping charges, or duty.
    * Thus the total amount of the transaction is the amount + taxAmount + shippingAmount + dutyAmount.
-   * <p>
-   * The amount is normalized to the proper number of decimal places for the selected currency.
-   * </p>
+   *
+   * <p>The amount is normalized to the proper number of decimal places for the selected currency.</p>
    *
    * @throws  IllegalArgumentException  if {@code amount <= 0} or is incorrectly formatted for the currency.
    */
@@ -301,9 +300,8 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Sets the tax amount of the transaction.
-   * <p>
-   * The amount is normalized to the proper number of decimal places for the selected currency.
-   * </p>
+   *
+   * <p>The amount is normalized to the proper number of decimal places for the selected currency.</p>
    *
    * @throws  IllegalArgumentException  if {@code taxAmount < 0} or is incorrectly formatted for the currency.
    */
@@ -345,9 +343,8 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Sets the shipping amount of the transaction.
-   * <p>
-   * The amount is normalized to the proper number of decimal places for the selected currency.
-   * </p>
+   *
+   * <p>The amount is normalized to the proper number of decimal places for the selected currency.</p>
    *
    * @throws  IllegalArgumentException  if {@code shippingAmount < 0} or is incorrectly formatted for the currency.
    */
@@ -375,9 +372,8 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Sets the duty charges of the transaction.
-   * <p>
-   * The amount is normalized to the proper number of decimal places for the selected currency.
-   * </p>
+   *
+   * <p>The amount is normalized to the proper number of decimal places for the selected currency.</p>
    *
    * @throws  IllegalArgumentException  if {@code dutyAmount < 0} or is incorrectly formatted for the currency.
    */
@@ -519,9 +515,8 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Gets the shipping two-digit ISO 3166-1 alpha-2 country code.
-   * <p>
-   * See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
-   * </p>
+   *
+   * <p>See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a></p>
    */
   public String getShippingCountryCode() {
     return shippingCountryCode;
@@ -529,9 +524,8 @@ public class TransactionRequest implements Cloneable {
 
   /**
    * Trims, converts to upper case, and sets the shipping two-digit ISO 3166-1 alpha-2 country code.
-   * <p>
-   * See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a>
-   * </p>
+   *
+   * <p>See <a href="https://wikipedia.org/wiki/ISO_3166-1_alpha-2">https://wikipedia.org/wiki/ISO_3166-1_alpha-2</a></p>
    *
    * @throws  IllegalArgumentException  if not a two-character code (after trimming).
    */

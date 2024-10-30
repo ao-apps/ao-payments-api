@@ -39,16 +39,13 @@ import org.apache.commons.lang3.NotImplementedException;
 
 /**
  * Processes credit card payments with pluggable merchant services providers and persistence mechanisms.
- * <p>
- * TODO: Age check methods
- * </p>
- * <p>
- * TODO: Make sure that no calls result in cross-provider data, like a card stored with on provider
- *       being used for transactions on another.
- * </p>
- * <p>
- * TODO: Provide batch close calls?
- * </p>
+ *
+ * <p>TODO: Age check methods</p>
+ *
+ * <p>TODO: Make sure that no calls result in cross-provider data, like a card stored with on provider
+ *       being used for transactions on another.</p>
+ *
+ * <p>TODO: Provide batch close calls?</p>
  *
  * @author  AO Industries, Inc.
  */
@@ -131,22 +128,23 @@ public class CreditCardProcessor {
       case GATEWAY_ERROR:
         status = Transaction.Status.GATEWAY_ERROR;
         break;
-      case SUCCESS: {
-        switch (authorizationResult.getApprovalResult()) {
-          case APPROVED:
-            status = Transaction.Status.CAPTURED;
-            break;
-          case DECLINED:
-            status = Transaction.Status.DECLINED;
-            break;
-          case HOLD:
-            status = Transaction.Status.HOLD;
-            break;
-          default:
-            throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
+      case SUCCESS:
+        {
+          switch (authorizationResult.getApprovalResult()) {
+            case APPROVED:
+              status = Transaction.Status.CAPTURED;
+              break;
+            case DECLINED:
+              status = Transaction.Status.DECLINED;
+              break;
+            case HOLD:
+              status = Transaction.Status.HOLD;
+              break;
+            default:
+              throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
+          }
+          break;
         }
-        break;
-      }
       default:
         throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedCommunicationResult", authorizationResult.getCommunicationResult());
     }
@@ -237,22 +235,23 @@ public class CreditCardProcessor {
       case GATEWAY_ERROR:
         status = Transaction.Status.GATEWAY_ERROR;
         break;
-      case SUCCESS: {
-        switch (authorizationResult.getApprovalResult()) {
-          case APPROVED:
-            status = Transaction.Status.AUTHORIZED;
-            break;
-          case DECLINED:
-            status = Transaction.Status.DECLINED;
-            break;
-          case HOLD:
-            status = Transaction.Status.HOLD;
-            break;
-          default:
-            throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
+      case SUCCESS:
+        {
+          switch (authorizationResult.getApprovalResult()) {
+            case APPROVED:
+              status = Transaction.Status.AUTHORIZED;
+              break;
+            case DECLINED:
+              status = Transaction.Status.DECLINED;
+              break;
+            case HOLD:
+              status = Transaction.Status.HOLD;
+              break;
+            default:
+              throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedApprovalResult", authorizationResult.getApprovalResult());
+          }
+          break;
         }
-        break;
-      }
       default:
         throw new LocalizedSQLException("23000", PACKAGE_RESOURCES, "CreditCardProcessor.sale.unexpectedCommunicationResult", authorizationResult.getCommunicationResult());
     }
@@ -520,14 +519,12 @@ public class CreditCardProcessor {
 
   /**
    * Synchronizes any replacement masked card numbers or expiration dates from the provider back into the persistence mechanism.
-   * <p>
-   * This should be called periodically to keep the local representation of the card up-to-date with any new card information
-   * available from the payment provider, such as automatic card expiration updates.
-   * </p>
-   * <p>
-   * Scheduling of the synchronization is beyond the scope of this project, but <a href="https://oss.aoapps.com/cron/">AO Cron</a>
-   * may be fit for purpose.
-   * </p>
+   *
+   * <p>This should be called periodically to keep the local representation of the card up-to-date with any new card information
+   * available from the payment provider, such as automatic card expiration updates.</p>
+   *
+   * <p>Scheduling of the synchronization is beyond the scope of this project, but <a href="https://oss.aoapps.com/cron/">AO Cron</a>
+   * may be fit for purpose.</p>
    */
   public void synchronizeStoredCards(
       Principal principal,
