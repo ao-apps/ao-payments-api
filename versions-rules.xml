@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-payments-api - Payment processing API supporting multiple payment gateways.
-Copyright (C) 2020, 2021, 2022, 2024  AO Industries, Inc.
+Copyright (C) 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -28,6 +28,16 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
   xsi:schemaLocation="http://mojo.codehaus.org/versions-maven-plugin/rule/2.0.0 https://www.mojohaus.org/versions-maven-plugin/xsd/rule-2.0.0.xsd"
 >
   <rules>
+    <rule groupId="commons-beanutils" artifactId="commons-beanutils" comparisonMethod="maven">
+      <ignoreVersions>
+        <!--
+          TODO: commons-beanutils-1.10.0 includes a new module-info.class specifying a new module name of
+          "org.apache.commons.beanutils" while commons-validator-1.9.0 references the old name "commons.beanutils".
+          Stay on commons-beanutils-1.9.4 util commons-validator-1.9.0 is updated to reference the new module name.
+        -->
+        <ignoreVersion type="exact">1.10.0</ignoreVersion>
+      </ignoreVersions>
+    </rule>
     <rule groupId="commons-collections" artifactId="commons-collections" comparisonMethod="maven">
       <ignoreVersions>
         <!-- Skip old YYYYMMDD versions -->

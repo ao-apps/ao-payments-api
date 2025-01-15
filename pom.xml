@@ -309,7 +309,12 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
       </dependency>
       <!-- Transitive -->
       <dependency>
-        <groupId>commons-beanutils</groupId><artifactId>commons-beanutils</artifactId><version>1.10.0</version>
+        <!--
+          TODO: commons-beanutils-1.10.0 includes a new module-info.class specifying a new module name of
+          "org.apache.commons.beanutils" while commons-validator-1.9.0 references the old name "commons.beanutils".
+          Stay on commons-beanutils-1.9.4 util commons-validator-1.9.0 is updated to reference the new module name.
+        -->
+        <groupId>commons-beanutils</groupId><artifactId>commons-beanutils</artifactId><version>1.9.4</version>
       </dependency>
       <dependency>
         <groupId>commons-collections</groupId><artifactId>commons-collections</artifactId><version>3.2.2</version>
