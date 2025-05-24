@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2016, 2019, 2020, 2021, 2022, 2024, 2025  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -244,10 +244,10 @@ public class CreditCard implements Cloneable {
         (
             !allowUnknownDate
                 || expirationMonth != UNKNOWN_EXPIRATION_MONTH
-        ) && (
+          ) && (
             expirationMonth < 1
                 || expirationMonth > 12
-        )
+          )
     ) {
       throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "CreditCard.validateExpirationMonth.expirationMonth.invalid");
     }
@@ -288,10 +288,10 @@ public class CreditCard implements Cloneable {
         (
             !allowUnknownDate
                 || expirationYear != UNKNOWN_EXPIRATION_YEAR
-        ) && (
+          ) && (
             expirationYear < MIN_EXPIRATION_YEAR
                 || expirationYear > (getCurrentYear() + EXPIRATION_YEARS_FUTURE)
-        )
+          )
     ) {
       throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "CreditCard.validateExpirationYear.expirationYear.invalid");
     }
