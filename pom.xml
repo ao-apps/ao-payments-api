@@ -126,6 +126,19 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
     </resources>
     <plugins>
       <plugin>
+        <groupId>org.sonatype.ossindex.maven</groupId><artifactId>ossindex-maven-plugin</artifactId>
+        <configuration>
+          <excludeVulnerabilityIds>
+            <!--
+              We do not use an bean property values from untrusted sources, so do not expect to be affected by
+              CVE-2025-48734.  Furthermore, we are stuck on commons-beanutils-1.9.4 until commons-validator-1.9.0 is
+              updated to reference the new module name.
+            -->
+            <exclude>CVE-2025-48734</exclude>
+          </excludeVulnerabilityIds>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId>
         <executions>
           <execution>
