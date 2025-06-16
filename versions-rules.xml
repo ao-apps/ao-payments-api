@@ -37,6 +37,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
         -->
         <ignoreVersion type="exact">1.10.0</ignoreVersion>
         <ignoreVersion type="exact">1.10.1</ignoreVersion>
+        <ignoreVersion type="exact">1.11.0</ignoreVersion>
       </ignoreVersions>
     </rule>
     <rule groupId="commons-collections" artifactId="commons-collections" comparisonMethod="maven">
