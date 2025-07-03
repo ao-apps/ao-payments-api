@@ -22,7 +22,7 @@ Payment processing API supporting multiple payment gateways.
 * [Project Home](https://oss.aoapps.com/payments/api/)
 * [Changelog](https://oss.aoapps.com/payments/api/changelog)
 * [API Docs](https://oss.aoapps.com/payments/api/apidocs/)
-* [Maven Central Repository](https://central.sonatype.com/artifact/com.aoapps/ao-payments-api)
+* [Central Repository](https://central.sonatype.com/artifact/com.aoapps/ao-payments-api)
 * [GitHub](https://github.com/ao-apps/ao-payments-api)
 
 ## Contact Us

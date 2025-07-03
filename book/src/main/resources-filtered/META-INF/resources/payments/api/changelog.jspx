@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-payments-api - Payment processing API supporting multiple payment gateways.
-Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2023  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2019, 2020, 2021, 2022, 2023, 2025  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -37,7 +37,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2016-10-29T18:13:01-05:00"
-    dateModified="2023-02-11T20:10:16Z"
+    dateModified="2025-07-02T23:05:45Z"
   >
     <c:set var="latestRelease" value="3.0.0" />
     <c:if test="${
@@ -50,7 +50,6 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
         version="@{project.version}"
         groupId="@{project.groupId}"
         artifactId="@{documented.artifactId}"
-        repository="@{nexusUrl}content/repositories/snapshots/"
         scmUrl="@{project.scm.url}"
       >
         <ul>
