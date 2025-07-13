@@ -309,7 +309,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
       </dependency>
       <!-- Transitive -->
       <dependency>
-        <groupId>commons-beanutils</groupId><artifactId>commons-beanutils</artifactId><version>1.9.4</version>
+        <groupId>commons-beanutils</groupId><artifactId>commons-beanutils</artifactId><version>1.11.0</version>
       </dependency>
       <dependency>
         <groupId>commons-collections</groupId><artifactId>commons-collections</artifactId><version>3.2.2</version>
