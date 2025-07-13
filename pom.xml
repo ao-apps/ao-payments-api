@@ -315,7 +315,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
         <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId><version>5.7.0-SNAPSHOT<!-- ${POST-SNAPSHOT} --></version>
       </dependency>
       <dependency>
-        <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.17.0</version>
+        <groupId>org.apache.commons</groupId><artifactId>commons-lang3</artifactId><version>3.18.0</version>
       </dependency>
       <dependency>
         <groupId>commons-validator</groupId><artifactId>commons-validator</artifactId><version>1.9.0</version>
