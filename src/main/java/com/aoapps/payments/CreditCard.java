@@ -606,7 +606,7 @@ public class CreditCard implements Cloneable {
     if (cardNumber != null && !(cardNumber = cardNumber.trim()).isEmpty()) {
       cardNumber = numbersOnly(cardNumber);
       if (
-          //!"4222222222222222".equals(cardNumber)
+          // !"4222222222222222".equals(cardNumber)
           !GenericValidator.isCreditCard(cardNumber)
       ) {
         throw new LocalizedIllegalArgumentException(PACKAGE_RESOURCES, "CreditCard.setCardNumber.cardNumber.invalid");
