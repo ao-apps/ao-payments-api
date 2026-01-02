@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-payments-api - Payment processing API supporting multiple payment gateways.
-Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025  AO Industries, Inc.
+Copyright (C) 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -272,7 +272,9 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
               <instructions>
                 <!--
                   Releases use "Automatic-Module-Name" instead of "module-info.java"
-                  since has direct dependencies that are not yet modularized.
+                  since has direct dependencies that are not yet modularized:
+                  commons-collections-3.2.2.jar
+                  commons-digester-2.1.jar
                 -->
                 <Automatic-Module-Name>${module.name}</Automatic-Module-Name>
                 <Private-Package>!.</Private-Package>
