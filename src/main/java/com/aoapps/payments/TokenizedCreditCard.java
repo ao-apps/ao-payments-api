@@ -75,7 +75,7 @@ public class TokenizedCreditCard {
   /**
    * Gets the provider-specific replacement masked card number for this tokenized card.
    *
-   * @see  #getReplacementMaskedCardNumber()
+   * @see  TokenizedCreditCard#getReplacementMaskedCardNumber()
    */
   public String getProviderReplacementMaskedCardNumber() {
     return providerReplacementMaskedCardNumber;
@@ -97,8 +97,8 @@ public class TokenizedCreditCard {
   /**
    * Gets the provider-specific replacement expiration date for this tokenized card.
    *
-   * @see  #getReplacementExpirationMonth()
-   * @see  #getReplacementExpirationYear()
+   * @see  TokenizedCreditCard#getReplacementExpirationMonth()
+   * @see  TokenizedCreditCard#getReplacementExpirationYear()
    */
   public String getProviderReplacementExpiration() {
     return providerReplacementExpiration;

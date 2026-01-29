@@ -260,9 +260,9 @@ public class TransactionRequest implements Cloneable {
    * Gets the amount of the transaction.  This amount should not include any tax, shipping charges, or duty.
    * Thus the total amount of the transaction is the amount + taxAmount + shippingAmount + dutyAmount.
    *
-   * @see  #setTaxAmount
-   * @see  #setShippingAmount
-   * @see  #setDutyAmount
+   * @see  TransactionRequest#setTaxAmount
+   * @see  TransactionRequest#setShippingAmount
+   * @see  TransactionRequest#setDutyAmount
    */
   public BigDecimal getAmount() {
     return amount;

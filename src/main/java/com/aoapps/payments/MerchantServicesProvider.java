@@ -46,8 +46,8 @@ public interface MerchantServicesProvider {
    * Performs an immediate sale, effectively a combination of <code>authorize</code> and <code>capture</code>.
    * No exceptions should ever be thrown, the CommunicationResult should be set to the appropriate error instead.
    *
-   * @see  #authorize
-   * @see  #capture
+   * @see  MerchantServicesProvider#authorize
+   * @see  MerchantServicesProvider#capture
    * @see  CreditCardProcessor#sale(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    */
   SaleResult sale(TransactionRequest transactionRequest, CreditCard creditCard);
@@ -55,8 +55,8 @@ public interface MerchantServicesProvider {
   /**
    * Authorizes a sale.  The funds are reserved but not captured until a later call to capture.
    *
-   * @see  #capture(com.aoapps.payments.AuthorizationResult)
-   * @see  #voidTransaction(com.aoapps.payments.Transaction)
+   * @see  MerchantServicesProvider#capture(com.aoapps.payments.AuthorizationResult)
+   * @see  MerchantServicesProvider#voidTransaction(com.aoapps.payments.Transaction)
    * @see  CreditCardProcessor#authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    */
   AuthorizationResult authorize(TransactionRequest transactionRequest, CreditCard creditCard);
@@ -64,7 +64,7 @@ public interface MerchantServicesProvider {
   /**
    * Captures the funds from a previous call to <code>authorize</code>.
    *
-   * @see  #authorize
+   * @see  MerchantServicesProvider#authorize
    * @see  CreditCardProcessor#capture(java.security.Principal, com.aoapps.payments.Transaction)
    */
   CaptureResult capture(AuthorizationResult authorizationResult);
@@ -99,7 +99,7 @@ public interface MerchantServicesProvider {
    * @throws  UnsupportedOperationException  when not supported
    * @throws  IOException   when unable to contact the bank
    *
-   * @see  #canStoreCreditCards()
+   * @see  MerchantServicesProvider#canStoreCreditCards()
    * @see  CreditCardProcessor#storeCreditCard(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.CreditCard)
    */
   // Java 8: default method
@@ -110,7 +110,7 @@ public interface MerchantServicesProvider {
    *
    * @throws  UnsupportedOperationException  when not supported
    *
-   * @see  #canStoreCreditCards()
+   * @see  MerchantServicesProvider#canStoreCreditCards()
    * @see  CreditCardProcessor#updateCreditCard(java.security.Principal, com.aoapps.payments.CreditCard)
    */
   // Java 8: default method
@@ -124,7 +124,7 @@ public interface MerchantServicesProvider {
    * @throws  UnsupportedOperationException  when not supported
    * @throws  IOException   when unable to contact the bank
    *
-   * @see  #canStoreCreditCards()
+   * @see  MerchantServicesProvider#canStoreCreditCards()
    * @see  CreditCardProcessor#updateCreditCardNumberAndExpiration(java.security.Principal, com.aoapps.payments.CreditCard, java.lang.String, byte, short, java.lang.String)
    */
   // Java 8: default method
@@ -142,7 +142,7 @@ public interface MerchantServicesProvider {
    * @throws  UnsupportedOperationException  when not supported
    * @throws  IOException   when unable to contact the bank
    *
-   * @see  #canStoreCreditCards()
+   * @see  MerchantServicesProvider#canStoreCreditCards()
    * @see  CreditCardProcessor#updateCreditCardExpiration(java.security.Principal, com.aoapps.payments.CreditCard, byte, short)
    */
   // Java 8: default method
@@ -168,7 +168,7 @@ public interface MerchantServicesProvider {
    *
    * @throws  IOException   when unable to contact the bank
    *
-   * @see  #getTokenizedCreditCards(java.util.Map, java.io.PrintWriter, java.io.PrintWriter, java.io.PrintWriter)
+   * @see  MerchantServicesProvider#getTokenizedCreditCards(java.util.Map, java.io.PrintWriter, java.io.PrintWriter, java.io.PrintWriter)
    * @see  CreditCardProcessor#synchronizeStoredCards(java.security.Principal, java.io.PrintWriter, java.io.PrintWriter, java.io.PrintWriter, boolean)
    */
   // Java 8: default method
@@ -184,8 +184,8 @@ public interface MerchantServicesProvider {
    * @throws  UnsupportedOperationException  when not supported
    * @throws  IOException   when unable to contact the bank
    *
-   * @see  #canStoreCreditCards()
-   * @see  #canGetTokenizedCreditCards()
+   * @see  MerchantServicesProvider#canStoreCreditCards()
+   * @see  MerchantServicesProvider#canGetTokenizedCreditCards()
    * @see  CreditCardProcessor#synchronizeStoredCards(java.security.Principal, java.io.PrintWriter, java.io.PrintWriter, java.io.PrintWriter, boolean)
    * @see  PersistenceMechanism#getCreditCards(java.security.Principal, java.lang.String)
    */

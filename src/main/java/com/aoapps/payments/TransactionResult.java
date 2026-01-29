@@ -166,7 +166,7 @@ public abstract class TransactionResult {
   /**
    * Gets the provider-specific error code.
    *
-   * @see  #getErrorCode()
+   * @see  TransactionResult#getErrorCode()
    */
   public String getProviderErrorCode() {
     return providerErrorCode;

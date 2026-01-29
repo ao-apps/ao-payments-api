@@ -219,7 +219,7 @@ public class AuthorizationResult extends TransactionResult implements Cloneable 
   /**
    * Creates a new authorization result.
    *
-   * @deprecated  Please use {@link #AuthorizationResult(java.lang.String, com.aoapps.payments.TransactionResult.CommunicationResult, java.lang.String, com.aoapps.payments.TransactionResult.ErrorCode, java.lang.String, java.lang.String, com.aoapps.payments.TokenizedCreditCard, java.lang.String, com.aoapps.payments.AuthorizationResult.ApprovalResult, java.lang.String, com.aoapps.payments.AuthorizationResult.DeclineReason, java.lang.String, com.aoapps.payments.AuthorizationResult.ReviewReason, java.lang.String, com.aoapps.payments.AuthorizationResult.CvvResult, java.lang.String, com.aoapps.payments.AuthorizationResult.AvsResult, java.lang.String)}
+   * @deprecated  Please use {@link AuthorizationResult#AuthorizationResult(java.lang.String, com.aoapps.payments.TransactionResult.CommunicationResult, java.lang.String, com.aoapps.payments.TransactionResult.ErrorCode, java.lang.String, java.lang.String, com.aoapps.payments.TokenizedCreditCard, java.lang.String, com.aoapps.payments.AuthorizationResult.ApprovalResult, java.lang.String, com.aoapps.payments.AuthorizationResult.DeclineReason, java.lang.String, com.aoapps.payments.AuthorizationResult.ReviewReason, java.lang.String, com.aoapps.payments.AuthorizationResult.CvvResult, java.lang.String, com.aoapps.payments.AuthorizationResult.AvsResult, java.lang.String)}
    */
   @Deprecated(forRemoval = true)
   public AuthorizationResult(

@@ -79,7 +79,7 @@ public class CreditCard implements Cloneable {
   /**
    * Value used to represent an unknown expiration month.
    *
-   * @deprecated  Please use {@link #UNKNOWN_EXPIRATION_MONTH} instead.
+   * @deprecated  Please use {@link CreditCard#UNKNOWN_EXPIRATION_MONTH} instead.
    */
   @Deprecated(forRemoval = true)
   public static final byte UNKNOWN_EXPRIATION_MONTH = UNKNOWN_EXPIRATION_MONTH;
@@ -93,7 +93,7 @@ public class CreditCard implements Cloneable {
   /**
    * Value used to represent an unknown expiration year.
    *
-   * @deprecated  Please use {@link #UNKNOWN_EXPIRATION_YEAR} instead.
+   * @deprecated  Please use {@link CreditCard#UNKNOWN_EXPIRATION_YEAR} instead.
    */
   @Deprecated(forRemoval = true)
   public static final short UNKNOWN_EXPRIATION_YEAR = UNKNOWN_EXPIRATION_YEAR;
@@ -114,18 +114,18 @@ public class CreditCard implements Cloneable {
   public static final short EXPIRATION_YEARS_FUTURE = 20;
 
   /**
-   * The prefix used for {@link #getCardNumberDisplay(java.lang.String)}.
+   * The prefix used for {@link CreditCard#getCardNumberDisplay(java.lang.String)}.
    */
   public static final String CARD_NUMBER_DISPLAY_PREFIX = "•••• ";
 
   /**
-   * The middle separator used for {@link #getExpirationDisplay(java.lang.Byte, java.lang.Short)}.
+   * The middle separator used for {@link CreditCard#getExpirationDisplay(java.lang.Byte, java.lang.Short)}.
    */
   public static final String EXPIRATION_DISPLAY_SEPARATOR = " / ";
 
   /**
-   * Only keeps the first {@link #MASK_START_DIGITS} and last {@link #MASK_END_DIGITS} digits of a card number after trimming.
-   * Other digits are replaced with {@link #MASK_CHARACTER}.
+   * Only keeps the first {@link CreditCard#MASK_START_DIGITS} and last {@link CreditCard#MASK_END_DIGITS} digits of a card number after trimming.
+   * Other digits are replaced with {@link CreditCard#MASK_CHARACTER}.
    * All non-digit characters are left intact.
    * If the number is {@code null}, returns an empty string.
    */
@@ -179,7 +179,7 @@ public class CreditCard implements Cloneable {
    * Gets the numbers out of a String.
    *
    * @param  value  the value to extract numbers from
-   * @param  allowUnknownDigit  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
+   * @param  allowUnknownDigit  selects inclusion of {@link CreditCard#UNKNOWN_DIGIT} in the result
    */
   public static String numbersOnly(String value, boolean allowUnknownDigit) {
     if (value == null) {
@@ -204,14 +204,14 @@ public class CreditCard implements Cloneable {
 
   /**
    * Gets the numbers out of a String, not including
-   * any {@link #UNKNOWN_DIGIT}.
+   * any {@link CreditCard#UNKNOWN_DIGIT}.
    */
   public static String numbersOnly(String value) {
     return numbersOnly(value, false);
   }
 
   /**
-   * See {@link #CARD_NUMBER_DISPLAY_PREFIX} and {@link #getCardNumberDisplay()}.
+   * See {@link CreditCard#CARD_NUMBER_DISPLAY_PREFIX} and {@link CreditCard#getCardNumberDisplay()}.
    */
   public static String getCardNumberDisplay(String cardNumber) {
     if (cardNumber == null) {
@@ -301,9 +301,9 @@ public class CreditCard implements Cloneable {
   /**
    * Gets an expiration date in MMYY format.
    *
-   * @param  expirationMonth  the month or {@link #UNKNOWN_EXPIRATION_MONTH} when unknown
-   * @param  expirationYear  the year or {@link #UNKNOWN_EXPIRATION_YEAR} when unknown
-   * @param  allowUnknownDate  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
+   * @param  expirationMonth  the month or {@link CreditCard#UNKNOWN_EXPIRATION_MONTH} when unknown
+   * @param  expirationYear  the year or {@link CreditCard#UNKNOWN_EXPIRATION_YEAR} when unknown
+   * @param  allowUnknownDate  selects inclusion of {@link CreditCard#UNKNOWN_DIGIT} in the result
    *
    * @throws  IllegalArgumentException  if invalid date
    */
@@ -334,9 +334,9 @@ public class CreditCard implements Cloneable {
 
   /**
    * Gets an expiration date in MMYY format,
-   * not including any {@link #UNKNOWN_DIGIT}.
+   * not including any {@link CreditCard#UNKNOWN_DIGIT}.
    *
-   * @deprecated  Please use {@link #getExpirationDateMMYY(byte, short, boolean)} allowing for unknown expirations
+   * @deprecated  Please use {@link CreditCard#getExpirationDateMMYY(byte, short, boolean)} allowing for unknown expirations
    */
   @Deprecated(forRemoval = true)
   public static String getExpirationDateMMYY(byte expirationMonth, short expirationYear) {
@@ -346,8 +346,8 @@ public class CreditCard implements Cloneable {
   /**
    * Gets the expiration display in "MM / YYYY" format or {@code null} when both month and year are unknown.
    *
-   * @see  #EXPIRATION_DISPLAY_SEPARATOR
-   * @see  #getExpirationDisplay()
+   * @see  CreditCard#EXPIRATION_DISPLAY_SEPARATOR
+   * @see  CreditCard#getExpirationDisplay()
    *
    * @throws  IllegalArgumentException  if invalid date
    */
@@ -637,7 +637,7 @@ public class CreditCard implements Cloneable {
   }
 
   /**
-   * See {@link #getCardNumberDisplay(java.lang.String)}.
+   * See {@link CreditCard#getCardNumberDisplay(java.lang.String)}.
    */
   public String getCardNumberDisplay() {
     return getCardNumberDisplay(maskedCardNumber);
@@ -646,7 +646,7 @@ public class CreditCard implements Cloneable {
   /**
    * Gets the expiration month, where 1 is January and 12 is December.
    *
-   * @see  #UNKNOWN_EXPIRATION_MONTH
+   * @see  CreditCard#UNKNOWN_EXPIRATION_MONTH
    */
   // TODO: 3.0: Make nullable Byte
   public byte getExpirationMonth() {
@@ -658,7 +658,7 @@ public class CreditCard implements Cloneable {
    *
    * @throws  IllegalArgumentException  if out of range.
    *
-   * @see  #UNKNOWN_EXPIRATION_MONTH
+   * @see  CreditCard#UNKNOWN_EXPIRATION_MONTH
    */
   // TODO: 3.0: Make nullable Byte
   public void setExpirationMonth(byte expirationMonth) {
@@ -668,7 +668,7 @@ public class CreditCard implements Cloneable {
   /**
    * Gets the expiration year, such as {@code 2007}.
    *
-   * @see  #UNKNOWN_EXPIRATION_YEAR
+   * @see  CreditCard#UNKNOWN_EXPIRATION_YEAR
    */
   // TODO: 3.0: Make nullable Short
   public short getExpirationYear() {
@@ -680,9 +680,9 @@ public class CreditCard implements Cloneable {
    * It also accepts values 0 &lt;= year &lt;= 99.  These values will be automatically
    * added to the current century.
    *
-   * @throws  IllegalArgumentException  if the resolved year is &lt; {@link #MIN_EXPIRATION_YEAR} or &gt; (current year + {@link #EXPIRATION_YEARS_FUTURE})
+   * @throws  IllegalArgumentException  if the resolved year is &lt; {@link CreditCard#MIN_EXPIRATION_YEAR} or &gt; (current year + {@link CreditCard#EXPIRATION_YEARS_FUTURE})
    *
-   * @see  #UNKNOWN_EXPIRATION_YEAR
+   * @see  CreditCard#UNKNOWN_EXPIRATION_YEAR
    */
   // TODO: 3.0: Make nullable Short
   public void setExpirationYear(short expirationYear) {
@@ -695,9 +695,9 @@ public class CreditCard implements Cloneable {
 
   /**
    * Gets the expiration date in MMYY format,
-   * not including any {@link #UNKNOWN_DIGIT}.
+   * not including any {@link CreditCard#UNKNOWN_DIGIT}.
    *
-   * @param  allowUnknownDate  selects inclusion of {@link #UNKNOWN_DIGIT} in the result
+   * @param  allowUnknownDate  selects inclusion of {@link CreditCard#UNKNOWN_DIGIT} in the result
    *
    * @throws  IllegalArgumentException  if invalid date
    */
@@ -707,11 +707,11 @@ public class CreditCard implements Cloneable {
 
   /**
    * Gets the expiration date in MMYY format,
-   * not including any {@link #UNKNOWN_DIGIT}.
+   * not including any {@link CreditCard#UNKNOWN_DIGIT}.
    *
    * @throws  IllegalArgumentException  if invalid date
    *
-   * @deprecated  Please use {@link #getExpirationDateMMYY(boolean)} allowing for unknown expirations
+   * @deprecated  Please use {@link CreditCard#getExpirationDateMMYY(boolean)} allowing for unknown expirations
    */
   @Deprecated(forRemoval = true)
   public String getExpirationDateMMYY() {
@@ -719,7 +719,7 @@ public class CreditCard implements Cloneable {
   }
 
   /**
-   * See {@link #getExpirationDisplay(java.lang.Byte, java.lang.Short)}.
+   * See {@link CreditCard#getExpirationDisplay(java.lang.Byte, java.lang.Short)}.
    */
   public String getExpirationDisplay() {
     return getExpirationDisplay(expirationMonth, expirationYear);

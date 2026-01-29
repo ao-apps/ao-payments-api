@@ -83,8 +83,8 @@ public class CreditCardProcessor {
    *                     The masked card number and/or expiration might be updated during the sale, and if updated
    *                     the changes will have already been persisted.
    *
-   * @see  #authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
-   * @see  #capture(java.security.Principal, com.aoapps.payments.Transaction)
+   * @see  CreditCardProcessor#authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#capture(java.security.Principal, com.aoapps.payments.Transaction)
    */
   public Transaction sale(Principal principal, Group group, TransactionRequest transactionRequest, CreditCard creditCard) throws SQLException {
     // Insert into persistence layer
@@ -195,8 +195,8 @@ public class CreditCardProcessor {
    *                     The masked card number and/or expiration might be updated during the sale, and if updated
    *                     the changes will have already been persisted.
    *
-   * @see  #capture(java.security.Principal, com.aoapps.payments.Transaction)
-   * @see  #voidTransaction(java.security.Principal, com.aoapps.payments.Transaction)
+   * @see  CreditCardProcessor#capture(java.security.Principal, com.aoapps.payments.Transaction)
+   * @see  CreditCardProcessor#voidTransaction(java.security.Principal, com.aoapps.payments.Transaction)
    */
   public Transaction authorize(Principal principal, Group group, TransactionRequest transactionRequest, CreditCard creditCard) throws SQLException {
     // Insert into persistence layer
@@ -293,7 +293,7 @@ public class CreditCardProcessor {
    *
    * @param  principal  <code>null</code> is acceptable
    *
-   * @see  #authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
+   * @see  CreditCardProcessor#authorize(java.security.Principal, com.aoapps.lang.security.acl.Group, com.aoapps.payments.TransactionRequest, com.aoapps.payments.CreditCard)
    */
   public CaptureResult capture(Principal principal, Transaction transaction) throws SQLException {
     CaptureResult captureResult = provider.capture(transaction.getAuthorizationResult());
@@ -338,9 +338,9 @@ public class CreditCardProcessor {
    *
    * @throws  SQLException  when unable to update the persistence layer
    *
-   * @see  #sale
-   * @see  #authorize
-   * @see  #capture
+   * @see  CreditCardProcessor#sale
+   * @see  CreditCardProcessor#authorize
+   * @see  CreditCardProcessor#capture
    */
   public VoidResult voidTransaction(Principal principal, Transaction transaction) throws SQLException {
     Transaction.Status status = transaction.getStatus();
