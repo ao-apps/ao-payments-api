@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2019, 2020, 2021, 2022, 2023, 2024  AO Industries, Inc.
+ * Copyright (C) 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2019, 2020, 2021, 2022, 2023, 2024, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -219,30 +219,30 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
                 persistenceUniqueId,
                 getProperty(props, TRANS_PRE, counter, ".groupName"),
                 new TransactionRequest(
-                    getPropertyBoolean(props,    TRANS_PRE, counter, TRANS_REQ_SUF + ".testMode"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".customerIp"),
-                    getPropertyInteger(props,    TRANS_PRE, counter, TRANS_REQ_SUF + ".duplicateWindow"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".orderNumber"),
-                    getPropertyCurrency(props,   TRANS_PRE, counter, TRANS_REQ_SUF + ".currencyCode"),
+                    getPropertyBoolean(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".testMode"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".customerIp"),
+                    getPropertyInteger(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".duplicateWindow"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".orderNumber"),
+                    getPropertyCurrency(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".currencyCode"),
                     getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".amount"),
                     getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxAmount"),
-                    getPropertyBoolean(props,    TRANS_PRE, counter, TRANS_REQ_SUF + ".taxExempt"),
+                    getPropertyBoolean(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".taxExempt"),
                     getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingAmount"),
                     getPropertyBigDecimal(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".dutyAmount"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingFirstName"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingLastName"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCompanyName"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress1"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress2"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCity"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingState"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingPostalCode"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCountryCode"),
-                    getPropertyBoolean(props,    TRANS_PRE, counter, TRANS_REQ_SUF + ".emailCustomer"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".merchantEmail"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".invoiceNumber"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".purchaseOrderNumber"),
-                    getProperty(props,           TRANS_PRE, counter, TRANS_REQ_SUF + ".description")
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingFirstName"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingLastName"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCompanyName"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress1"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingStreetAddress2"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCity"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingState"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingPostalCode"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".shippingCountryCode"),
+                    getPropertyBoolean(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".emailCustomer"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".merchantEmail"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".invoiceNumber"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".purchaseOrderNumber"),
+                    getProperty(props, TRANS_PRE, counter, TRANS_REQ_SUF + ".description")
                 ),
                 new CreditCard(
                     null, // persistenceUniqueId
@@ -275,52 +275,52 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
                 Long.parseLong(getProperty(props, TRANS_PRE, counter, ".authorizationTime")),
                 getProperty(props, TRANS_PRE, counter, ".authorizationPrincipalName"),
                 new AuthorizationResult(
-                    getProperty(props,     TRANS_PRE, counter, ".providerId"),
+                    getProperty(props, TRANS_PRE, counter, ".providerId"),
                     getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
-                    getProperty(props,     TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorCode"),
+                    getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorCode"),
                     getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
-                    getProperty(props,     TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage"),
-                    getProperty(props,     TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId"),
+                    getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerErrorMessage"),
+                    getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerUniqueId"),
                     tokenizedCreditCardProviderUniqueId == null ? null : new TokenizedCreditCard(
                         tokenizedCreditCardProviderUniqueId,
-                        getProperty(props,      TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementMaskedCardNumber"),
+                        getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementMaskedCardNumber"),
                         // TODO: 3.0: Store separate type and masked card numbers
-                        getProperty(props,      TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementMaskedCardNumber"),
-                        getProperty(props,      TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementExpiration"),
-                        getPropertyByte(props,  TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationMonth"),
+                        getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementMaskedCardNumber"),
+                        getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.providerReplacementExpiration"),
+                        getPropertyByte(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationMonth"),
                         getPropertyShort(props, TRANS_PRE, counter, AUTH_RES_SUF + ".tokenizedCreditCard.replacementExpirationYear")
                     ),
-                    getProperty(props,     TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult"),
+                    getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerApprovalResult"),
                     getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalResult", AuthorizationResult.ApprovalResult.class),
-                    getProperty(props,     TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason"),
+                    getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerDeclineReason"),
                     getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".declineReason", AuthorizationResult.DeclineReason.class),
-                    getProperty(props,     TRANS_PRE, counter, AUTH_RES_SUF + ".providerReviewReason"),
+                    getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerReviewReason"),
                     getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".reviewReason", AuthorizationResult.ReviewReason.class),
-                    getProperty(props,     TRANS_PRE, counter, AUTH_RES_SUF + ".providerCvvResult"),
+                    getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerCvvResult"),
                     getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".cvvResult", AuthorizationResult.CvvResult.class),
-                    getProperty(props,     TRANS_PRE, counter, AUTH_RES_SUF + ".providerAvsResult"),
+                    getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".providerAvsResult"),
                     getPropertyEnum(props, TRANS_PRE, counter, AUTH_RES_SUF + ".avsResult", AuthorizationResult.AvsResult.class),
-                    getProperty(props,     TRANS_PRE, counter, AUTH_RES_SUF + ".approvalCode")
+                    getProperty(props, TRANS_PRE, counter, AUTH_RES_SUF + ".approvalCode")
                 ),
                 coalesce(getPropertyLong(props, TRANS_PRE, counter, ".captureTime"), -1), // TODO: 3.0: Make nullable Long
                 getProperty(props, TRANS_PRE, counter, ".capturePrincipalName"),
                 new CaptureResult(
-                    getProperty(props,     TRANS_PRE, counter, ".providerId"),
+                    getProperty(props, TRANS_PRE, counter, ".providerId"),
                     getPropertyEnum(props, TRANS_PRE, counter, CAP_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
-                    getProperty(props,     TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorCode"),
+                    getProperty(props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorCode"),
                     getPropertyEnum(props, TRANS_PRE, counter, CAP_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
-                    getProperty(props,     TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorMessage"),
-                    getProperty(props,     TRANS_PRE, counter, CAP_RES_SUF + ".providerUniqueId")
+                    getProperty(props, TRANS_PRE, counter, CAP_RES_SUF + ".providerErrorMessage"),
+                    getProperty(props, TRANS_PRE, counter, CAP_RES_SUF + ".providerUniqueId")
                 ),
                 coalesce(getPropertyLong(props, TRANS_PRE, counter, ".voidTime"), -1), // TODO: 3.0: Make nullable Long
                 getProperty(props, TRANS_PRE, counter, ".voidPrincipalName"),
                 new VoidResult(
-                    getProperty(props,     TRANS_PRE, counter, ".providerId"),
+                    getProperty(props, TRANS_PRE, counter, ".providerId"),
                     getPropertyEnum(props, TRANS_PRE, counter, VOID_RES_SUF + ".communicationResult", TransactionResult.CommunicationResult.class),
-                    getProperty(props,     TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorCode"),
+                    getProperty(props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorCode"),
                     getPropertyEnum(props, TRANS_PRE, counter, VOID_RES_SUF + ".errorCode", TransactionResult.ErrorCode.class),
-                    getProperty(props,     TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorMessage"),
-                    getProperty(props,     TRANS_PRE, counter, VOID_RES_SUF + ".providerUniqueId")
+                    getProperty(props, TRANS_PRE, counter, VOID_RES_SUF + ".providerErrorMessage"),
+                    getProperty(props, TRANS_PRE, counter, VOID_RES_SUF + ".providerUniqueId")
                 ),
                 getPropertyEnum(props, TRANS_PRE, counter, ".status", Transaction.Status.class)
             );

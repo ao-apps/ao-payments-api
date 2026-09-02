@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 ao-payments-api - Payment processing API supporting multiple payment gateways.
-Copyright (C) 2022  AO Industries, Inc.
+Copyright (C) 2022, 2026  AO Industries, Inc.
     support@aoindustries.com
     7262 Bull Pen Cir
     Mobile, AL 36695
@@ -29,7 +29,7 @@ along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
 
   <!-- Will not rename since the name helps indicate the format -->
   <suppress
-    checks="AbbreviationAsWordInName"
+    checks="(AbbreviationAsWordInName|GoogleMethodName)"
     files="[/\\]com[/\\]aoapps[/\\]payments[/\\]CreditCard\.java$"
     message="'getExpirationDateMMYY'"
   />
