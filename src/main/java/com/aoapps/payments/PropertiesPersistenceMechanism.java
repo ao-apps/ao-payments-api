@@ -581,7 +581,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
         }
       } catch (NumberFormatException err) {
         // This should not happen, but is not critical
-        logger.log(Level.WARNING, null, err);
+        logger.log(Level.WARNING, "TODO: message here", err);
       }
     }
     String uniqueId = Long.toString(highest + 1);
@@ -761,7 +761,7 @@ public class PropertiesPersistenceMechanism implements PersistenceMechanism {
         }
       } catch (NumberFormatException err) {
         // This should not happen, but is not critical
-        logger.log(Level.WARNING, null, err);
+        logger.log(Level.WARNING, "TODO: message here", err);
       }
     }
     String uniqueId = Long.toString(highest + 1);
