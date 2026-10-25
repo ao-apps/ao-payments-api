@@ -1,6 +1,6 @@
 /*
  * ao-payments-api - Payment processing API supporting multiple payment gateways.
- * Copyright (C) 2021, 2022, 2023  AO Industries, Inc.
+ * Copyright (C) 2021, 2022, 2023, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -21,7 +21,6 @@
  * along with ao-payments-api.  If not, see <https://www.gnu.org/licenses/>.
  */
 module com.aoapps.payments.api {
-  exports com.aoapps.payments;
   // Direct
   requires com.aoapps.collections; // <groupId>com.aoapps</groupId><artifactId>ao-collections</artifactId>
   requires com.aoapps.lang; // <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId>
@@ -30,4 +29,6 @@ module com.aoapps.payments.api {
   // Java SE
   requires java.logging;
   requires java.sql;
+
+  exports com.aoapps.payments;
 }
