@@ -38,6 +38,9 @@ binding.setVariable('upstreamProjects', [
   '../lang', // <groupId>com.aoapps</groupId><artifactId>ao-lang</artifactId>
 ])
 
+// *-devel projects only run locally during dev and are never deployed, no other branches to audit
+binding.setVariable('scmAdditionalAuditBranches', [])
+
 /******************************************************************************************
  *                                                                                        *
  * Everything below this line is identical for all projects, except the copied matrix     *
